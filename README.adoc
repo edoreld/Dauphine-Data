@@ -8,12 +8,12 @@ version]]
 
 A Java project developed during the https://github.com/oliviercailloux/java-course[Java course] taught at Université Paris-Dauphine (in http://www.mido.dauphine.fr/[MIDO] M2 MIAGE). The code is jointly copyrighted by Olivier Cailloux and the following students:
 
+* Zakaria Benzait
 * Ouafa Boucenna
 * Sofian El Idrissi
-* Ziad Souiki
-* Zakaria Benzait
 * Thomas Gervraud
 * Sebastien Niang
+* Ziad Souiki
 
 The code is hereby published under the MIT License, with their permission.
 
