@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 /**
- * Created by Ziad  & Sofian on 03/12/2017.
- * object planning by user
+ * Created by Ziad & Sofian on 03/12/2017. object planning by user
  */
 @Entity
 public class Planning {
@@ -21,33 +19,31 @@ public class Planning {
 	/**
 	 * The person whose planning it is (with all the lectures they are enrolled in)
 	 */
-    @Id
+	@Id
 	// type === table for unique primary key (use in triple)
-    @GeneratedValue(strategy = GenerationType.TABLE)
-	private String idPlanning ;
-    
-    @JoinColumn(nullable = false)
-    private Person person;
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private String idPlanning;
 
-    public Planning() {
+	@JoinColumn(nullable = false)
+	private Person person;
+
+	public Planning() {
 	}
-    
-    /**
-     * depending on the future treatment, we can replace
-     *  by arrayList or Linkedlist or stream in java 8 ?
-	 *  Not <code>null</code>.
-     */
-    @JoinColumn(nullable = false)
-    private List<Lecture> lectures;
 
-    public Planning(Person person) {
-    	this.person = Objects.requireNonNull(person);
+	/**
+	 * depending on the future treatment, we can replace by arrayList or Linkedlist
+	 * or stream in java 8 ? Not <code>null</code>.
+	 */
+	@JoinColumn(nullable = false)
+	private List<Lecture> lectures;
+
+	public Planning(Person person) {
+		this.person = Objects.requireNonNull(person);
 		this.lectures = new ArrayList<>();
 	}
-    
-    
-    public Planning(Person person, List<Lecture> lectures) {
-    	this.person = Objects.requireNonNull(person);
+
+	public Planning(Person person, List<Lecture> lectures) {
+		this.person = Objects.requireNonNull(person);
 		this.lectures = Objects.requireNonNull(lectures);
 	}
 
@@ -57,9 +53,8 @@ public class Planning {
 	 * @return not <code>null</code>.
 	 */
 	public Person getPerson() {
-        return person;
-    }
-
+		return person;
+	}
 
 	/**
 	 * Sets this planning's person.
@@ -67,18 +62,18 @@ public class Planning {
 	 * @param person
 	 *            can't be <code>null</code>
 	 */
-    public void setPerson(Person person) {
-        this.person = Objects.requireNonNull(person);
-    }
+	public void setPerson(Person person) {
+		this.person = Objects.requireNonNull(person);
+	}
 
 	/**
 	 * Returns this planning's lectures.
 	 *
 	 * @return not <code>null</code>.
 	 */
-    public List<Lecture> getLectures() {
-        return lectures;
-    }
+	public List<Lecture> getLectures() {
+		return lectures;
+	}
 
 	/**
 	 * Sets this planning's lectures.
@@ -86,9 +81,9 @@ public class Planning {
 	 * @param lectures
 	 *            can't be <code>null</code>
 	 */
-    public void setLectures (ArrayList<Lecture> lectures) {
-        this.lectures = Objects.requireNonNull(lectures);
-    }
+	public void setLectures(ArrayList<Lecture> lectures) {
+		this.lectures = Objects.requireNonNull(lectures);
+	}
 
 	/**
 	 * Add this a lecture to this planning's lectures.
@@ -96,9 +91,9 @@ public class Planning {
 	 * @param lecture
 	 *            can't be <code>null</code>
 	 */
-    public void addLecture (Lecture lecture) {
-        this.lectures.add(Objects.requireNonNull(lecture));
-    }
+	public void addLecture(Lecture lecture) {
+		this.lectures.add(Objects.requireNonNull(lecture));
+	}
 
 	public String getIdPlanning() {
 		return idPlanning;

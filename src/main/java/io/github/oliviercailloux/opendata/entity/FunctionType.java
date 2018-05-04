@@ -1,11 +1,5 @@
 package io.github.oliviercailloux.opendata.entity;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-
 /**
  * Created by Ziad on 03/12/2017.
  *
@@ -14,7 +8,5 @@ import javax.persistence.IdClass;
  * (non-exhaustive list on 03/12/2017
  */
 public enum FunctionType {
-    MAITRE_DE_CONFERENCES,
-    ENS_VAC,
-    PROFESSEUR_DES_UNIVERSITES
+	MAITRE_DE_CONFERENCES, ENS_VAC, PROFESSEUR_DES_UNIVERSITES
 }

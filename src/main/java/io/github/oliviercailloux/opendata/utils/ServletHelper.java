@@ -1,6 +1,5 @@
 package io.github.oliviercailloux.opendata.utils;
 
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -25,8 +24,7 @@ public class ServletHelper {
 	}
 
 	public String getRedirectURL(ServletContext context) {
-		Collection<String> mappings = context.getServletRegistration(AppServlet.class.getCanonicalName())
-				.getMappings();
+		Collection<String> mappings = context.getServletRegistration(AppServlet.class.getCanonicalName()).getMappings();
 		assert (mappings.size() == 1);
 		final String urlMapping = mappings.iterator().next();
 		assert (urlMapping.charAt(0) == '/');

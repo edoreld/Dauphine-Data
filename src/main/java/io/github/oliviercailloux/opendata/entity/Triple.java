@@ -1,50 +1,47 @@
 package io.github.oliviercailloux.opendata.entity;
 
-
-import com.google.common.base.Strings;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.google.common.base.Strings;
+
 /**
- * Created by Ziad & sofian on 07/02/2017.
- *  triple is a class to create data attached to a subject (id) and put a predicate and an object
+ * Created by Ziad & sofian on 07/02/2017. triple is a class to create data
+ * attached to a subject (id) and put a predicate and an object
  */
 @Entity
 public class Triple {
 
-
-    /**
-     * id of a triple
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    String id;
+	/**
+	 * id of a triple
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	String id;
 
 	/**
-	 *  subject is a string containing an id of an object (person or course)
-	 *  not null
+	 * subject is a string containing an id of an object (person or course) not null
 	 */
-    @Column(nullable = false)
+	@Column(nullable = false)
 	String subject;
 
 	/**
-	 *  the predicate attached to the subject
+	 * the predicate attached to the subject
 	 */
-    @Column(nullable = false)
-	String predicate="";
+	@Column(nullable = false)
+	String predicate = "";
 
 	/**
-	 *  object is a string containing the data
+	 * object is a string containing the data
 	 */
-    @Column(nullable = false)
-	String object="";
+	@Column(nullable = false)
+	String object = "";
 
-    public Triple() {
-    }
+	public Triple() {
+	}
 
 	public String getId() {
 		return id;
@@ -59,18 +56,20 @@ public class Triple {
 	}
 
 	/**
-	 *  Subject can not be null or empty
+	 * Subject can not be null or empty
+	 * 
 	 * @param subject
 	 */
 	public void setSubject(String subject) throws IllegalArgumentException {
-		if(Strings.isNullOrEmpty(subject)){
+		if (Strings.isNullOrEmpty(subject)) {
 			throw new IllegalArgumentException("subject can not be null or empty");
 		}
 		this.subject = Strings.nullToEmpty(subject);
 	}
 
 	/**
-	 *  if <code>null</code>, will be converted to an empty string.
+	 * if <code>null</code>, will be converted to an empty string.
+	 * 
 	 * @return
 	 */
 	public String getPredicate() {
@@ -78,7 +77,7 @@ public class Triple {
 	}
 
 	public void setPredicate(String predicate) {
-		this.predicate =Strings.nullToEmpty(predicate);
+		this.predicate = Strings.nullToEmpty(predicate);
 	}
 
 	public String getObject() {
@@ -86,7 +85,8 @@ public class Triple {
 	}
 
 	/**
-	 *  if <code>null</code>, will be converted to an empty string.
+	 * if <code>null</code>, will be converted to an empty string.
+	 * 
 	 * @param object
 	 */
 	public void setObject(String object) {
