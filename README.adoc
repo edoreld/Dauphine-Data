@@ -1,0 +1,90 @@
+= Dauphine Open Data
+:sectanchors:
+
+image:https://travis-ci.org/benzait27/Dauphine-Open-Data.svg?branch=master["Build Status", link="https://travis-ci.org/benzait27/Dauphine-Open-Data"]
+
+https://badge.fury.io/gh/benzait27%2FDauphine-Open-Data[image:https://badge.fury.io/gh/benzait27%2FDauphine-Open-Data.svg[GitHub
+version]]
+
+A Java project developed during the https://github.com/oliviercailloux/java-course[Java course] taught at Université Paris-Dauphine (in http://www.mido.dauphine.fr/[MIDO] M2 MIAGE). The code is jointly copyrighted by Olivier Cailloux and the following students:
+
+* Ouafa Boucenna
+* Sofian El Idrissi
+* Ziad Souiki
+* Zakaria Benzait
+* Thomas Gervraud
+* Sebastien Niang
+
+The code is hereby published under the MIT License, with their permission.
+
+= Original description
+== Dauphine Open Data
+
+L’université Paris-Dauphine crée et met à jour de nombreuses données
+publiques, qui sont parfois mises à disposition uniquement via son site
+web, voire parfois non mises à disposition et simplement conservées dans
+des bases de données.
+
+Le mouvement open data considère que les données bénéficient d’une
+exposition maximale, dans des formats facilement lisibles par des
+machines. Entre autres bénéfices, cette approche facilite la
+réutilisation et l’innovation.
+
+Ce projet a pour but de créer une plate-forme qui servira à la mise à
+disposition de certaines données publiques de Paris-Dauphine. Il visera
+à mettre également à disposition certaines données non publiques après
+authentification. Par exemple, un enseignant a droit d’accès aux
+adresses e-mail des étudiants qui suivent son cours, mais ces données ne
+sont pas publiques.
+
+== Installation dev
+
+TODO ...
+
+....
+ pour les commandes ...
+....
+
+== Deploiement
+
+cf api https://api.eu-gb.bluemix.net
+
+cf login (puis entrer email et mdp)
+
+cf push
+
+(récupère la configuration manifest lien :
+http://dauphine-open-data.eu-gb.mybluemix.net)
+
+== Lancement
+Pour lancer le projet suivait les étapes suivantes
+
+1/ lancer http:/dauphine-open-data.eu-gb.mybluemixnet/BDDfedd cette
+étape permets d'alimenter la BDD par l'ensemble de cours et enseignants
+
+2/ lancer http://dauphine-open-data.eu-gb.mybluemix.net pour lister les
+différentes cours et personnes créer précédemment
+
+3/ pour supprimer la BDD ou relancez le teste vous dervrez lancer la
+servlet http://dauphine-open-data.eu-gb.mybluemix.net/DeletAll
+
+== Lancer les tests
+comment lancer les tests
+
+....
+commande pour test
+....
+
+== Contributeurs
+[zsouiki] Ziad SOUIKI M2 MIAGE Ouafa Boucenna M2 MIAGE Soufian Elidrissi
+M2 MIAGE Sebastien Niang M2 MIAGE Thomas Gervraud M2 MIAGE Zakaria
+Benzait M2 MIAGE
+
+== Version
+Actuellement en version 0.1.0
+
+== Sources
+Concernant la structure du code, nous nous sommes fortement inspiré du
+projet suivant :
+
+https://github.com/javaee-samples/javaee8-applications
