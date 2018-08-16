@@ -55,8 +55,7 @@ public class Person {
 	/**
 	 * Sets this person's last name.
 	 *
-	 * @param lastName
-	 *            if <code>null</code>, will be converted to an empty string.
+	 * @param lastName if <code>null</code>, will be converted to an empty string.
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = Strings.nullToEmpty(lastName);
@@ -133,8 +132,7 @@ public class Person {
 	/**
 	 * Sets this lecture's id.
 	 *
-	 * @param group
-	 *            if <code>null</code>, will be converted to an empty string.
+	 * @param group if <code>null</code>, will be converted to an empty string.
 	 */
 	public void setId(String id) {
 		this.id = Strings.nullToEmpty(id);
@@ -152,8 +150,7 @@ public class Person {
 	/**
 	 * Sets this person's number.
 	 *
-	 * @param number
-	 *            if <code>null</code>, will be converted to an empty string.
+	 * @param number if <code>null</code>, will be converted to an empty string.
 	 */
 	public void setNumber(String number) {
 		this.number = Strings.nullToEmpty(number);
@@ -171,8 +168,7 @@ public class Person {
 	/**
 	 * Sets this person's fax.
 	 *
-	 * @param fax
-	 *            if <code>null</code>, will be converted to an empty string.
+	 * @param fax if <code>null</code>, will be converted to an empty string.
 	 */
 	public void setFax(String fax) {
 		this.fax = Strings.nullToEmpty(fax);
@@ -190,8 +186,7 @@ public class Person {
 	/**
 	 * Sets this person's office.
 	 *
-	 * @param office
-	 *            if <code>null</code>, will be converted to an empty string.
+	 * @param office if <code>null</code>, will be converted to an empty string.
 	 */
 	public void setOffice(String office) {
 		this.office = Strings.nullToEmpty(office);
@@ -210,8 +205,7 @@ public class Person {
 	/**
 	 * Sets the list of emails of this person
 	 *
-	 * @param emails
-	 *            not <code>null</code>.
+	 * @param emails not <code>null</code>.
 	 */
 	public void setEmails(List<String> emails) {
 		this.emails = Objects.requireNonNull(emails);
@@ -220,8 +214,7 @@ public class Person {
 	/**
 	 * Add an email to the list of emails of this person
 	 *
-	 * @param email
-	 *            not <code>null</code>.
+	 * @param email not <code>null</code>.
 	 */
 	public void addEmail(String email) {
 		this.emails.add(Objects.requireNonNull(email));
@@ -240,8 +233,7 @@ public class Person {
 	/**
 	 * Sets the list of structures of this person
 	 *
-	 * @param structures
-	 *            not <code>null</code>.
+	 * @param structures not <code>null</code>.
 	 */
 	public void setStructures(List<String> structures) {
 		this.structures = Objects.requireNonNull(structures);
@@ -250,8 +242,7 @@ public class Person {
 	/**
 	 * Add a structure to the list of structures of this person
 	 *
-	 * @param structure
-	 *            not <code>null</code>.
+	 * @param structure not <code>null</code>.
 	 */
 	public void addStructure(String structure) {
 		this.structures.add(Objects.requireNonNull(structure));

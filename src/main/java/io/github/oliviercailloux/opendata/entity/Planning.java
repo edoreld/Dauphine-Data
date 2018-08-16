@@ -59,8 +59,7 @@ public class Planning {
 	/**
 	 * Sets this planning's person.
 	 *
-	 * @param person
-	 *            can't be <code>null</code>
+	 * @param person can't be <code>null</code>
 	 */
 	public void setPerson(Person person) {
 		this.person = Objects.requireNonNull(person);
@@ -78,8 +77,7 @@ public class Planning {
 	/**
 	 * Sets this planning's lectures.
 	 *
-	 * @param lectures
-	 *            can't be <code>null</code>
+	 * @param lectures can't be <code>null</code>
 	 */
 	public void setLectures(ArrayList<Lecture> lectures) {
 		this.lectures = Objects.requireNonNull(lectures);
@@ -88,8 +86,7 @@ public class Planning {
 	/**
 	 * Add this a lecture to this planning's lectures.
 	 *
-	 * @param lecture
-	 *            can't be <code>null</code>
+	 * @param lecture can't be <code>null</code>
 	 */
 	public void addLecture(Lecture lecture) {
 		this.lectures.add(Objects.requireNonNull(lecture));

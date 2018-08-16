@@ -25,8 +25,7 @@ public class ICalendarMapper {
 	/**
 	 * Convert a planning entity into an ICalendar entity
 	 * 
-	 * @param planning
-	 *            the planning entity to encode, cannot be null
+	 * @param planning the planning entity to encode, cannot be null
 	 * @return the planning encoded as a ICalendar entity
 	 */
 	public ICalendar encodePlanningToICalendar(Planning planning) {
@@ -43,8 +42,7 @@ public class ICalendarMapper {
 	/**
 	 * Convert a lecture entity into an event object
 	 * 
-	 * @param lecture
-	 *            the lecture entity to encode, cannot be null
+	 * @param lecture the lecture entity to encode, cannot be null
 	 * @return the lecture encoded as an Event entity
 	 */
 	public VEvent transformLectureToEvent(Lecture lecture) {

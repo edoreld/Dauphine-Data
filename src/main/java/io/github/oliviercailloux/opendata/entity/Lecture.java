@@ -105,8 +105,7 @@ public class Lecture implements Serializable {
 	/**
 	 * Méthode who return date attribute with format defined in param
 	 * 
-	 * @param format
-	 *            is optional and if null return default format JJ/MM/YYYY HH:MM
+	 * @param format is optional and if null return default format JJ/MM/YYYY HH:MM
 	 * @return
 	 */
 	public String getDateWithFormat(String format) {
@@ -125,8 +124,7 @@ public class Lecture implements Serializable {
 	/**
 	 * Sets this lecture's course.
 	 *
-	 * @param course
-	 *            can't be <code>null</code>
+	 * @param course can't be <code>null</code>
 	 */
 	public void setCourse(Course course) {
 		this.course = Objects.requireNonNull(course);
@@ -144,8 +142,7 @@ public class Lecture implements Serializable {
 	/**
 	 * Sets this lecture's date.
 	 *
-	 * @param date
-	 *            can't be <code>null</code>
+	 * @param date can't be <code>null</code>
 	 */
 	public void setDate(Date date) {
 		this.date = Objects.requireNonNull(date);
@@ -163,8 +160,7 @@ public class Lecture implements Serializable {
 	/**
 	 * Sets this lecture's room.
 	 *
-	 * @param room
-	 *            if <code>null</code>, will be converted to an empty string.
+	 * @param room if <code>null</code>, will be converted to an empty string.
 	 */
 	public void setRoom(String room) {
 		this.room = Strings.nullToEmpty(room);
@@ -182,8 +178,7 @@ public class Lecture implements Serializable {
 	/**
 	 * Sets this lecture's group.
 	 *
-	 * @param group
-	 *            if <code>null</code>, will be converted to an empty string.
+	 * @param group if <code>null</code>, will be converted to an empty string.
 	 */
 	public void setGroup(String group) {
 		this.group = Strings.nullToEmpty(group);
@@ -201,8 +196,7 @@ public class Lecture implements Serializable {
 	/**
 	 * Sets this lecture's teacher.
 	 *
-	 * @param teacher
-	 *            can't be <code>null</code>
+	 * @param teacher can't be <code>null</code>
 	 */
 	public void setTeacher(Person teacher) {
 		this.teacher = Objects.requireNonNull(teacher);

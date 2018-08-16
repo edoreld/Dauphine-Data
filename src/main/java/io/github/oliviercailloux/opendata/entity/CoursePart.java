@@ -60,13 +60,10 @@ public class CoursePart implements Serializable {
 	/**
 	 * Constructor with field
 	 * 
-	 * @param type
-	 *            The type of the course, not <code>null</code>.
-	 * @param volume
-	 *            The number of the hours reserved to this course, not
-	 *            <code>null</code>.
-	 * @param teacher
-	 *            the person who will teach the course, not <code>null</code>.
+	 * @param type    The type of the course, not <code>null</code>.
+	 * @param volume  The number of the hours reserved to this course, not
+	 *                <code>null</code>.
+	 * @param teacher the person who will teach the course, not <code>null</code>.
 	 */
 	public CoursePart(CourseType type, int volume, Person teacher) {
 		this.type = type;

@@ -51,7 +51,7 @@ public class JsonMapper {
 	 * 
 	 * @param json
 	 * @param className
-	 * @param <T>
+	 * @param           <T>
 	 * @return object from json
 	 * @throws IOException
 	 */
@@ -70,7 +70,7 @@ public class JsonMapper {
 	 * 
 	 * @param json
 	 * @param className
-	 * @param <T>
+	 * @param           <T>
 	 * @return
 	 * @throws IOException
 	 */

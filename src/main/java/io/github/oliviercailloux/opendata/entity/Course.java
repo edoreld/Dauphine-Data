@@ -62,8 +62,8 @@ public class Course implements Serializable {
 	/**
 	 * Sets the list of course Part.
 	 *
-	 * @param coursePart
-	 *            Not <code>null</code>, will be converted to an empty string.
+	 * @param coursePart Not <code>null</code>, will be converted to an empty
+	 *                   string.
 	 */
 	public void setCoursePart(List<CoursePart> coursePart) {
 		this.coursePart = coursePart;
@@ -103,8 +103,8 @@ public class Course implements Serializable {
 	/**
 	 * Course constructor with fields
 	 * 
-	 * @param courseName
-	 *            Not <code>null</code>, the name of the course ( Big Data, ...)
+	 * @param courseName Not <code>null</code>, the name of the course ( Big Data,
+	 *                   ...)
 	 */
 	public Course(String courseName) {
 		this.courseName = Strings.nullToEmpty(courseName);
@@ -122,8 +122,7 @@ public class Course implements Serializable {
 	/**
 	 * Sets this course's id.
 	 *
-	 * @param idCourse
-	 *            Not <code>null</code>,
+	 * @param idCourse Not <code>null</code>,
 	 */
 	public void setIdCourse(String idCourse) {
 		this.idCourse = Strings.nullToEmpty(idCourse);
@@ -141,8 +140,7 @@ public class Course implements Serializable {
 	/**
 	 * Sets this course's description.
 	 *
-	 * @param description
-	 *            Not <code>null</code>.
+	 * @param description Not <code>null</code>.
 	 */
 	public void setDescription(String description) {
 		this.description = Strings.nullToEmpty(description);
@@ -160,8 +158,7 @@ public class Course implements Serializable {
 	/**
 	 * Sets this course's name.
 	 *
-	 * @param courseName
-	 *            Not <code>null</code>.
+	 * @param courseName Not <code>null</code>.
 	 */
 	public void setCourseName(String courseName) {
 		this.courseName = Strings.nullToEmpty(courseName);
@@ -179,8 +176,7 @@ public class Course implements Serializable {
 	/**
 	 * Sets this course's locale.
 	 *
-	 * @param locale
-	 *            may be <code>null</code>,
+	 * @param locale may be <code>null</code>,
 	 */
 	public void setLocale(Locale locale) {
 		this.locale = (locale);
@@ -198,8 +194,7 @@ public class Course implements Serializable {
 	/**
 	 * Sets this course's credits.
 	 *
-	 * @param credits
-	 *            not <code>null</code>.
+	 * @param credits not <code>null</code>.
 	 */
 	public void setCredits(int credits) {
 		this.credits = credits;
@@ -217,8 +212,7 @@ public class Course implements Serializable {
 	/**
 	 * Sets this course's specialty.
 	 *
-	 * @param specialty
-	 *            Not <code>null</code>,
+	 * @param specialty Not <code>null</code>,
 	 */
 	public void setSpecialty(TypeSpecialty specialty) {
 		this.specialty = specialty;

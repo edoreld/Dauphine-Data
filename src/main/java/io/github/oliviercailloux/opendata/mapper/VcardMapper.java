@@ -23,8 +23,7 @@ public class VcardMapper {
 	/**
 	 * Convert a person entity into an VCard entity
 	 * 
-	 * @param person
-	 *            the person entity to encode, cannot be null
+	 * @param person the person entity to encode, cannot be null
 	 * @return the person encoded as a VCard entity
 	 */
 	public VCard encodePersonToVcard(Person person) {
