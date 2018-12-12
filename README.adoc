@@ -129,3 +129,4 @@ Documenter en détail et clairement le mécanisme d’authentification sur le CA
  - Récupération des données de planning plus propres (en partenariat avec la DSI).
  - Prise en compte des remarques suite à review code (sécurité & qualité) par la DSI.
  - Menu du CROUS ? (Seulement trouvé ceci et menu utilisé précédemment.)
+...
