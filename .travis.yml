@@ -1,22 +1,14 @@
 language: java
 jdk: oraclejdk8
-sudo: false
-before_install:
-   mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+notifications:
+    slack: open-data-talk:mtISmEkmb4mOYBXCJCsWVjWC
+addons:
+  sonarcloud:
+    organization: "arnclaudel-github"
+    secure:
+      token: $SONAR_TOKEN
 script:
-   mvn test -B
-language: java
-git:
-  depth: 1
-dist: trusty
+  - mvn -Dsonar.login=$SONAR_TOKEN -Dsonar.password= clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 cache:
   directories:
   - "$HOME/.m2"
-deploy:
-  provider: bluemixcloudfoundry
-  skip_cleanup: true
-  username: ziad.souiki@dauphine.eu
-  password: $BLUEMIX_PASSWORD
-  organization: ziad.souiki@dauphine.eu
-  space: dev
-  region: eu-gb
