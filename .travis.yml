@@ -4,9 +4,9 @@ notifications:
   slack: open-data-talk:mtISmEkmb4mOYBXCJCsWVjWC
 addons:
   sonarcloud:
-    organization: edoreld-github
+    organization: "edoreld-github"
     token:
-      secure: PAdUmmnBTIz0nv9d4uI5uU2Nys4tdm45dgMIAOSyKisNtSzG5oyZZrYXiGjJPFSUyjriKvT/v3v5ZTw/05c64jruR9pcKoEFf8XL62xRiEw1OauLvOu7CJn/OOGLqkBYcAWfKg6rZkxH7Ft+0WcywpCW1mhpy89OAElTVPhLFH7ABbROXwEAirPWam+GqYBPD+TUjEOQJJLboeK/JpVLWq8+EbhCIHYNM1OCQHbteaYetPFE0hwXPDBsuxKMFMjOPl2eEviBDupQUGnZujzuQXzglgMIIyn0fdX56DahF1ZUkNA+9e2HjJg1CspKZaemGUs7urz+yO21DSe62lGWM4HVAUAOsaf6k/Uv7bxmID89uKB7tLgKM+ETVFOSDxPNL6c/tQtms+ITocC/yazOZA/MA62QI6waNGhmJrtXAKBz/02AgtoN1beNodJqaQQg/gXq9MLDfjf8PEgr3L+q6d81I7z77e5IULcTYUbyZJRUiE1b2TL+m7As8uC8RewT6gGL+roJk5o4aQY3D3VpfCRRqVdNSPM0w7J+IMyc0Q3PsrZ4mIo7mocIwKgBbuGPmbgM04AgHrzgWsgTGSsGDRn2IxMt4Zv98S2ymE7QJ1thRB47s+y5p2xWjXfukU7/BXaaLv7aKUoujk0RN1YX2UtMy0pqzVcsyQoFexnS/y8=
+      secure: "$SONAR_TOKEN"
 script:
 - mvn -Dsonar.login=$SONAR_TOKEN clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 cache:
