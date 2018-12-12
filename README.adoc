@@ -1,4 +1,4 @@
-# Dauphine Open Data image:https://travis-ci.com/ArnCLAUDEL/dauphine-opendata.svg?branch=master["Build Status", link="https://travis-ci.com/ArnCLAUDEL/dauphine-opendata"] image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=alert_status["Quality Gate", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
+# Dauphine Open Data image:https://travis-ci.org/edoreld/Dauphine-Open-Data.svg?branch=dev["", link="https://travis-ci.org/edoreld/Dauphine-Open-Data"] image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=alert_status["Quality Gate", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
 
 ## Sonar analysis
 
