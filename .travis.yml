@@ -4,7 +4,7 @@ notifications:
     slack: open-data-talk:mtISmEkmb4mOYBXCJCsWVjWC
 addons:
   sonarcloud:
-    organization: "arnclaudel-github"
+    organization: "edoreld-github"
     secure:
       token: $SONAR_TOKEN
 script:
