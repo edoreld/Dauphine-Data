@@ -1,13 +1,13 @@
-# Dauphine Open Data image:https://travis-ci.org/edoreld/Dauphine-Open-Data.svg?branch=dev["", link="https://travis-ci.org/edoreld/Dauphine-Open-Data"] image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=alert_status["Quality Gate", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
+# Dauphine Open Data image:https://travis-ci.org/edoreld/Dauphine-Open-Data.svg?branch=dev["", link="https://travis-ci.org/edoreld/Dauphine-Open-Data"] image:https://sonarcloud.io/api/project_badges/measure?project=edoreld_Dauphine-Open-Data&metric=alert_status["Quality Gate", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
 
 ## Sonar analysis
 
-image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=bugs["Bugs", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
-image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=vulnerabilities["Vulnerabilities", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
-image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=code_smells["Code Smells", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
+image:https://sonarcloud.io/api/project_badges/measure?project=edoreld_Dauphine-Open-Data&metric=bugs["Bugs", link="https://sonarcloud.io/dashboard?id=edoreld_Dauphine-Open-Data"]
+image:https://sonarcloud.io/api/project_badges/measure?project=edoreld_Dauphine-Open-Data&metric=vulnerabilities["Vulnerabilities", link="https://sonarcloud.io/dashboard?id=edoreld_Dauphine-Open-Data"]
+image:https://sonarcloud.io/api/project_badges/measure?project=edoreld_Dauphine-Open-Data&metric=code_smells["Code Smells", link="https://sonarcloud.io/dashboard?id=edoreld_Dauphine-Open-Data"]
 
-image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=coverage["Coverage", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
-image:https://sonarcloud.io/api/project_badges/measure?project=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent&metric=duplicated_lines_density["Duplicated Lines", link="https://sonarcloud.io/dashboard?id=io.github.oliviercailloux.y2018%3Adauphine-opendata-parent"]
+image:https://sonarcloud.io/api/project_badges/measure?project=edoreld_Dauphine-Open-Data&metric=coverage["Coverage", link="https://sonarcloud.io/dashboard?id=edoreld_Dauphine-Open-Data"]
+image:https://sonarcloud.io/api/project_badges/measure?project=edoreld_Dauphine-Open-Data&metric=duplicated_lines_density["Duplicated Lines", link="https://sonarcloud.io/dashboard?id=edoreld_Dauphine-Open-Data"]
 
 ## Description
 
