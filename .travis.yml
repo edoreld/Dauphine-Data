@@ -1,10 +1,14 @@
+env:
+  global:
+    secure: "X/1KksemOC32ecLHD4lEysPadKK3dNGiA7HPKIKjs0Gts2A6PoACZ555PN+jQ9a8lu9c5gX1FPMvjzHGrV0v3Mcu/2Mm3sXELYsynsm/gmePbdgSQcPNfkNiYa3Z48O1hR+5v9MOtnhAcF/E3672MO0Rqqp4z0QiHQx/1ppJ0/DbLIH5PkszByRy1VmhYAUxOulDF+3ehho3bP2enAxo3ob4zU05ZgKoPdKoYNlK2Mn2Na8QLsfJ2rXooxQdm87hZQzaVKb/1/vD1WhIsxg1fOEHwqQg8A73DJcdUZdq6bfaWl4Uv/gyOKQQ0GCjfTPG7z4gVLTc+gsIttTvBQk//ba/yUKpZJH3J7VLhx3k4dxxv99U9x+gGNLW7YdZwO35+ZutT4ohJLlimHuLibzHePglEPk3NUmGIZmmG77g62YfZQInMofJCPsDUQCdNVus+Ftvbzcmtaooe85NkSW/3rqnpe778hpB6cBg6vC34NDUw47x0abh8Uo675KN/TDGNHX8V5mtDTZ381xQ9H2xi7bEYVykI4FtxUkW+0YY1+5eRb6V7I0XgQtI23W2+xEbQ3YnyLRhueVEy+39uMZDov5rRmWCM+qZERw1cvsTGDh+XKKU3axkIXIfSp669rrihQPnVde9GLCB3Mx1GlQ5yqvAQUjzhFolCk41PbHHF9o="
 language: java
 jdk: oraclejdk8
-notifications:
-  slack: open-data-talk:mtISmEkmb4mOYBXCJCsWVjWC
+addons:
+  sonarcloud:
+    organization: edoreld-github
+    token: "$SONAR_TOKEN"
 script:
-  - ./runSonarQubeAnalysis.sh
+- mvn -Dsonar.projectKey=edoreld_Dauphine-Open-Data -Dsonar.organization=edoreld-github -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=$SONAR_TOKEN clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 cache:
   directories:
   - "$HOME/.m2"
-
