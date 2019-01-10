@@ -108,5 +108,5 @@ derby.log
 # ####################
 .sonar_token
 .db.tuto
-/doc/
-/src/main/resources/logback.xml
+doc/
+distrib/
