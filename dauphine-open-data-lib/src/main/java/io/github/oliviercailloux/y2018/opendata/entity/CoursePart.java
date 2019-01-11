@@ -36,7 +36,7 @@ public class CoursePart extends AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@XmlElement
-	private Long coursePartId;
+	private Long coursePartBusinessId;
 
 	@NotNull
 	@XmlElement
@@ -53,7 +53,7 @@ public class CoursePart extends AbstractEntity {
 
 	@Override
 	public Long getId() {
-		return coursePartId;
+		return coursePartBusinessId;
 	}
 
 	/**
@@ -122,7 +122,27 @@ public class CoursePart extends AbstractEntity {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (coursePartBusinessId == null ? 0 : coursePartBusinessId.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		return super.equals(obj);
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CoursePart other = (CoursePart) obj;
+		if (coursePartBusinessId == null) {
+			if (other.coursePartBusinessId != null)
+				return false;
+		} else if (!coursePartBusinessId.equals(other.coursePartBusinessId))
+			return false;
+		return true;
 	}
 }

@@ -176,7 +176,27 @@ public class Course extends AbstractEntity {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (courseBusinessID == null ? 0 : courseBusinessID.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		return super.equals(obj);
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Course other = (Course) obj;
+		if (courseBusinessID == null) {
+			if (other.courseBusinessID != null)
+				return false;
+		} else if (!courseBusinessID.equals(other.courseBusinessID))
+			return false;
+		return true;
 	}
 }
