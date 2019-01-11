@@ -159,7 +159,7 @@ public class Course extends AbstractEntity {
 	 * @return a list of the parts of the course @
 	 */
 	public Set<CoursePart> getCourseParts() {
-		return new HashSet<CoursePart>(courseParts);
+		return new HashSet<>(courseParts);
 	}
 
 	/**
@@ -175,4 +175,8 @@ public class Course extends AbstractEntity {
 		return serialVersionUID;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 }

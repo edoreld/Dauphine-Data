@@ -75,21 +75,36 @@ public class CoursePart extends AbstractEntity {
 	}
 
 	/**
-	 * @return the global hourly volume of this course part
+	 * @return the global hourly volume of the {@link CoursePart}
 	 */
 	public Long getGlobalVolume() {
 		return globalVolume;
 	}
 
+	/**
+	 * Sets the global volume of this {@link CoursePart}
+	 *
+	 * @param globalVolume
+	 */
 	public void setGlobalVolume(@NotNull Long globalVolume) {
 		Preconditions.checkNotNull(globalVolume, "globalVolume");
 		this.globalVolume = globalVolume;
 	}
 
+	/**
+	 * Gets the list of {@link Course} to which this {@link CoursePart} belongs
+	 *
+	 * @return
+	 */
 	public Set<Course> getCourses() {
-		return new HashSet<Course>(courses);
+		return new HashSet<>(courses);
 	}
 
+	/**
+	 * sets the set of courses
+	 *
+	 * @param courses
+	 */
 	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
@@ -99,10 +114,15 @@ public class CoursePart extends AbstractEntity {
 	}
 
 	/**
-	 * This enumerate class provide us a list of course types as TD, CM? ...
+	 * This enumerate class provide us a list of course types as TD, CM, etc
 	 *
 	 */
 	public enum CourseTypeEnum {
 		TP, CM, TD, HOME_WORK, PROFESS_TRAINING, TRAININGWEEKS, ALL
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
 	}
 }
