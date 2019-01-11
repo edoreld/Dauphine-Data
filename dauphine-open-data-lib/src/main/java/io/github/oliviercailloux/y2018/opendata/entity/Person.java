@@ -1,4 +1,5 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.Entity;
@@ -20,6 +21,16 @@ import com.google.common.base.Strings;
 public class Person extends AbstractEntity {
 
 	private static final long serialVersionUID = -4768931293875213592L;
+
+	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Person() {
+		super();
+		accessServices= new ArrayList();
+		personnalMail = new ArrayList();
+		dauphineMail  = new ArrayList();	
+	}
 
 	@Override
 	public Long getId() {
