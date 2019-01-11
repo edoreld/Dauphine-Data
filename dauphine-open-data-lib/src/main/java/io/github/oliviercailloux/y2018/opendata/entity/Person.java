@@ -68,16 +68,16 @@ public class Person extends AbstractEntity {
 		this.memberShip = memberShip;
 
 	}
+	
+	public  List<String> getDauphineMail() {
 
-	public String getDauphineMail() {
-
-		return dauphineMail;
+		return Collections.unmodifiableList(dauphineMail);
 
 	}
 
 	public void setDauphineMail(String dauphineMail) {
 
-		this.dauphineMail = dauphineMail;
+		this.dauphineMail.add(dauphineMail);
 
 	}
 
@@ -148,14 +148,14 @@ public class Person extends AbstractEntity {
 		this.fax = Strings.nullToEmpty(fax);
 	}
 
-	public String getPersonnalMail() {
+	public List<String> getPersonnalMail() {
 
-		return personnalMail;
+		return Collections.unmodifiableList(personnalMail);
 	}
 
 	public void setPersonnalMail(String personnalMail) {
 
-		this.personnalMail = Strings.nullToEmpty(personnalMail);
+		this.personnalMail.add(personnalMail);
 	}
 
 	public String getIne() {
@@ -181,20 +181,35 @@ public class Person extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	/**
+	 * Firstname field mandatory
+	 */
 	@NotNull
 	private String firstName;
-
+	
+	/**
+	 * This fiel is also madatory all person mus have a lastname
+	 */
 	@NotNull
 	private String LastName;
 
+	/**
+	 * This will help to distinguish student from teachers and is mandatory
+	 */
 	@NotNull
 	private String accountType;
 
+	/**
+	 * This field is madatory and help to know the membership group
+	 */
 	@NotNull
 	private List<String> memberShip;
 
+	/**
+	 * a person in this context have mandatory dauphine mail so it can't be null
+	 */
 	@NotNull
-	private String dauphineMail;
+	private List<String> dauphineMail;
 
 	private String office;
 	/**
@@ -217,10 +232,10 @@ public class Person extends AbstractEntity {
 	private String fax;
 	
 	/**
-	 * this field represent the personnal mail of the person 
+	 * this field represent the personnal mail of the person.a person can have many personal mail 
 	 */
 
-	private String personnalMail;
+	private List<String> personnalMail;
 	
 	/**
 	 * This field represent National Student code in case person is a student
