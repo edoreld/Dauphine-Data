@@ -38,10 +38,6 @@ public class Planning extends AbstractEntity {
 
 	@OneToMany
 	@JoinColumn(nullable = false)
-	private String planningName;
-
-	@OneToMany
-	@JoinColumn(nullable = false)
 	private List<Lecture> lectures = new ArrayList<>();
 
 	@OneToOne
@@ -49,13 +45,12 @@ public class Planning extends AbstractEntity {
 	private Person person;
 
 	public Planning () {}
-	
+
 	/**
 	 * Constructor
 	 */
-	
-	public Planning (String planningName,final Person person, final List<Lecture> lecture) {
-		this.planningName = planningName;
+
+	public Planning (final Person person, final List<Lecture> lecture) {
 		this.person = Objects.requireNonNull(person);
 		this.lectures = Objects.requireNonNull(lecture);
 	}
@@ -66,23 +61,9 @@ public class Planning extends AbstractEntity {
 	}
 
 	/**
-	 * Returns sets this planning's name
-	 */
-
-	public String getPlanningName() {
-		return planningName;
-	}
-
-	/**
-	 * Sets this planning's name
-	 */
-
-	public void setPlanningName(String planningName) {
-		this.planningName = planningName;
-	}
-
-	/**
 	 * Returns this planning's person
+	 * 
+	 * @return not <code>null</code>
 	 */
 
 	public Person getPerson() {
@@ -91,6 +72,8 @@ public class Planning extends AbstractEntity {
 
 	/**
 	 * sets this planning's person
+	 * 
+	 * @param person can't be <code>null</code>
 	 */
 
 	public void setPerson(final Person person) {
@@ -99,6 +82,8 @@ public class Planning extends AbstractEntity {
 
 	/**
 	 * Returns this planning's lectures
+	 * 
+	 * @return not <code>null</code>
 	 */
 
 	public List<Lecture> getLectures(){
@@ -106,18 +91,22 @@ public class Planning extends AbstractEntity {
 	}
 
 	/**
-	 * Sets this planning's lectures.
+	 * Sets this planning's lectures
+	 * 
+	 * @param lectures can't be <code>null</code>
 	 */
 
 	public void setLectures(List<Lecture> lectures) {
 		Objects.requireNonNull(lectures);
 		this.lectures = lectures;
 	}
-	
+
 	/**
 	 * Adding a lecture to this planning's lectures
+	 * 
+	 * @param lecture can't be <code>null</code>
 	 */
-	
+
 	public void AddLecture (final Lecture lecture) {
 		this.lectures.add(Objects.requireNonNull(lecture));
 	}
