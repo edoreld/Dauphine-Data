@@ -52,8 +52,9 @@ public class PlanningDao extends AbstractDao<Planning>  {
 
 	@Override
 	public Planning persist(Planning entity) throws EntityAlreadyExistsDaoException {
-		if(!entityManager.contains(entity))
+		if(!entityManager.contains(entity)) {
 			entityManager.persist(entity);
+		}
 		return entity;
 	}
 
