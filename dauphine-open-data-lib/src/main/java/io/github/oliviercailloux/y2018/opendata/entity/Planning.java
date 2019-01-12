@@ -39,7 +39,7 @@ public class Planning extends AbstractEntity {
 	@OneToMany
 	@JoinColumn(nullable = false)
 	private String planningName;
-/*
+
 	@OneToMany
 	@JoinColumn(nullable = false)
 	private List<Lecture> lectures = new ArrayList<>();
@@ -47,7 +47,7 @@ public class Planning extends AbstractEntity {
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Person person;
-*/
+
 	public Planning () {}
 	
 	/**
@@ -56,8 +56,8 @@ public class Planning extends AbstractEntity {
 	
 	public Planning (String planningName,final Person person, final List<Lecture> lecture) {
 		this.planningName = planningName;
-//		this.person = Objects.requireNonNull(person);
-//		this.lectures = Objects.requireNonNull(lecture);
+		this.person = Objects.requireNonNull(person);
+		this.lectures = Objects.requireNonNull(lecture);
 	}
 
 	@Override
@@ -84,42 +84,42 @@ public class Planning extends AbstractEntity {
 	/**
 	 * Returns this planning's person
 	 */
-/*
+
 	public Person getPerson() {
 		return person;
 	}
-*/
+
 	/**
 	 * sets this planning's person
 	 */
-/*
+
 	public void setPerson(final Person person) {
 		this.person = Objects.requireNonNull(person);
 	}
-*/
+
 	/**
 	 * Returns this planning's lectures
 	 */
-/*
+
 	public List<Lecture> getLectures(){
 		return lectures;
 	}
-*/
+
 	/**
 	 * Sets this planning's lectures.
 	 */
-/*
+
 	public void setLectures(List<Lecture> lectures) {
 		Objects.requireNonNull(lectures);
 		this.lectures = lectures;
 	}
-*/	
+	
 	/**
 	 * Adding a lecture to this planning's lectures
 	 */
-/*	
+	
 	public void AddLecture (final Lecture lecture) {
 		this.lectures.add(Objects.requireNonNull(lecture));
 	}
-*/
+
 }
