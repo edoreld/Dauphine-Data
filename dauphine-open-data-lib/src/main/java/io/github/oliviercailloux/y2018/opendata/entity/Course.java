@@ -8,9 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -28,7 +26,7 @@ import com.google.common.base.Preconditions;
  *
  * @author Javier Martínez
  *
- *
+ * @version 1.1
  */
 @Entity
 @XmlRootElement
@@ -39,7 +37,7 @@ public class Course extends AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long courseBusinessID;
+	private Long id;
 
 	@NotNull
 	@XmlElement
@@ -56,11 +54,9 @@ public class Course extends AbstractEntity {
 
 	@NotNull
 	@XmlElement
-	private String teacher;
+	private String instructionLanguage;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Course_CoursePart", joinColumns = {
-			@JoinColumn(name = "courseBusinessID") }, inverseJoinColumns = { @JoinColumn(name = "coursePartId") })
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	@XmlElementWrapper
 	@XmlElement
 	private Set<CoursePart> courseParts = new HashSet<>();
@@ -73,7 +69,7 @@ public class Course extends AbstractEntity {
 
 	@Override
 	public Long getId() {
-		return courseBusinessID;
+		return id;
 	}
 
 	/*
@@ -87,7 +83,7 @@ public class Course extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the external id of the course
+	 * Sets the external {@code not null} id of the {@link Course}
 	 *
 	 * @param courseID
 	 * @since 1.0
@@ -98,7 +94,7 @@ public class Course extends AbstractEntity {
 	}
 
 	/**
-	 * @return the not null name of the course
+	 * @return the name of the course
 	 * @since 1.0
 	 */
 	public String getCourseName() {
@@ -106,7 +102,7 @@ public class Course extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the name of the course
+	 * Sets the {@code not null} name of the {@link Course}
 	 *
 	 * @param courseName
 	 * @since 1.0
@@ -125,7 +121,7 @@ public class Course extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the description of the course
+	 * Sets the {@code not null} description of the {@link Course}
 	 *
 	 * @param courseDescription
 	 * @since 1.0
@@ -133,25 +129,6 @@ public class Course extends AbstractEntity {
 	public void setCourseDescription(@NotNull String courseDescription) {
 		Preconditions.checkNotNull(courseName, "coursedescription");
 		this.courseDescription = courseDescription;
-	}
-
-	/**
-	 * @return the {@code not null} teacher of the course
-	 * @since 1.0
-	 */
-	public String getTeacher() {
-		return teacher;
-	}
-
-	/**
-	 * Sets the teacher of the course
-	 *
-	 * @param teacher
-	 * @since 1.0
-	 */
-	public void setTeacher(@NotNull String teacher) {
-		Preconditions.checkNotNull(teacher, "teacher");
-		this.teacher = teacher;
 	}
 
 	/**
@@ -175,11 +152,33 @@ public class Course extends AbstractEntity {
 		return serialVersionUID;
 	}
 
+	/**
+	 * Returns the language of the course
+	 *
+	 * @return
+	 * @since 1.1
+	 */
+	public String getInstructionLanguage() {
+		return instructionLanguage;
+	}
+
+	/**
+	 * Sets the language of the {@code not null} {@link Course}
+	 *
+	 * @param instructionLanguage
+	 * @since 1.1
+	 *
+	 */
+	public void setInstructionLanguage(@NotNull String instructionLanguage) {
+		Preconditions.checkNotNull(instructionLanguage, "instructionLanguage");
+		this.instructionLanguage = instructionLanguage;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + (courseBusinessID == null ? 0 : courseBusinessID.hashCode());
+		result = prime * result + (id == null ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -192,10 +191,10 @@ public class Course extends AbstractEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		Course other = (Course) obj;
-		if (courseBusinessID == null) {
-			if (other.courseBusinessID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!courseBusinessID.equals(other.courseBusinessID))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
