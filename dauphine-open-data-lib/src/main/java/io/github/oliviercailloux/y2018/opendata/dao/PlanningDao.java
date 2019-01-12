@@ -1,6 +1,3 @@
-/**
- * 
- */
 package io.github.oliviercailloux.y2018.opendata.dao;
 
 import java.util.List;
@@ -12,7 +9,7 @@ import javax.persistence.Query;
 import io.github.oliviercailloux.y2018.opendata.entity.Planning;
 
 /**
- * @author elhadj oumar diallo
+ * @author elhadj diallo
  *
  */
 
@@ -22,10 +19,14 @@ public class PlanningDao extends AbstractDao<Planning>  {
 	 * 
 	 * @param entityManager a managed entity manager
 	 */
-	
+
 	public PlanningDao (final EntityManager entityManager) {
 		super(entityManager, Planning.class, "Planning");
 	}
+
+	/**
+	 * The method allows to find the schedules recorded in the database
+	 */
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -34,12 +35,20 @@ public class PlanningDao extends AbstractDao<Planning>  {
 		return query.getResultList();
 	}
 
+	/**
+	 * Allows to find for a record with iD
+	 */
+
 	@Override
 	public Optional<Planning> findOne(Long id) {
 		Optional<Planning> planning = Optional.of(entityManager.find(Planning.class, id));
 		return planning;
-		
+
 	}
+
+	/**
+	 * Allows to save an record of schedule
+	 */
 
 	@Override
 	public Planning persist(Planning entity) throws EntityAlreadyExistsDaoException {
@@ -48,16 +57,26 @@ public class PlanningDao extends AbstractDao<Planning>  {
 		return entity;
 	}
 
+	/**
+	 * Allows to merge planning objects
+	 */
+
 	@Override
 	public Planning merge(Planning entity) {
 		return entityManager.merge(entity);
 	}
 
+	/**
+	 * Allows to remove a schedule record using the id
+	 */
+
 	@Override
 	public void remove(Long id) throws EntityDoesNotExistDaoException {
-		Query query = entityManager.createNativeQuery("DELETE FROM " +entityClass.getSimpleName() + " WHERE ID = " +id);
-		query.executeUpdate();
-		
+		Planning planning = entityManager.find(entityClass, id);
+		if(planning != null) {
+			entityManager.remove(planning);
+		}
+
 	}
 
 }
