@@ -14,6 +14,7 @@ import io.github.oliviercailloux.y2018.opendata.entity.Planning;
  */
 
 public class PlanningDao extends AbstractDao<Planning>  {
+	
 	/**
 	 * This contructor expects both managed entity manager
 	 * 
@@ -41,8 +42,7 @@ public class PlanningDao extends AbstractDao<Planning>  {
 
 	@Override
 	public Optional<Planning> findOne(Long id) {
-		Optional<Planning> planning = Optional.of(entityManager.find(Planning.class, id));
-		return planning;
+		return Optional.of(entityManager.find(entityClass, id));
 
 	}
 
@@ -52,9 +52,8 @@ public class PlanningDao extends AbstractDao<Planning>  {
 
 	@Override
 	public Planning persist(Planning entity) throws EntityAlreadyExistsDaoException {
-		if(!entityManager.contains(entity)) {
-			entityManager.persist(entity);
-		}
+		if(!entityManager.contains(entity)) 
+			entityManager.persist(entity);	
 		return entity;
 	}
 
@@ -74,10 +73,8 @@ public class PlanningDao extends AbstractDao<Planning>  {
 	@Override
 	public void remove(Long id) throws EntityDoesNotExistDaoException {
 		Planning planning = entityManager.find(entityClass, id);
-		if(planning != null) {
-			entityManager.remove(planning);
-		}
-
+		if(planning != null) 
+			entityManager.remove(planning);	
 	}
 
 }

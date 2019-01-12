@@ -1,5 +1,10 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlElement;
+
 public class Lecture extends AbstractEntity{
 
 	/**
@@ -9,12 +14,20 @@ public class Lecture extends AbstractEntity{
 	 * 
 	 * it must be deleted during the merge
 	 */
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@XmlElement
+	private Long id;
+	
 	private static final long serialVersionUID = 2283030879727615179L;
 
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

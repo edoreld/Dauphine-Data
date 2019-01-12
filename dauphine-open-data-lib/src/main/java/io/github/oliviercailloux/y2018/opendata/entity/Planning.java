@@ -9,8 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -36,15 +36,15 @@ public class Planning extends AbstractEntity {
 	@XmlElement
 	private Long id;
 
-	@OneToMany
+	@NotNull
+	@OneToOne
 	@JoinColumn(nullable = false)
 	private List<Lecture> lectures = new ArrayList<>();
 
+	@NotNull
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Person person;
-
-	public Planning () {}
 
 	/**
 	 * Constructor
@@ -60,6 +60,10 @@ public class Planning extends AbstractEntity {
 		return id;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+		
 	/**
 	 * Returns this planning's person
 	 * 
