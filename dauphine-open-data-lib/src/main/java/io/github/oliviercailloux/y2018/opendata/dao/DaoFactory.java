@@ -2,6 +2,7 @@ package io.github.oliviercailloux.y2018.opendata.dao;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -43,5 +44,11 @@ public class DaoFactory {
 	private void checkFieldInitialized() {
 		Preconditions.checkNotNull(entityManager, "entityManager");
 	}
-
+	
+	
+	@Produces
+	public TripleDao makeTripleDao() {
+		return new TripleDao(entityManager);
+	}
 }
+
