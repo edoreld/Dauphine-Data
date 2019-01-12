@@ -1,9 +1,9 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
 
-import javax.persistence.Column;
+import com.google.common.base.Strings;
+
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,31 +25,36 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Barthelemy Delemotte
  */
 @Entity
+@Table(
+        // triples should be unique within the database
+        uniqueConstraints=@UniqueConstraint(columnNames={"subject", "predicate", "object"})
+)
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Triple extends AbstractEntity {
     
     /*
      * Set a fixed max size for RDF triple values.
+     * The default varchar size is 255, and this is potentially not long enough for long URLs
      * We keep it private for the moment as this is not yet a stable api.
      */
-    private static final int MAX_VALUE_SIZE = 1024;
+    private static final int MAX_VALUE_SIZE = 1023;
     
     @Id @GeneratedValue
     @XmlElement
     Long id;
     
-    @Column(length = MAX_VALUE_SIZE)
+    @Column(length = MAX_VALUE_SIZE, nullable = false)
     @XmlElement
-    String subject;
+    String subject = "";
     
-    @Column(length = MAX_VALUE_SIZE)
+    @Column(length = MAX_VALUE_SIZE, nullable = false)
     @XmlElement
-    String predicate;
+    String predicate = "";
     
-    @Column(length = MAX_VALUE_SIZE)
+    @Column(length = MAX_VALUE_SIZE, nullable = false)
     @XmlElement
-    String object;
+    String object = "";
     
     /**
      * Default constructor to be used by JPA
@@ -63,9 +68,9 @@ public class Triple extends AbstractEntity {
      * @param object the target object identification or any value
      */
     public Triple(final String subject, final String predicate, final String object) {
-        this.subject = subject;
-        this.predicate = predicate;
-        this.object = object;
+        this.subject = Strings.nullToEmpty(subject);
+        this.predicate = Strings.nullToEmpty(predicate);
+        this.object = Strings.nullToEmpty(object);
     }
     
     @Override
@@ -78,7 +83,7 @@ public class Triple extends AbstractEntity {
     }
     
     public void setSubject(String subject) {
-        this.subject = subject;
+        this.subject = Strings.nullToEmpty(subject);
     }
     
     public String getPredicate() {
@@ -86,7 +91,7 @@ public class Triple extends AbstractEntity {
     }
     
     public void setPredicate(String predicate) {
-        this.predicate = predicate;
+        this.predicate = Strings.nullToEmpty(predicate);
     }
     
     public String getObject() {
@@ -94,6 +99,6 @@ public class Triple extends AbstractEntity {
     }
     
     public void setObject(String object) {
-        this.object = object;
+        this.object = Strings.nullToEmpty(object);
     }
 }

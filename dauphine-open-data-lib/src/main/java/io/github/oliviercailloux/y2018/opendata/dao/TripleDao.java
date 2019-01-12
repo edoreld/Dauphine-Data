@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.opendata.dao;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import io.github.oliviercailloux.y2018.opendata.entity.Triple;
 
 import javax.persistence.EntityManager;
@@ -57,5 +58,17 @@ public class TripleDao extends AbstractDao<Triple> {
             throw new EntityDoesNotExistDaoException(errorMessage);
         }
         entityManager.remove(entityOpt.get());
+    }
+    
+    /**
+     * Find all triple attached to a given subject
+     * @param subject a subject literal value. <br/> Null subjects are converted to empty strings.
+     * @return the list of Triple matching the given subject
+     */
+    public List<Triple> findBySubject(final String subject) {
+        return entityManager
+                .createQuery("SELECT t FROM  Triple t WHERE t.subject = :subject", entityClass)
+                .setParameter("subject", Strings.nullToEmpty(subject))
+                .getResultList();
     }
 }
