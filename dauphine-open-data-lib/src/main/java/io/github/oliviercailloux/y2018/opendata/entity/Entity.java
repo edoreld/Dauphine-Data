@@ -15,4 +15,5 @@ public interface Entity extends Serializable {
 
 	Long getId();
 
+
 }
