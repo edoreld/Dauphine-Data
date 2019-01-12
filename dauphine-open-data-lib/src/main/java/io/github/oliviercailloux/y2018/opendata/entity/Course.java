@@ -22,7 +22,7 @@ import com.google.common.base.Preconditions;
 
 /**
  *
- * Represents a Dauphine Course
+ * Represents a Dauphine Course. It's meant to be a subset of the CDM-fr schema.
  *
  * @author Javier Martínez
  *
@@ -88,7 +88,7 @@ public class Course extends AbstractEntity {
 	 * @param courseID
 	 * @since 1.0
 	 */
-	public void setCourseID(@NotNull String courseID) {
+	public void setCourseID(@NotNull String courseID) throws NullPointerException {
 		Preconditions.checkNotNull(courseID, "courseID");
 		this.courseID = courseID;
 	}
