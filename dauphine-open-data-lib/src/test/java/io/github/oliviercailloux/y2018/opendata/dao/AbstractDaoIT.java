@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -33,9 +34,9 @@ import io.github.oliviercailloux.y2018.opendata.entity.Entity;
 public abstract class AbstractDaoIT<E extends Entity, D extends Dao<E>> {
 
 	protected D dao;
-
+	
 	@Inject
-	private UserTransaction userTransaction;
+	protected UserTransaction userTransaction;
 
 	private final List<E> entitiesToDelete = Lists.newLinkedList();
 
@@ -63,13 +64,14 @@ public abstract class AbstractDaoIT<E extends Entity, D extends Dao<E>> {
 		}
 		commit();
 	}
-
+	
 	protected abstract E changeEntity(final E originalEntity);
-
-	protected abstract E doMakeEntity();
-
-	protected E makeEntity(final boolean persist, final boolean removeAfter) throws Exception {
-		final E e = doMakeEntity();
+	
+	// Pass an index in order to allow the delegate method to create entities with respect of unique constraints
+	protected abstract E doMakeEntity(int index);
+	
+	protected E makeEntity(final boolean persist, final boolean removeAfter, int index) throws Exception {
+		final E e = doMakeEntity(index);
 		if (persist) {
 			begin();
 			dao.persist(e);
@@ -80,7 +82,12 @@ public abstract class AbstractDaoIT<E extends Entity, D extends Dao<E>> {
 		}
 		return e;
 	}
-
+	
+	protected E makeEntity(final boolean persist, final boolean removeAfter) throws Exception {
+		return makeEntity(persist, removeAfter, 0);
+	}
+	
+	
 	protected E makeEntity(final boolean persist) throws Exception {
 		return makeEntity(persist, true);
 	}
@@ -92,7 +99,7 @@ public abstract class AbstractDaoIT<E extends Entity, D extends Dao<E>> {
 	protected List<E> makeEntities(final int nb, final boolean persist, final boolean removeAfter) throws Exception {
 		final List<E> entities = Lists.newLinkedList();
 		for (int i = 0; i < nb; i++) {
-			entities.add(makeEntity(persist, removeAfter));
+			entities.add(makeEntity(persist, removeAfter, i));
 		}
 		return entities;
 	}
