@@ -88,7 +88,7 @@ public class Course extends AbstractEntity {
 	 * @param courseID
 	 * @since 1.0
 	 */
-	public void setCourseID(@NotNull String courseID) throws NullPointerException {
+	public void setCourseID(@NotNull String courseID) {
 		Preconditions.checkNotNull(courseID, "courseID");
 		this.courseID = courseID;
 	}
