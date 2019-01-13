@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -86,6 +87,7 @@ public class Planning extends AbstractEntity {
 	 * 
 	 * @return not <code>null</code>
 	 */
+
 	public List<Lecture> getLectures(){
 		return lectures;
 	}
@@ -112,7 +114,6 @@ public class Planning extends AbstractEntity {
 		this.lectures.add(Objects.requireNonNull(lecture));
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) 
@@ -125,12 +126,9 @@ public class Planning extends AbstractEntity {
 			return false;
 
 		Planning fobj = (Planning) obj;
-		if(id == null) {
-			if(fobj != null) 
-				return true;
-		}
-		if (id.equals(fobj.id)) 
+		if (!id.equals(fobj.id)) 
 			return false;
+
 		return true;
 	}
 
