@@ -25,7 +25,6 @@ public class Person extends AbstractEntity {
 
 	@Override
 	public Long getId() {
-		// TODO Auto-generated method stub
 		return id;
 	}
 	
