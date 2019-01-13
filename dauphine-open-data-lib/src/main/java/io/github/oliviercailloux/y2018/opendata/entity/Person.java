@@ -1,7 +1,12 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +16,13 @@ import com.google.common.base.Strings;
 
 /**
  * Provides a basic implementation of class Person.<br />
- * Person is either Student or Teacher. In this class you have basic attributes to
- * manipulate class Person and getters an setters
- * <br />
+ * Person is either Student or Teacher. In this class you have basic attributes
+ * to manipulate class Person and getters an setters. In our code INE is the
+ * acronym of National Student Identification All our getters should not return
+ * null string All our method get for a List are protected from unsafe
+ * modification we handle the adding of null value in a list by making mandatory
+ * parameter of method modifying a list <br />
+ * 
  * @author Gandi Taric
  */
 
@@ -22,14 +31,99 @@ public class Person extends AbstractEntity {
 
 	private static final long serialVersionUID = -4768931293875213592L;
 
-	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	/**
+	 * Firstname field mandatory
+	 */
+	@NotNull
+	private String firstName;
+
+	/**
+	 * This fiel is also madatory all person mus have a lastname
+	 */
+	@NotNull
+	private String LastName;
+
+	/**
+	 * This will help to distinguish student from teachers and is mandatory
+	 */
+	@NotNull
+	private String accountType;
+
+	/**
+	 * This field represent National Student Identification code in case person is a
+	 * student it will be filled with empty string if person is a teacher
+	 */
+	private String ine;
+
+	/**
+	 * This field help to check if person object is active or not
+	 */
+	private boolean isActive;
+
+	/**
+	 * This represent teacher's office when person is teacher
+	 */
+	private String office;
+
+	/**
+	 * This represent the phone number of the person
+	 */
+	private String phoneNumer;
+
+	/**
+	 * this field represent the training of the student and will be set to empty
+	 * string if it is a teacher
+	 */
+	private String training;
+
+	/**
+	 * This represent fax of the person
+	 */
+	private String fax;
+
+	/**
+	 * this field represent the personnal mail of the person.a person can have many
+	 * personal mail
+	 */
+	@Column(nullable = false)
+	@ElementCollection
+	@CollectionTable(name = "personnalMail")
+	private List<String> personnalMail;
+
+	/**
+	 * a person in this context have mandatory dauphine mail so it can't be null
+	 */
+	@Column(nullable = false)
+	@ElementCollection
+	@CollectionTable(name = "dauphineMail")
+	private List<String> dauphineMail;
+
+	/**
+	 * This field is madatory and help to know the membership group
+	 */
+	@Column(nullable = false)
+	@ElementCollection
+	@CollectionTable(name = "memberShip")
+	private List<String> memberShip;
+
+	/**
+	 * This represent the list of services allowed to the student
+	 */
+	@Column(nullable = false)
+	@ElementCollection
+	@CollectionTable(name = "accessServices")
+	private List<String> accessServices;
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Person() {
 		super();
-		accessServices= new ArrayList();
+		accessServices = new ArrayList();
 		personnalMail = new ArrayList();
-		dauphineMail  = new ArrayList();	
+		dauphineMail = new ArrayList();
 	}
 
 	@Override
@@ -42,7 +136,11 @@ public class Person extends AbstractEntity {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	/**
+	 * as firstName is mandatory for all person, parameter @param firstName is also
+	 * mandatory
+	 */
+	public void setFirstName(@NotNull String firstName) {
 
 		this.firstName = firstName;
 	}
@@ -52,7 +150,11 @@ public class Person extends AbstractEntity {
 		return LastName;
 	}
 
-	public void setLastName(String lastName) {
+	/**
+	 * as lastName is mandatory for all person, parameter @param lastName is also
+	 * mandatory
+	 */
+	public void setLastName(@NotNull String lastName) {
 
 		LastName = lastName;
 	}
@@ -62,7 +164,11 @@ public class Person extends AbstractEntity {
 		return accountType;
 	}
 
-	public void setAccountType(String accountType) {
+	/**
+	 * As accountType is mandatory for all person, parameter @param accountType is
+	 * also mandatory
+	 */
+	public void setAccountType(@NotNull String accountType) {
 
 		this.accountType = accountType;
 
@@ -70,23 +176,23 @@ public class Person extends AbstractEntity {
 
 	public List<String> getMemberShip() {
 
-		return memberShip;
+		return Collections.unmodifiableList(memberShip);
 
 	}
 
-	public void setMemberShip(List<String> memberShip) {
+	public void addMemberShip(@NotNull String memberShip) {
 
-		this.memberShip = memberShip;
+		this.memberShip.add(memberShip);
 
 	}
-	
-	public  List<String> getDauphineMail() {
+
+	public List<String> getDauphineMail() {
 
 		return Collections.unmodifiableList(dauphineMail);
 
 	}
 
-	public void setDauphineMail(String dauphineMail) {
+	public void addDauphineMail(@NotNull String dauphineMail) {
 
 		this.dauphineMail.add(dauphineMail);
 
@@ -115,7 +221,11 @@ public class Person extends AbstractEntity {
 		return Collections.unmodifiableList(accessServices);
 	}
 
-	public void setAccessServices(String service) {
+	/**
+	 *
+	 * @param service
+	 */
+	public void addAccessServices(@NotNull String service) {
 
 		this.accessServices.add(service);
 	}
@@ -164,7 +274,11 @@ public class Person extends AbstractEntity {
 		return Collections.unmodifiableList(personnalMail);
 	}
 
-	public void setPersonnalMail(String personnalMail) {
+	/**
+	 * 
+	 * @param personnalMail is mandatory field
+	 */
+	public void addPersonnalMail(@NotNull String personnalMail) {
 
 		this.personnalMail.add(personnalMail);
 	}
@@ -179,7 +293,6 @@ public class Person extends AbstractEntity {
 		this.ine = Strings.nullToEmpty(ine);
 	}
 
-
 	public boolean isActive() {
 		return isActive;
 	}
@@ -187,78 +300,5 @@ public class Person extends AbstractEntity {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	/**
-	 * Firstname field mandatory
-	 */
-	@NotNull
-	private String firstName;
-	
-	/**
-	 * This fiel is also madatory all person mus have a lastname
-	 */
-	@NotNull
-	private String LastName;
-
-	/**
-	 * This will help to distinguish student from teachers and is mandatory
-	 */
-	@NotNull
-	private String accountType;
-
-	/**
-	 * This field is madatory and help to know the membership group
-	 */
-	@NotNull
-	private List<String> memberShip;
-
-	/**
-	 * a person in this context have mandatory dauphine mail so it can't be null
-	 */
-	@NotNull
-	private List<String> dauphineMail;
-
-	private String office;
-	/**
-	 * This represent the list of services allowed to the student 
-	 */
-	private List<String> accessServices;
-
-	private String phoneNumer;
-	
-	/**
-	 * this field represent the training of the student and will 
-	 * be set to empty string if it is a teacher
-	 */
-	private String training;
-	
-    /**
-     * This represent fax of the person
-     */
-
-	private String fax;
-	
-	/**
-	 * this field represent the personnal mail of the person.a person can have many personal mail 
-	 */
-
-	private List<String> personnalMail;
-	
-	/**
-	 * This field represent National Student code in case person is a student
-	 * it will be filled with empty string if person is a teacher
-	 */
-
-	private String ine;
-	
-	/**
-	 * This field help to check if person object is active or not
-	 */
-
-	private boolean isActive;
 
 }
