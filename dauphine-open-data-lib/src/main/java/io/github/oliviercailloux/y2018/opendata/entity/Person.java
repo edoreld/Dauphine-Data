@@ -283,11 +283,19 @@ public class Person extends AbstractEntity {
 		this.personnalMail.add(personnalMail);
 	}
 
+	/**
+	 * Return the ine wich is the National Student Identification code in case person is a
+	 * student it will be filled with empty string if person is a teacher
+	 */
 	public String getIne() {
 
 		return ine;
 	}
 
+	/**
+	 * help to modifiy the National Student Identification code in case person is a
+	 * student it will be filled with empty string if person is a teacher
+	 */
 	public void setIne(String ine) {
 
 		this.ine = Strings.nullToEmpty(ine);
