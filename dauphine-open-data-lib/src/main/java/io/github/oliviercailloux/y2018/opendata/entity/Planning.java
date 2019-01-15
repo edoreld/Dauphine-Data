@@ -8,8 +8,7 @@ import java.util.Objects;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -35,20 +34,18 @@ public class Planning extends AbstractEntity {
 	@XmlElement
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(nullable = false)
+	private String name;
+	
+	@ManyToMany
 	private List<Lecture> lectures = new ArrayList<>();
 
-	@OneToOne
-	@JoinColumn(nullable = false)
-	private Person person;
 
 	/**
 	 * Constructor
 	 */
 
-	public Planning (final Person person, final List<Lecture> lecture) {
-		this.person = Objects.requireNonNull(person);
+	public Planning (String name, final List<Lecture> lecture) {
+		this.name = name;
 		this.lectures = Objects.requireNonNull(lecture);
 	}
 
@@ -62,23 +59,21 @@ public class Planning extends AbstractEntity {
 	}
 
 	/**
-	 * Returns this planning's person
+	 * Returns this planning's name
 	 * 
-	 * @return not <code>null</code>
 	 */
-
-	public Person getPerson() {
-		return person;
+	
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * sets this planning's person
+	 * Sets this planning's name
 	 * 
-	 * @param person can't be <code>null</code>
 	 */
-
-	public void setPerson(final Person person) {
-		this.person = Objects.requireNonNull(person);
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
