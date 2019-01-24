@@ -19,7 +19,7 @@ import com.google.common.base.Strings;
  * @author Mohamed EL AMRANI
  */
 @Entity
-public class Lecture implements Serializable {
+public class Lecture extends AbstractEntity {
 
 	
 	private static final long serialVersionUID = -6829937183172871605L;
@@ -31,8 +31,8 @@ public class Lecture implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
-	public long getId() {
+	
+	public Long getId() {
 		return id;
 	}
 
