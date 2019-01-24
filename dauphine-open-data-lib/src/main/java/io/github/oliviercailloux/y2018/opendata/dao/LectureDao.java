@@ -8,7 +8,7 @@ import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 
 
 
-public class LectureDao extends AbstractDao<Lecture> {
+public class LectureDao extends AbstractDao< Lecture > {
 
 	/**
 	 * This constructor expects both managed entity manager.
@@ -57,6 +57,6 @@ public class LectureDao extends AbstractDao<Lecture> {
 	public Lecture merge(Lecture entity) {
 		return entityManager.merge(entity);
 	}
+	
 
-
-}
+	}
