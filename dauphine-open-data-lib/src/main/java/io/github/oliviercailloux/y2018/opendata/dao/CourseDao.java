@@ -10,7 +10,7 @@ import io.github.oliviercailloux.y2018.opendata.entity.Course;
 
 /**
  *
- * @author edoreld
+ * @author Javier Martinez
  *
  */
 public class CourseDao extends AbstractDao<Course> {
@@ -46,9 +46,8 @@ public class CourseDao extends AbstractDao<Course> {
 	 * @since 1.0
 	 */
 	@Override
-	public Course persist(Course entity) throws EntityAlreadyExistsDaoException {
-		if (!entityManager.contains(entity))
-			entityManager.persist(entity);
+	public Course persist(Course entity) {
+		entityManager.persist(entity);
 		return entity;
 	}
 
@@ -64,7 +63,7 @@ public class CourseDao extends AbstractDao<Course> {
 	 * @since 1.0
 	 */
 	@Override
-	public void remove(Long id) throws EntityDoesNotExistDaoException {
+	public void remove(Long id) {
 		Course course = entityManager.find(entityClass, id);
 		if (course != null)
 			entityManager.remove(course);
