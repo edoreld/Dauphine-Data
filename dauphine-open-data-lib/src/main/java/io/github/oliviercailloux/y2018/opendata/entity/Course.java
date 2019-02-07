@@ -1,15 +1,16 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -17,8 +18,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.checkerframework.common.aliasing.qual.Unique;
-
-import com.google.common.base.Preconditions;
 
 /**
  *
@@ -39,20 +38,20 @@ public class Course extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotNull
+	@Column(nullable = false)
 	@XmlElement
 	@Unique
 	private String courseID;
 
-	@NotNull
+	@Column(nullable = false)
 	@XmlElement
 	private String courseName;
 
-	@NotNull
+	@Column(nullable = false)
 	@XmlElement
 	private String courseDescription;
 
-	@NotNull
+	@Column(nullable = false)
 	@XmlElement
 	private String instructionLanguage;
 
@@ -88,8 +87,7 @@ public class Course extends AbstractEntity {
 	 * @param courseID
 	 * @since 1.0
 	 */
-	public void setCourseID(@NotNull String courseID) {
-		Preconditions.checkNotNull(courseID, "courseID");
+	public void setCourseID(String courseID) {
 		this.courseID = courseID;
 	}
 
@@ -107,8 +105,7 @@ public class Course extends AbstractEntity {
 	 * @param courseName
 	 * @since 1.0
 	 */
-	public void setCourseName(@NotNull String courseName) {
-		Preconditions.checkNotNull(courseName, "coursename");
+	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
 
@@ -126,8 +123,7 @@ public class Course extends AbstractEntity {
 	 * @param courseDescription
 	 * @since 1.0
 	 */
-	public void setCourseDescription(@NotNull String courseDescription) {
-		Preconditions.checkNotNull(courseName, "coursedescription");
+	public void setCourseDescription(String courseDescription) {
 		this.courseDescription = courseDescription;
 	}
 
@@ -140,22 +136,28 @@ public class Course extends AbstractEntity {
 	}
 
 	/**
-	 * Sets the list of course parts
+	 * Add a coursePart to the coursePart list
 	 *
-	 * @param coursePartsl
+	 * @param coursepart
+	 * @since 1.0
 	 */
-	public void setCourseParts(Set<CoursePart> courseParts) {
-		this.courseParts = courseParts;
+	public void addCoursePart(CoursePart coursePart) {
+		this.courseParts.add(coursePart);
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	/**
+	 * Remove a coursePart from the coursePart list
+	 *
+	 * @param coursePart
+	 */
+	public void removeCoursePart(CoursePart coursePart) {
+		this.courseParts.remove(coursePart);
 	}
 
 	/**
 	 * Returns the language of the course
 	 *
-	 * @return
+	 * @return instructionLanguage
 	 * @since 1.1
 	 */
 	public String getInstructionLanguage() {
@@ -169,33 +171,17 @@ public class Course extends AbstractEntity {
 	 * @since 1.1
 	 *
 	 */
-	public void setInstructionLanguage(@NotNull String instructionLanguage) {
-		Preconditions.checkNotNull(instructionLanguage, "instructionLanguage");
+	public void setInstructionLanguage(String instructionLanguage) {
 		this.instructionLanguage = instructionLanguage;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (id == null ? 0 : id.hashCode());
-		return result;
+		return Objects.hashCode(this);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Course other = (Course) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+		return Objects.equals(this, obj);
 	}
 }
