@@ -1,16 +1,20 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
 
-import java.util.HashSet;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyEnumerated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -55,10 +59,17 @@ public class Course extends AbstractEntity {
 	@XmlElement
 	private String instructionLanguage;
 
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ElementCollection
+	@CollectionTable(name = "Course_Part")
+	@MapKeyEnumerated(EnumType.STRING)
+	@MapKeyColumn(name = "type", nullable = false)
 	@XmlElementWrapper
 	@XmlElement
-	private Set<CoursePart> courseParts = new HashSet<>();
+	private Map<CoursePart, Integer> volumes = new EnumMap<>(CoursePart.class);
+
+	public enum CoursePart {
+		CM, TP, TD, HOMEWORK, PROFESSTRAINING, TRAININGWEEKS, ALL
+	}
 
 	/**
 	 * Returns the business id of the course
@@ -129,29 +140,30 @@ public class Course extends AbstractEntity {
 
 	/**
 	 *
-	 * @return a list of the parts of the course @
+	 * @return sets the coursePart associated with {@code key} to value
+	 *         {@code value}
 	 */
-	public Set<CoursePart> getCourseParts() {
-		return new HashSet<>(courseParts);
+	public void setCoursePart(CoursePart key, Integer value) {
+		this.volumes.put(key, value);
 	}
 
 	/**
-	 * Add a coursePart to the coursePart list
+	 * Removes the coursepart associated with a {@code key}
 	 *
-	 * @param coursepart
-	 * @since 1.0
+	 * @param key key whose mapping is to be removed from the map
+	 * @return the value previously associated with this key
 	 */
-	public void addCoursePart(CoursePart coursePart) {
-		this.courseParts.add(coursePart);
+	public Integer removeCoursePart(CoursePart key) {
+		return this.volumes.remove(key);
 	}
 
 	/**
-	 * Remove a coursePart from the coursePart list
+	 * Returns a Set view of the mappings contained in this map.
 	 *
-	 * @param coursePart
+	 * @return
 	 */
-	public void removeCoursePart(CoursePart coursePart) {
-		this.courseParts.remove(coursePart);
+	public Set<Map.Entry<CoursePart, Integer>> entrySet() {
+		return this.volumes.entrySet();
 	}
 
 	/**
