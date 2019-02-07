@@ -17,30 +17,32 @@ Le mouvement open data considère que les données bénéficient d’une exposit
 
 Ce projet a pour but de créer une plate-forme qui servira à la mise à disposition de certaines données publiques de Paris-Dauphine. Il visera à mettre également à disposition certaines données non publiques après authentification. Par exemple, un enseignant a droit d’accès aux adresses e-mail des étudiants qui suivent son cours, mais ces données ne sont pas publiques.
 
-## Tasks
+## Cahier des Charges
 
- - Set up Slack.
- - Set and link up Trevis to the project.
- - Set and link up SonarQube to the project.
- - Set up a database for use by the team for all the JPA entity objects.
- - Create a graphical schema of the database.
- - Determine the dependencies between functionalities (i.e : to develop B, we need to do A)
- - Study the existing code to find out which features are already partially or completely implemented.
- - Figure out with the client what tasks to do during the next sprint and then assign them based on preference.
+Il a été décidé de repartir de zéro afin d'éviter de devoir corriger ou découvrir trop de comportements non souhaités.
+Le projet va se décomposer en 2 parties.
 
-##  Planning
+* La lib qui contient les entités et les Dao
+* Le serveur qui contient les servlets et qui dépend de la lib.
 
 ### Itération 1
+* 5 Entités : Person, Course, Lecture, Planning, Triple
+* 1 Dao générique implémentant un CRUD simple.
+* 1 Servlet générique exposant les entités en lecture seule, en Json et XML
+* Un test pour chaque URL exposée via Arquillian
 
- - Course
- - Basics
- - Triple
- - VCal
- - VCard
- - BasicServlets
- - lib
- - Db
+### Itération 2 :
+* Sérialisation de certaines entités sous d'autres formats :
+** Course au format CDM-fr
+** Planning au format VCal
+** Person au format VCard
+* Réalisation d'un client simple pour une démo
+* Récupération des informations dans Dauphine Centrale avec un cache de validité
 
+### Itération 3 :
+* déploiement dans IBM Cloud
+* Interop avec PoleInfo pour exposer une partie de leur API
+* Mise en place du système d'authentification
 
 ## Projected Functionalities
 
