@@ -26,6 +26,11 @@ import com.google.common.base.Preconditions;
 public class ResponseHeaderProvider implements ContainerResponseFilter {
 
 	private static final String DEFAULT_CHARSET = StandardCharsets.UTF_8.name();
+
+	/**
+	 * The application default locale. (Note that it is NOT the one returned by
+	 * {@link Locale#getDefault})
+	 */
 	private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
 	@Context
@@ -58,7 +63,7 @@ public class ResponseHeaderProvider implements ContainerResponseFilter {
 	 * @param responseContext The current response context
 	 */
 	@Override
-	public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) {
+	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
 		response.setLocale(DEFAULT_LOCALE);
 		response.setCharacterEncoding(DEFAULT_CHARSET);
 	}
