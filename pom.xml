@@ -1,81 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>io.github.oliviercailloux.y2017</groupId>
-	<artifactId>dauphine-open-data</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+
+	<groupId>io.github.oliviercailloux.y2018.opendata</groupId>
+	<artifactId>dauphine-open-data-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Dauphine Open Data Parent</name>
+	<description>Open Data project for Dauphine M2 MIAGE SITN</description>
+
+	<modules>
+		<module>dauphine-open-data-lib</module>
+		<module>dauphine-open-data</module>
+	</modules>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<version.wildfly>14.0.1.Final</version.wildfly>
+		<version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
+		<version.plugin.resources>3.1.0</version.plugin.resources>
+		<version.jacoco.plugin>0.8.2</version.jacoco.plugin>
+		<version.slf4j.api>1.7.25</version.slf4j.api>
+		<version.slf4j.log4j12>1.7.25</version.slf4j.log4j12>
+		<version.google.guava>27.0.1-jre</version.google.guava>
+		<version.spring.test>5.1.3.RELEASE</version.spring.test>
+		<version.jee.api>8.0</version.jee.api>
+		<version.junit>4.12</version.junit>
+		<version.arquillian.bom>1.4.0.Final</version.arquillian.bom>
+		<version.arquillian.wildfly>2.1.1.Final</version.arquillian.wildfly>
+		<version.maven.failsafe.plugin>3.0.0-M2</version.maven.failsafe.plugin>
+		<version.tidy>1.1.0</version.tidy>
+		<version.surefire.plugin>2.17</version.surefire.plugin>
+		<path.distrib.wildfly>distrib/wildfly/</path.distrib.wildfly>
+		<path.jboss.home>${path.distrib.wildfly}/wildfly-${version.wildfly}/</path.jboss.home>
+		<wildfly.exec.skip>true</wildfly.exec.skip>
+		<unpack.wildfly.skip>true</unpack.wildfly.skip>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>${version.arquillian.bom}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
-		<!--  jackson for convert Object to JSON-->
+		<!-- arquillian -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.6.3</version>
+			<groupId>org.jboss.shrinkwrap.resolver</groupId>
+			<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-		  <groupId>com.google.code.gson</groupId>
-		  <artifactId>gson</artifactId>
-		  <version>2.8.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>20.0</version>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.1.7</version>
-			<scope>runtime</scope>
+			<groupId>org.wildfly.arquillian</groupId>
+			<artifactId>wildfly-arquillian-container-remote</artifactId>
+			<version>${version.arquillian.wildfly}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j.api}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
-			<scope>provided</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${version.slf4j.log4j12}</version>
 		</dependency>
 
+		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>${version.junit}</version>
 			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-		   <groupId>com.googlecode.ez-vcard</groupId>
-		   <artifactId>ez-vcard</artifactId>
-		   <version>0.10.3</version>
-		</dependency>
-		
-		<dependency>
-		   <groupId>net.sf.biweekly</groupId>
-		   <artifactId>biweekly</artifactId>
-		   <version>0.6.1</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.2.1</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${version.spring.test}</version>
+			<scope>test</scope>
 		</dependency>
+
+		<!-- JEE API -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${version.jee.api}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- utils -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${version.google.guava}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<!-- pom formatter -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>tidy-maven-plugin</artifactId>
+					<version>${version.tidy}</version>
+					<executions>
+						<execution>
+							<id>validate</id>
+							<phase>validate</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
+			<!-- unit tests -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.17</version>
+				<version>${version.surefire.plugin}</version>
+			</plugin>
+
+			<!-- integration tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>${version.maven.failsafe.plugin}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- install wildfly -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-wildfly</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<skip>${unpack.wildfly.skip}</skip>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.wildfly</groupId>
+									<artifactId>wildfly-dist</artifactId>
+									<version>${version.wildfly}</version>
+									<type>zip</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${path.distrib.wildfly}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- start and stop wildfly -->
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
+				<configuration>
+					<jbossHome>${path.jboss.home}</jbossHome>
+					<skip>${wildfly.exec.skip}</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-wildfly</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-wildfly</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>shutdown</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

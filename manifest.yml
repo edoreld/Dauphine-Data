@@ -1,6 +1,0 @@
-applications:
- - name: Dauphine-Open-Data
-   path: target/Dauphine-Open-Data.war
-   instances: 1
-   random-route: true
-
