@@ -58,7 +58,7 @@ public class ResponseHeaderProvider implements ContainerResponseFilter {
 	 * @param responseContext The current response context
 	 */
 	@Override
-	public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) {
+	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
 		response.setLocale(DEFAULT_LOCALE);
 		response.setCharacterEncoding(DEFAULT_CHARSET);
 	}
