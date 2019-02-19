@@ -12,10 +12,4 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("resource")
 public class DauphineOpenDataApp extends Application {
 
-	final ImmutableSet<Class<?>> classes = ImmutableSet.of(ResponseHeaderProvider.class);
-
-	@Override
-	public Set<Class<?>> getClasses() {
-		return classes;
-	}
 }

@@ -89,8 +89,6 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	}
 
 	/**
-
-
 	 * Checks whether the field injection worked.
 	 *
 	 * @throws NullPointerException If a field is null
@@ -148,22 +146,10 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@GET
 	@Path("{id}")
-	public Response get(@PathParam("id") final String id) throws Exception {
-		LOGGER.info("[{}] - finding entity with id [{}] ..", resourceName, id);
-
-		final Optional<Long> parsedIdOpt = tryParseId(id);
-		if (!parsedIdOpt.isPresent()) {
-			return Response.status(Status.BAD_REQUEST).build();
-		}
-		final Long parsedId = parsedIdOpt.get();
-
-		begin();
-		final Optional<E> entityOpt = dao.findOne(parsedId);
 	public Response get(@PathParam("id") Long id) throws Exception {
 		LOGGER.info("[{}] - finding entity with id [{}] ..", resourceName, id);
 		begin();
 		final Optional<E> entityOpt = dao.findOne(id);
-
 		commit();
 		if (entityOpt.isPresent()) {
 			return Response.ok(entityOpt.get()).build();
@@ -182,9 +168,7 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 * @throws DaoException If thrown by {@link Dao#persist(Entity)}
 	 */
 	@POST
-
 	public Response post(E entity) throws Exception {
-
 		LOGGER.info("[{}] - creating entity [{}] ..", resourceName, entity);
 		try {
 			begin();
@@ -214,15 +198,12 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@PUT
 	@Path("{id}")
-
 	public Response put(@PathParam("id") Long id, E entity) throws Exception {
 		LOGGER.info("[{}] - merging entity with id [{}] ..", resourceName, id);
-
 		if (entity.getId() == null) {
 			LOGGER.warn("[{}] - the provided id is null, creation not allowed", resourceName);
 			return Response.status(Status.FORBIDDEN).build();
 		}
-
 
 		if (entity.getId() != id) {
 			LOGGER.warn("[{}] - the provided id [{}] is different than the url one [{}]", resourceName, entity.getId(),
@@ -231,7 +212,6 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 		}
 
 		if (!dao.findOne(id).isPresent()) {
-
 			LOGGER.info("[{}] - entity does not exist", resourceName);
 			return Response.status(Status.NOT_FOUND).build();
 		} else {
