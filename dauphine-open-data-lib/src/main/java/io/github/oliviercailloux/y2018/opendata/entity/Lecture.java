@@ -32,50 +32,43 @@ public class Lecture extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Course (basic information about course (author, type ...)
 	 */
 	@JoinColumn(nullable = false)
-	private Course course = new Course();
+	private Course course ;
 
 	/**
 	 * Date of Lecture 
 	 */
 	@Column(nullable = false)
-	private Date date = new Date();
+	private Date date;
 	/**
 	 * Duration  of Lecture 
 	 */
 	
 	@Column(nullable = false)
-	private int duration = 0;
+	private int duration ;
 
 	/**
 	 * ROOM  defined like A_B042"
 	 */
 	@Column(nullable = false)
-	private String room = "";
+	private String room;
 
 	/**
 	 * Group  defined A5
 	 * A5STI86 Gr01 M2 IF
 	 */
 	@Column(nullable = false)
-	private String group = "";
+	private String group;
 
 	/**
 	 * the teacher responsible for the lecture.
 	 */
 	@JoinColumn(nullable = false)
-	private Person teacher = new Person();
+	private Person teacher;
 
 	public Lecture() {
 	}
@@ -89,6 +82,10 @@ public class Lecture extends AbstractEntity {
 		this.teacher = Objects.requireNonNull(teacher);
 	}
 
+	public Long getId() {
+		return id;
+	} 
+	
 	/**
 	 * Returns this lecture's course.
 	 *
