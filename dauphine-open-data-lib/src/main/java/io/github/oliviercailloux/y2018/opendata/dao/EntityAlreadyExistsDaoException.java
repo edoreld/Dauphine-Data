@@ -7,7 +7,6 @@ public class EntityAlreadyExistsDaoException extends DaoException {
 	public EntityAlreadyExistsDaoException() {
 		super();
 	}
-
 	public EntityAlreadyExistsDaoException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);

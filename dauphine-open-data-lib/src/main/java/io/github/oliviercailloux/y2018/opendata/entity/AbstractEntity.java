@@ -2,6 +2,8 @@ package io.github.oliviercailloux.y2018.opendata.entity;
 
 /**
  * Almost empty implementation of {@link Entity} which provides base
+ * implementation of the methods {@link #toString()}, {@link #equals(Object)}.
+ * and {@link #hashCode()}. <br />
  * implementation of the method {@link #toString()}.<br />
  * This mostly provides a nice flexibility for future features.
  *
@@ -20,5 +22,4 @@ public abstract class AbstractEntity implements Entity {
 
 		return getId().toString();
 	}
-
 }
