@@ -82,28 +82,10 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 * @param resourceName The name of the resource, mostly used for logging
 	 * @param resourcePath The path of the resource, used to build a URL
 	 */
-	public AbstractResource(final String resourceName, final String resourcePath) {
+	public AbstractResource(String resourceName, String resourcePath) {
 		this.resourceName = Preconditions.checkNotNull(resourceName, "resourceName");
 		this.resourcePath = Preconditions.checkNotNull(resourcePath, "resourcePath");
 		// dao and transaction will be set via injection
-	}
-
-	/**
-	 * This setter should not be used and is only for field injection.
-	 *
-	 * @param dao The dao to use
-	 */
-	public void setDao(final D dao) {
-		this.dao = Preconditions.checkNotNull(dao, "dao");
-	}
-
-	/**
-	 * This setter should not be used and is only for field injection.
-	 *
-	 * @param userTransaction The userTransaction to use
-	 */
-	public void setDao(final UserTransaction userTransaction) {
-		this.userTransaction = Preconditions.checkNotNull(userTransaction, "userTransaction");
 	}
 
 	/**
@@ -131,29 +113,13 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	}
 
 	/**
-	 * Tries to parse the id as a long and catches any thrown
-	 * {@link NumberFormatException}.
-	 *
-	 * @param id The id to parse
-	 * @return {@code Optional.empty()} if the exception was thrown
-	 */
-	protected Optional<Long> tryParseId(final String id) {
-		try {
-			return Optional.of(Long.parseLong(id));
-		} catch (final NumberFormatException e) {
-			LOGGER.info("[{}] - id [{}] cannot  be parsed..", resourceName, id, e);
-			return Optional.empty();
-		}
-	}
-
-	/**
 	 * Makes a 201 - Created response with the location of the resource.<br />
 	 * The location is the following : /<tt>resourcePath</tt>/<tt>id</tt>.
 	 *
 	 * @param id The id of the created resource
 	 * @return The created response
 	 */
-	protected Response makeCreatedResponse(final Long id) {
+	protected Response makeCreatedResponse(Long id) {
 		return Response.created(URI.create("/" + resourcePath + "/" + id)).build();
 	}
 
@@ -180,17 +146,10 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@GET
 	@Path("{id}")
-	public Response get(@PathParam("id") final String id) throws Exception {
+	public Response get(@PathParam("id") Long id) throws Exception {
 		LOGGER.info("[{}] - finding entity with id [{}] ..", resourceName, id);
-
-		final Optional<Long> parsedIdOpt = tryParseId(id);
-		if (!parsedIdOpt.isPresent()) {
-			return Response.status(Status.BAD_REQUEST).build();
-		}
-		final Long parsedId = parsedIdOpt.get();
-
 		begin();
-		final Optional<E> entityOpt = dao.findOne(parsedId);
+		final Optional<E> entityOpt = dao.findOne(id);
 		commit();
 		if (entityOpt.isPresent()) {
 			return Response.ok(entityOpt.get()).build();
@@ -209,7 +168,7 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 * @throws DaoException If thrown by {@link Dao#persist(Entity)}
 	 */
 	@POST
-	public Response post(final E entity) throws Exception {
+	public Response post(E entity) throws Exception {
 		LOGGER.info("[{}] - creating entity [{}] ..", resourceName, entity);
 		try {
 			begin();
@@ -239,26 +198,20 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@PUT
 	@Path("{id}")
-	public Response put(@PathParam("id") final String id, final E entity) throws Exception {
+	public Response put(@PathParam("id") Long id, E entity) throws Exception {
 		LOGGER.info("[{}] - merging entity with id [{}] ..", resourceName, id);
-		final Optional<Long> parsedIdOpt = tryParseId(id);
-		if (!parsedIdOpt.isPresent()) {
-			return Response.status(Status.BAD_REQUEST).build();
-		}
-		final long parsedId = parsedIdOpt.get();
-
 		if (entity.getId() == null) {
 			LOGGER.warn("[{}] - the provided id is null, creation not allowed", resourceName);
 			return Response.status(Status.FORBIDDEN).build();
 		}
 
-		if (entity.getId() != parsedId) {
+		if (entity.getId() != id) {
 			LOGGER.warn("[{}] - the provided id [{}] is different than the url one [{}]", resourceName, entity.getId(),
-					parsedId);
+					id);
 			return Response.status(Status.FORBIDDEN).build();
 		}
 
-		if (!dao.findOne(parsedId).isPresent()) {
+		if (!dao.findOne(id).isPresent()) {
 			LOGGER.info("[{}] - entity does not exist", resourceName);
 			return Response.status(Status.NOT_FOUND).build();
 		} else {
@@ -281,17 +234,11 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@DELETE
 	@Path("{id}")
-	public Response delete(@PathParam("id") final String id) throws Exception {
+	public Response delete(@PathParam("id") Long id) throws Exception {
 		LOGGER.info("[{}] - removing entity with id [{}] ..", resourceName, id);
-		final Optional<Long> parsedIdOpt = tryParseId(id);
-		if (!parsedIdOpt.isPresent()) {
-			return Response.status(Status.BAD_REQUEST).build();
-		}
-		final Long parsedId = parsedIdOpt.get();
-
 		try {
 			begin();
-			dao.remove(parsedId);
+			dao.remove(id);
 			commit();
 			return Response.noContent().build();
 		} catch (final EntityDoesNotExistDaoException e) {
