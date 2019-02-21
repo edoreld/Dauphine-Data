@@ -7,21 +7,20 @@ public class EntityAlreadyExistsDaoException extends DaoException {
 	public EntityAlreadyExistsDaoException() {
 		super();
 	}
-
-	public EntityAlreadyExistsDaoException(final String message, final Throwable cause, final boolean enableSuppression,
-			final boolean writableStackTrace) {
+	public EntityAlreadyExistsDaoException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
-	public EntityAlreadyExistsDaoException(final String message, final Throwable cause) {
+	public EntityAlreadyExistsDaoException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public EntityAlreadyExistsDaoException(final String message) {
+	public EntityAlreadyExistsDaoException(String message) {
 		super(message);
 	}
 
-	public EntityAlreadyExistsDaoException(final Throwable cause) {
+	public EntityAlreadyExistsDaoException(Throwable cause) {
 		super(cause);
 	}
 
