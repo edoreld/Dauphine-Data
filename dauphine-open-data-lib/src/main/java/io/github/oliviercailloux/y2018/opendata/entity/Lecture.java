@@ -198,3 +198,5 @@ public class Lecture extends AbstractEntity {
 	}
 
 }
+
+
