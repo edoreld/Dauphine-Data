@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Preconditions;
 
 import io.github.oliviercailloux.y2018.opendata.dao.Dao;
+import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
 import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoException;
 import io.github.oliviercailloux.y2018.opendata.dao.EntityDoesNotExistDaoException;
 import io.github.oliviercailloux.y2018.opendata.entity.Entity;
-
 
 /**
  * Provides a base implementation for a JAX-RS resource class with a RESTful
