@@ -48,8 +48,8 @@ public abstract class AbstractDao<E extends Entity> implements Dao<E> {
 	 */
 	public AbstractDao(final EntityManager entityManager, final Class<E> entityClass, final String entityName) {
 		this.entityManager = Preconditions.checkNotNull(entityManager, "entityManager");
-		this.entityClass = Preconditions.checkNotNull(entityClass, "entityClass");
-		this.entityName = Preconditions.checkNotNull(entityName, "entityName");
+		this.entityClass   = Preconditions.checkNotNull(entityClass, "entityClass");
+		this.entityName    = Preconditions.checkNotNull(entityName, "entityName");
 	}
 
 	@Override
