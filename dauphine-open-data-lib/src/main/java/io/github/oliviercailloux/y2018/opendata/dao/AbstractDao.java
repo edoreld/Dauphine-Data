@@ -46,7 +46,7 @@ public abstract class AbstractDao<E extends Entity> implements Dao<E> {
 	 * @param entityName    The name of entity, should match with the table name
 	 *                      since it is used to build SQL query
 	 */
-	public AbstractDao(final EntityManager entityManager, final Class<E> entityClass, final String entityName) {
+	public AbstractDao(EntityManager entityManager, Class<E> entityClass, String entityName) {
 		this.entityManager = Preconditions.checkNotNull(entityManager, "entityManager");
 		this.entityClass   = Preconditions.checkNotNull(entityClass, "entityClass");
 		this.entityName    = Preconditions.checkNotNull(entityName, "entityName");

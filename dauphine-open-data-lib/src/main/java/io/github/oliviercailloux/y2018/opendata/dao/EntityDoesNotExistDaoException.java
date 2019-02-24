@@ -8,20 +8,20 @@ public class EntityDoesNotExistDaoException extends DaoException {
 		super();
 	}
 
-	public EntityDoesNotExistDaoException(final String message, final Throwable cause, final boolean enableSuppression,
-			final boolean writableStackTrace) {
+	public EntityDoesNotExistDaoException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
-	public EntityDoesNotExistDaoException(final String message, final Throwable cause) {
+	public EntityDoesNotExistDaoException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public EntityDoesNotExistDaoException(final String message) {
+	public EntityDoesNotExistDaoException(String message) {
 		super(message);
 	}
 
-	public EntityDoesNotExistDaoException(final Throwable cause) {
+	public EntityDoesNotExistDaoException(Throwable cause) {
 		super(cause);
 	}
 
