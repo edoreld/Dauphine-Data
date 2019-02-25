@@ -53,14 +53,8 @@ public class Person extends AbstractEntity {
 	 */
 	private String ine;
 
-	/**
-	 * This represent teacher's office when person is teacher
-	 */
 	private String office;
 
-	/**
-	 * This represent the phone number of the person
-	 */
 	private String phoneNumer;
 
 	/**
@@ -75,20 +69,20 @@ public class Person extends AbstractEntity {
 	private String fax;
 
 	/**
-	 * this field represent the personnal mail of the person.a person can have many
+	 * this field represent the personal mail of the person.a person can have many
 	 * personal mail
 	 */
 	@Column(nullable = false)
 	@ElementCollection
-	@CollectionTable(name = "personnalMail")
-	private List<String> personnalMail;
+	@CollectionTable(name = "Personal_Mail_table")
+	private List<String> personalMail;
 
 	/**
 	 * a person in this context have mandatory dauphine mail so it can't be empty
 	 */
 	@Column(nullable = false)
 	@ElementCollection
-	@CollectionTable(name = "dauphineMail")
+	@CollectionTable(name = "dauphine_Mail_table")
 	private List<String> dauphineMail;
 
 	/**
@@ -96,7 +90,7 @@ public class Person extends AbstractEntity {
 	 */
 	@Column(nullable = false)
 	@ElementCollection
-	@CollectionTable(name = "memberShip")
+	@CollectionTable(name = "memberShip_table")
 	private List<String> memberShip;
 
 	/**
@@ -112,7 +106,7 @@ public class Person extends AbstractEntity {
 
 	public Person() {
 		super();
-		personnalMail = new ArrayList<String>();
+		personalMail = new ArrayList<String>();
 		dauphineMail = new ArrayList<String>();
 	}
 
@@ -224,18 +218,18 @@ public class Person extends AbstractEntity {
 		this.fax = Strings.nullToEmpty(fax);
 	}
 
-	public List<String> getPersonnalMail() {
+	public List<String> getPersonalMail() {
 
-		return Collections.unmodifiableList(personnalMail);
+		return Collections.unmodifiableList(personalMail);
 	}
 
 	/**
 	 * 
 	 * @param personnalMail is mandatory field
 	 */
-	public void addPersonnalMail(@NotNull String personnalMail) {
+	public void addPersonalMail(@NotNull String personalMail) {
 
-		this.personnalMail.add(personnalMail);
+		this.personalMail.add(personalMail);
 	}
 
 	public String getIne() {
