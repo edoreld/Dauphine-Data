@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,9 @@ public class Planning extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@XmlElement
 	private Long id;
-
+	
+	@Column(nullable = false)
+	@XmlElement
 	private String name;
 	
 	@ManyToMany

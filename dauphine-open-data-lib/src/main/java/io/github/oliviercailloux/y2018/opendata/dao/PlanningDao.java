@@ -51,9 +51,8 @@ public class PlanningDao extends AbstractDao<Planning>  {
 	 */
 
 	@Override
-	public Planning persist(Planning entity) throws EntityAlreadyExistsDaoException {
-		if(!entityManager.contains(entity)) 
-			entityManager.persist(entity);	
+	public Planning persist(Planning entity) {
+		entityManager.persist(entity);	
 		return entity;
 	}
 
@@ -62,7 +61,7 @@ public class PlanningDao extends AbstractDao<Planning>  {
 	 */
 
 	@Override
-	public Planning merge(Planning entity) {
+	public Planning merge(Planning entity){
 		return entityManager.merge(entity);
 	}
 
@@ -71,7 +70,7 @@ public class PlanningDao extends AbstractDao<Planning>  {
 	 */
 
 	@Override
-	public void remove(Long id) throws EntityDoesNotExistDaoException {
+	public void remove(Long id){
 		Planning planning = entityManager.find(entityClass, id);
 		if(planning != null) 
 			entityManager.remove(planning);	
