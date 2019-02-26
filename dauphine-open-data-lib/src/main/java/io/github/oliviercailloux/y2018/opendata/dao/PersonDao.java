@@ -27,7 +27,6 @@ public class PersonDao extends AbstractDao<Person> {
 	 * This method help to find all records of person saved in DB
 	 */
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> findAll() {
 
