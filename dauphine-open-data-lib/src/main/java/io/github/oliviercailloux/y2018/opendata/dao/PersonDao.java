@@ -30,7 +30,7 @@ public class PersonDao extends AbstractDao<Person> {
 	@Override
 	public List<Person> findAll() {
 
-		Query query = entityManager.createQuery("SELECT e FROM Person e");
+		Query query = entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e");
 		return query.getResultList();
 	}
 
