@@ -205,7 +205,7 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 			return Response.status(Status.FORBIDDEN).build();
 		}
 
-		if (entity.getId() != id) {
+		if (!id.equals(entity.getId())) {
 			LOGGER.warn("[{}] - the provided id [{}] is different than the url one [{}]", resourceName, entity.getId(),
 					id);
 			return Response.status(Status.FORBIDDEN).build();
