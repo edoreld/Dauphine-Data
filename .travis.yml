@@ -8,7 +8,7 @@ addons:
     organization: edoreld-github
     token: "$SONAR_TOKEN"
 script:
-- mvn -Dsonar.projectKey=edoreld_Dauphine-Open-Data -Dsonar.organization=edoreld-github -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=$SONAR_TOKEN clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+- mvn -Dsonar.projectKey=edoreld_Dauphine-Open-Data -Dsonar.organization=edoreld-github -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=$SONAR_TOKEN clean install sonar:sonar
 cache:
   directories:
   - "$HOME/.m2"
