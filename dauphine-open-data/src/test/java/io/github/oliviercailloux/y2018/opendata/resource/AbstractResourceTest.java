@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.UserTransaction;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.Response;
 
@@ -47,16 +46,12 @@ public class AbstractResourceTest {
 	@Mock
 	private Dao<FakeEntity> dao;
 
-	@Mock
-	private UserTransaction userTransaction;
-
 	private final AbstractResource<FakeEntity, Dao<FakeEntity>> resource = new AbstractResource<>("FakeEntity",
 			"fakeEntity");
 
 	@Before
 	public void before() {
 		ReflectionTestUtils.setField(resource, "dao", dao);
-		ReflectionTestUtils.setField(resource, "userTransaction", userTransaction);
 	}
 
 	private FakeEntity makeFakeEntity() {
@@ -76,7 +71,6 @@ public class AbstractResourceTest {
 	public void testCheckFieldInitialized() {
 		resource.checkFieldInitialized();
 		assertNotNull(ReflectionTestUtils.getField(resource, "dao"));
-		assertNotNull(ReflectionTestUtils.getField(resource, "userTransaction"));
 	}
 
 	@Test
