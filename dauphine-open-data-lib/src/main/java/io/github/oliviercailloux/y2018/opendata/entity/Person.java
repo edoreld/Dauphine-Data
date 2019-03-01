@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+
 import com.google.common.base.Strings;
 
 /**
@@ -22,12 +23,12 @@ import com.google.common.base.Strings;
  * null string All our method get for a List are protected from unsafe
  * modification we handle the adding of null value in a list by making mandatory
  * parameter of method modifying a list <br />
- * 
+ *
  * @author Gandi Taric
  */
 
 @Entity
-public class Person extends AbstractEntity {
+public class Person implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
 	private static final long serialVersionUID = -4768931293875213592L;
 
@@ -75,7 +76,7 @@ public class Person extends AbstractEntity {
 	@Column(nullable = false)
 	@ElementCollection
 	@CollectionTable(name = "Personal_Mail_table")
-	private List<String> personalMail;
+	private final List<String> personalMail;
 
 	/**
 	 * a person in this context have mandatory dauphine mail so it can't be empty
@@ -83,7 +84,7 @@ public class Person extends AbstractEntity {
 	@Column(nullable = false)
 	@ElementCollection
 	@CollectionTable(name = "dauphine_Mail_table")
-	private List<String> dauphineMail;
+	private final List<String> dauphineMail;
 
 	/**
 	 * This field is madatory and help to know the membership group
@@ -106,8 +107,8 @@ public class Person extends AbstractEntity {
 
 	public Person() {
 		super();
-		personalMail = new ArrayList<String>();
-		dauphineMail = new ArrayList<String>();
+		personalMail = new ArrayList<>();
+		dauphineMail = new ArrayList<>();
 	}
 
 	@Override
@@ -121,8 +122,8 @@ public class Person extends AbstractEntity {
 	}
 
 	/**
-	 * 
-	 * @param is firstName  of a given person
+	 *
+	 * @param is firstName of a given person
 	 */
 	public void setFirstName(@NotNull String firstName) {
 
@@ -175,8 +176,9 @@ public class Person extends AbstractEntity {
 	 * @param is name of an office
 	 */
 	public void setOffice(String office) {
-		if (isStudent == false)
+		if (isStudent == false) {
 			this.office = Strings.nullToEmpty(office);
+		}
 	}
 
 	public String getPhoneNumer() {
@@ -186,7 +188,7 @@ public class Person extends AbstractEntity {
 
 	/**
 	 * @param is a phoneNumer of a given person
-	 * 
+	 *
 	 */
 	public void setPhoneNumer(String phoneNumer) {
 
@@ -199,8 +201,8 @@ public class Person extends AbstractEntity {
 	}
 
 	/**
-	 * 
-	 * @param is a name of training 
+	 *
+	 * @param is a name of training
 	 */
 	public void setTraining(String training) {
 
@@ -224,7 +226,7 @@ public class Person extends AbstractEntity {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param personnalMail is mandatory field
 	 */
 	public void addPersonalMail(@NotNull String personalMail) {
@@ -238,8 +240,9 @@ public class Person extends AbstractEntity {
 	}
 
 	public void setIne(String ine) {
-		if (isStudent)
+		if (isStudent) {
 			this.ine = Strings.nullToEmpty(ine);
+		}
 	}
 
 	public boolean isActive() {

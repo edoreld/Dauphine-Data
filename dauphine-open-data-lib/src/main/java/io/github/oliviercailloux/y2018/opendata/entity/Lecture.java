@@ -1,20 +1,19 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
-import java.util.Optional;
+
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+
 import com.google.common.base.Strings;
 
 @Entity
-public class Lecture extends AbstractEntity {
+public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
 	private static final long serialVersionUID = -6829937183172871605L;
 
@@ -35,10 +34,10 @@ public class Lecture extends AbstractEntity {
 	 * Date of Lecture
 	 */
 	private Instant date;
-	
-    /**
-     * Date of dur	ation measured in minutes
-     */
+
+	/**
+	 * Date of dur ation measured in minutes
+	 */
 	@Column(nullable = false)
 	private int duration;
 
@@ -65,6 +64,7 @@ public class Lecture extends AbstractEntity {
 		this.teacher = Objects.requireNonNull(teacher);
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}

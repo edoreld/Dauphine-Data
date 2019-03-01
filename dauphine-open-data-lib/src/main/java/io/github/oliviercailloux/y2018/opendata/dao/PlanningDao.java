@@ -2,7 +2,11 @@ package io.github.oliviercailloux.y2018.opendata.dao;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import io.github.oliviercailloux.y2018.opendata.entity.Planning;
 
@@ -10,18 +14,12 @@ import io.github.oliviercailloux.y2018.opendata.entity.Planning;
  * @author elhadj diallo
  *
  */
+@Transactional
+@RequestScoped
+public class PlanningDao implements Dao<Planning> {
 
-public class PlanningDao extends AbstractDao<Planning>  {
-	
-	/**
-	 * This contructor expects both managed entity manager
-	 * 
-	 * @param entityManager a managed entity manager
-	 */
-
-	public PlanningDao (final EntityManager entityManager) {
-		super(entityManager, Planning.class, "Planning");
-	}
+	@PersistenceContext
+	protected EntityManager entityManager;
 
 	/**
 	 * The method allows to find the schedules recorded in the database
@@ -29,7 +27,7 @@ public class PlanningDao extends AbstractDao<Planning>  {
 
 	@Override
 	public List<Planning> findAll() {
-		return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass).getResultList();
+		return entityManager.createQuery("SELECT e FROM S e", Planning.class).getResultList();
 	}
 
 	/**
@@ -38,7 +36,7 @@ public class PlanningDao extends AbstractDao<Planning>  {
 
 	@Override
 	public Optional<Planning> findOne(Long id) {
-		return Optional.of(entityManager.find(entityClass, id));
+		return Optional.of(entityManager.find(Planning.class, id));
 
 	}
 
@@ -48,7 +46,7 @@ public class PlanningDao extends AbstractDao<Planning>  {
 
 	@Override
 	public Planning persist(Planning entity) throws EntityAlreadyExistsDaoException {
-		entityManager.persist(entity);	
+		entityManager.persist(entity);
 		return entity;
 	}
 
@@ -57,7 +55,7 @@ public class PlanningDao extends AbstractDao<Planning>  {
 	 */
 
 	@Override
-	public Planning merge(Planning entity){
+	public Planning merge(Planning entity) {
 		return entityManager.merge(entity);
 	}
 
@@ -67,9 +65,15 @@ public class PlanningDao extends AbstractDao<Planning>  {
 
 	@Override
 	public void remove(Long id) throws EntityDoesNotExistDaoException {
-		Planning planning = entityManager.find(entityClass, id);
-		if(planning != null) 
-			entityManager.remove(planning);	
+		final Planning planning = entityManager.find(Planning.class, id);
+		if (planning != null) {
+			entityManager.remove(planning);
+		}
+	}
+
+	@Override
+	public void flush() {
+		entityManager.flush();
 	}
 
 }

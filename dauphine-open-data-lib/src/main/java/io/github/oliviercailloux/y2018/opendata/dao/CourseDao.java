@@ -16,8 +16,9 @@ import io.github.oliviercailloux.y2018.opendata.entity.Course;
  * @author Javier Martinez
  *
  */
+@Transactional
 @RequestScoped
-public class CourseDao extends AbstractDao<Course> {
+public class CourseDao implements Dao<Course> {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
