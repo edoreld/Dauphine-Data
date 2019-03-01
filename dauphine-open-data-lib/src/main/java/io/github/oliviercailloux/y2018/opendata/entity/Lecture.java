@@ -1,12 +1,9 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
-import java.util.Date;
-import java.io.Serializable;
+
 import java.util.Date;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,16 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import com.google.common.base.Strings;
+
 /**
- *  Implementation of the class lecture with methods of manipulation of attributes   
+ * Implementation of the class lecture with methods of manipulation of
+ * attributes
+ *
  * @author Mohamed EL AMRANI
  */
 @Entity
-public class Lecture extends AbstractEntity {
+public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
-	
 	private static final long serialVersionUID = -6829937183172871605L;
-	
 
 	/**
 	 * The id Lecture Not <code>null</code>.
@@ -31,7 +29,8 @@ public class Lecture extends AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -47,26 +46,25 @@ public class Lecture extends AbstractEntity {
 	private Course course = new Course();
 
 	/**
-	 * Date of Lecture 
+	 * Date of Lecture
 	 */
 	@Column(nullable = false)
 	private Date date = new Date();
 	/**
-	 * Duration  of Lecture 
+	 * Duration of Lecture
 	 */
-	
+
 	@Column(nullable = false)
 	private int duration = 0;
 
 	/**
-	 * ROOM  defined like A_B042"
+	 * ROOM defined like A_B042"
 	 */
 	@Column(nullable = false)
 	private String room = "";
 
 	/**
-	 * Group  defined A5
-	 * A5STI86 Gr01 M2 IF
+	 * Group defined A5 A5STI86 Gr01 M2 IF
 	 */
 	@Column(nullable = false)
 	private String group = "";
@@ -124,7 +122,7 @@ public class Lecture extends AbstractEntity {
 	public void setDate(Date date) {
 		this.date = Objects.requireNonNull(date);
 	}
-	
+
 	/**
 	 * Returns this lecture's duration.
 	 *
@@ -198,5 +196,3 @@ public class Lecture extends AbstractEntity {
 	}
 
 }
-
-

@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 
 @RequestScoped
-public class LectureDao extends AbstractDao<Lecture> {
+public class LectureDao implements Dao<Lecture> {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
