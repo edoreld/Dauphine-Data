@@ -6,12 +6,6 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -63,9 +57,6 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	@Inject
 	protected D dao;
 
-	@Inject
-	protected UserTransaction userTransaction;
-
 	/**
 	 * The name of the resource, mostly used for logging.
 	 */
@@ -96,20 +87,6 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	@PostConstruct
 	public void checkFieldInitialized() {
 		Preconditions.checkNotNull(dao, "dao");
-		Preconditions.checkNotNull(userTransaction, "userTransaction");
-	}
-
-	protected void begin() throws NotSupportedException, SystemException {
-		userTransaction.begin();
-	}
-
-	protected void commit() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException,
-			HeuristicRollbackException, SystemException {
-		userTransaction.commit();
-	}
-
-	protected void rollback() throws IllegalStateException, SecurityException, SystemException {
-		userTransaction.rollback();
 	}
 
 	/**
@@ -137,20 +114,17 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 
 	/**
 	 * Returns the element of the current resource with the given id.<br />
-	 * - BAD_REQUEST if the id cannot be parsed as a long.<br />
 	 * - NOT_FOUND if the element does not exist.
 	 *
 	 * @param id The id of the element
-	 * @return Either a BAD_REQUEST, NOT_FOUND or OK response
+	 * @return NOT_FOUND or OK response
 	 * @throws DaoException If thrown by {@link Dao#findOne(Long)}
 	 */
 	@GET
 	@Path("{id}")
-	public Response get(@PathParam("id") Long id) throws Exception {
+	public Response get(@PathParam("id") Long id) {
 		LOGGER.info("[{}] - finding entity with id [{}] ..", resourceName, id);
-		begin();
 		final Optional<E> entityOpt = dao.findOne(id);
-		commit();
 		if (entityOpt.isPresent()) {
 			return Response.ok(entityOpt.get()).build();
 		} else {
@@ -168,23 +142,19 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 * @throws DaoException If thrown by {@link Dao#persist(Entity)}
 	 */
 	@POST
-	public Response post(E entity) throws Exception {
+	public Response post(E entity) {
 		LOGGER.info("[{}] - creating entity [{}] ..", resourceName, entity);
 		try {
-			begin();
 			final E persistedEntity = dao.persist(entity);
-			commit();
 			return makeCreatedResponse(persistedEntity.getId());
 		} catch (final EntityAlreadyExistsDaoException e) {
 			LOGGER.info("[{}] - entity [{}] already exist ..", resourceName, entity, e);
-			rollback();
 			return Response.status(Status.CONFLICT).entity("entity already exists").build();
 		}
 	}
 
 	/**
 	 * Creates or updates the given element of the given id.<br />
-	 * - BAD_REQUEST if the id cannot be parsed as a long.<br />
 	 * - FORBIDDEN if the given element has a different id than the given one.<br />
 	 * - CREATED if the creation was successful. Note that a different id may be
 	 * used for the creation.<br />
@@ -192,13 +162,13 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 *
 	 * @param id     The id of the resource to update
 	 * @param entity The element to create or merge
-	 * @return Either a BAD_REQUEST, FORBIDDEN, CREATED or NO_CONTENT response
+	 * @return Either a FORBIDDEN, CREATED or NO_CONTENT response
 	 * @throws DaoException If thrown by wither {@link Dao#findOne(Long)} or
 	 *                      {@link Dao#merge(Entity)}
 	 */
 	@PUT
 	@Path("{id}")
-	public Response put(@PathParam("id") Long id, E entity) throws Exception {
+	public Response put(@PathParam("id") Long id, E entity) {
 		LOGGER.info("[{}] - merging entity with id [{}] ..", resourceName, id);
 		if (entity.getId() == null) {
 			LOGGER.warn("[{}] - the provided id is null, creation not allowed", resourceName);
@@ -215,16 +185,13 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 			LOGGER.info("[{}] - entity does not exist", resourceName);
 			return Response.status(Status.NOT_FOUND).build();
 		} else {
-			begin();
 			dao.merge(entity);
-			commit();
 			return Response.noContent().build();
 		}
 	}
 
 	/**
 	 * Deletes the element with the given id.<br />
-	 * - BAD_REQUEST if the id cannot be parsed as a long.<br />
 	 * - NOT_FOUND if the element does not exist.<br />
 	 * - NO_CONTENT if the deletion was successful.<br />
 	 *
@@ -234,16 +201,13 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@DELETE
 	@Path("{id}")
-	public Response delete(@PathParam("id") Long id) throws Exception {
+	public Response delete(@PathParam("id") Long id) {
 		LOGGER.info("[{}] - removing entity with id [{}] ..", resourceName, id);
 		try {
-			begin();
 			dao.remove(id);
-			commit();
 			return Response.noContent().build();
 		} catch (final EntityDoesNotExistDaoException e) {
 			LOGGER.info("[{}] - removal failed, entity [{}] does not exist", resourceName, id, e);
-			rollback();
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}

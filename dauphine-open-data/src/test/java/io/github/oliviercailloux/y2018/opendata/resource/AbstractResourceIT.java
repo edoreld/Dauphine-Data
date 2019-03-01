@@ -6,6 +6,9 @@ import static org.junit.Assert.assertFalse;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
@@ -14,12 +17,6 @@ import java.util.Scanner;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
@@ -33,6 +30,7 @@ import javax.ws.rs.core.Response.Status;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -46,13 +44,13 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	protected static final Random RAND = new Random(1L);
 	protected static final String WAR_NAME = "resource-it-war";
-	protected static final String BASE_URL = "http://localhost:8080/" + WAR_NAME + "/resource/";
 
 	@Inject
-	private UserTransaction userTransaction;
+	private URL url;
+	private URI uri;
+
 	protected final Client client;
 	protected final String resourcePath;
-	protected D dao;
 
 	public AbstractResourceIT(final Client client, final String resourcePath) {
 		this.client = Preconditions.checkNotNull(client);
@@ -63,8 +61,12 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		this(ResteasyClientBuilder.newClient(), resourcePath);
 	}
 
-	public void setDao(final D dao) {
-		this.dao = Preconditions.checkNotNull(dao);
+	protected abstract D getDao();
+
+	@Before
+	public void before() throws URISyntaxException {
+		Preconditions.checkNotNull("url", url);
+		this.uri = url.toURI();
 	}
 
 	@After
@@ -78,21 +80,8 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	protected abstract GenericType<List<E>> getEntitiesType();
 
-	protected final void begin() throws NotSupportedException, SystemException {
-		userTransaction.begin();
-	}
-
-	protected final void commit() throws SecurityException, IllegalStateException, RollbackException,
-			HeuristicMixedException, HeuristicRollbackException, SystemException {
-		userTransaction.commit();
-	}
-
-	protected final void rollback() throws IllegalStateException, SecurityException, SystemException {
-		userTransaction.rollback();
-	}
-
 	protected WebTarget getWebTarget() {
-		return client.target(BASE_URL);
+		return client.target(uri);
 	}
 
 	protected WebTarget getResourceWebTarget() {
@@ -221,14 +210,11 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	@Test
 	public void testGet() throws Exception {
-		begin();
-		dao.persist(makeEntity());
-		commit();
-		final List<E> entities = dao.findAll();
+		getDao().persist(makeEntity());
+		final List<E> entities = getDao().findAll();
 		final Response response = acceptJsonUTF8English().get();
 		assertStatusIsOk(response);
 		assertContentTypeIsJsonUTF8(response);
-
 		response.bufferEntity();
 		final GenericType<List<E>> entitiesType = getEntitiesType();
 		final List<E> receivedEntities = response.readEntity(entitiesType);
@@ -238,9 +224,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	@Test
 	public void testGetId() throws Exception {
 		final E c = makeEntity();
-		begin();
-		final E persistedEntity = dao.persist(c);
-		commit();
+		final E persistedEntity = getDao().persist(c);
 		final Response response = acceptJsonUTF8English(persistedEntity.getId().toString()).get();
 		assertStatusIsOk(response);
 		assertContentTypeIsJsonUTF8(response);
@@ -262,9 +246,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	@Test
 	public void testPostAlreadyExists() throws Exception {
 		final E c = makeEntity();
-		begin();
-		final E persistedEntity = dao.persist(c);
-		commit();
+		final E persistedEntity = getDao().persist(c);
 		final Response response = acceptJsonUTF8English().post(Entity.json(persistedEntity));
 		assertStatusCodeIs(Status.CONFLICT.getStatusCode(), response);
 	}
@@ -272,9 +254,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	@Test
 	public void testPutIdsDifferent() throws Exception {
 		final E c = makeEntity();
-		begin();
-		final E persistedEntity = dao.persist(c);
-		commit();
+		final E persistedEntity = getDao().persist(c);
 		final Response response = acceptJsonUTF8English(c.getId().toString() + 1).put(Entity.json(persistedEntity));
 		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), response);
 	}
@@ -298,9 +278,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	@Test
 	public void testPutMerge() throws Exception {
 		final E c = makeEntity();
-		begin();
-		final E persistedEntity = dao.persist(c);
-		commit();
+		final E persistedEntity = getDao().persist(c);
 		final Response response = acceptJsonUTF8English(c.getId().toString()).put(Entity.json(persistedEntity));
 		assertStatusIsNoContent(response);
 	}
@@ -308,12 +286,10 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	@Test
 	public void testDelete() throws Exception {
 		final E c = makeEntity();
-		begin();
-		final E persistedEntity = dao.persist(c);
-		commit();
+		final E persistedEntity = getDao().persist(c);
 		final Response response = acceptJsonUTF8English(persistedEntity.getId().toString()).delete();
 		assertStatusIsNoContent(response);
-		assertFalse("entity was not removed", dao.findOne(persistedEntity.getId()).isPresent());
+		assertFalse("entity was not removed", getDao().findOne(persistedEntity.getId()).isPresent());
 	}
 
 	@Test
