@@ -3,8 +3,11 @@ package io.github.oliviercailloux.y2018.opendata.dao;
 import java.util.List;
 import java.util.Optional;
 
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import io.github.oliviercailloux.y2018.opendata.entity.Course;
 
@@ -13,59 +16,50 @@ import io.github.oliviercailloux.y2018.opendata.entity.Course;
  * @author Javier Martinez
  *
  */
+@RequestScoped
 public class CourseDao extends AbstractDao<Course> {
 
-	/**
-	 * This constructor expects both managed entity manager.
-	 *
-	 * @param entityManager A managed entity manager
-	 */
-	public CourseDao(final EntityManager entityManager) {
-		super(entityManager, Course.class, "Course");
-	}
+	@PersistenceContext
+	protected EntityManager entityManager;
 
-	/**
-	 * @since 1.0
-	 */
-	@SuppressWarnings("unchecked")
+	@Transactional
 	@Override
 	public List<Course> findAll() {
-		Query query = entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e");
+		final Query query = entityManager.createQuery("SELECT c FROM Course c");
 		return query.getResultList();
 	}
 
-	/**
-	 * @since 1.0
-	 */
+	@Transactional
 	@Override
 	public Optional<Course> findOne(Long id) {
-		return Optional.of(entityManager.find(entityClass, id));
+		return Optional.of(entityManager.find(Course.class, id));
 	}
 
-	/**
-	 * @since 1.0
-	 */
+	@Transactional
 	@Override
 	public Course persist(Course entity) {
 		entityManager.persist(entity);
 		return entity;
 	}
 
-	/**
-	 * @since 1.0
-	 */
+	@Transactional
 	@Override
 	public Course merge(Course entity) {
 		return entityManager.merge(entity);
 	}
 
-	/**
-	 * @since 1.0
-	 */
+	@Transactional
 	@Override
 	public void remove(Long id) {
-		Course course = entityManager.find(entityClass, id);
-		if (course != null)
+		final Course course = entityManager.find(Course.class, id);
+		if (course != null) {
 			entityManager.remove(course);
+		}
+	}
+
+	@Transactional
+	@Override
+	public void flush() {
+		entityManager.flush();
 	}
 }
