@@ -31,7 +31,11 @@ public class PersonDao extends AbstractDao<Person> {
 	public List<Person> findAll() {
 
 		Query query = entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e");
-		return query.getResultList();
+		final List<Person> list = new LinkedList<Person>();
+		for(final Object o : query.getResultList()) {
+		    list.add((Person)o);
+		}
+		return list;
 	}
 
 	/**
