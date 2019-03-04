@@ -1,10 +1,9 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
-import java.util.Date;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
-
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -12,18 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-
 import com.google.common.base.Strings;
-/**
- *  Implementation of the class lecture with methods of manipulation of attributes   
- * @author Mohamed EL AMRANI
- */
+
 @Entity
 public class Lecture extends AbstractEntity {
 
-	
 	private static final long serialVersionUID = -6829937183172871605L;
-	
 
 	/**
 	 * The id Lecture Not <code>null</code>.
@@ -31,62 +24,49 @@ public class Lecture extends AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/**
 	 * Course (basic information about course (author, type ...)
 	 */
 	@JoinColumn(nullable = false)
-	private Course course = new Course();
+	private Course course;
 
 	/**
-	 * Date of Lecture 
+	 * Date of Lecture
 	 */
-	@Column(nullable = false)
-	private Date date = new Date();
-	/**
-	 * Duration  of Lecture 
-	 */
+	private Instant date;
 	
+    /**
+     * Date of dur	ation measured in minutes
+     */
 	@Column(nullable = false)
-	private int duration = 0;
+	private int duration;
 
-	/**
-	 * ROOM  defined like A_B042"
-	 */
 	@Column(nullable = false)
-	private String room = "";
+	private String room;
 
-	/**
-	 * Group  defined A5
-	 * A5STI86 Gr01 M2 IF
-	 */
 	@Column(nullable = false)
-	private String group = "";
-
+	private String group;
 	/**
 	 * the teacher responsible for the lecture.
 	 */
 	@JoinColumn(nullable = false)
-	private Person teacher = new Person();
+	private Person teacher;
 
 	public Lecture() {
 	}
 
-	public Lecture(Course course, Date date, int duration, String room, String group, Person teacher) {
+	public Lecture(Course course, Instant date, int duration, String room, String group, Person teacher) {
 		this.course = Objects.requireNonNull(course);
 		this.date = Objects.requireNonNull(date);
 		this.duration = Objects.requireNonNull(duration);
 		this.room = Strings.nullToEmpty(room);
 		this.group = Strings.nullToEmpty(group);
 		this.teacher = Objects.requireNonNull(teacher);
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	/**
@@ -112,7 +92,7 @@ public class Lecture extends AbstractEntity {
 	 *
 	 * @return not <code>null</code>.
 	 */
-	public Date getDate() {
+	public Instant getDate() {
 		return date;
 	}
 
@@ -121,10 +101,10 @@ public class Lecture extends AbstractEntity {
 	 *
 	 * @param date can't be <code>null</code>
 	 */
-	public void setDate(Date date) {
+	public void setDate(Instant date) {
 		this.date = Objects.requireNonNull(date);
 	}
-	
+
 	/**
 	 * Returns this lecture's duration.
 	 *
@@ -198,5 +178,3 @@ public class Lecture extends AbstractEntity {
 	}
 
 }
-
-
