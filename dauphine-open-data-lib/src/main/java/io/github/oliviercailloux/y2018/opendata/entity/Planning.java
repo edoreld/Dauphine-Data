@@ -12,31 +12,28 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * 
  * Here is a basic implementation for the class Planning
  * 
+ * Planning concerns all the courses of a person in particular 
+ * a teacher over a given period of time
+ * 
  * @author elhadj diallo
  * 
  */
 
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-
 public class Planning extends AbstractEntity {	
 
 	private static final long serialVersionUID = -5050839598082807501L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@XmlElement
 	private Long id;
 	
 	@Column(nullable = false)
-	@XmlElement
 	private String name;
 	
 	@ManyToMany
@@ -47,7 +44,7 @@ public class Planning extends AbstractEntity {
 	 * Constructor
 	 */
 
-	public Planning (String name, final List<Lecture> lecture) {
+	public Planning (String name, Person person, final List<Lecture> lecture) {
 		this.name = name;
 		this.lectures = Objects.requireNonNull(lecture);
 	}
@@ -55,28 +52,6 @@ public class Planning extends AbstractEntity {
 	@Override
 	public Long getId() {
 		return id;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	/**
-	 * Returns this planning's name
-	 * 
-	 */
-	
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets this planning's name
-	 * 
-	 */
-	
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/**
@@ -96,19 +71,7 @@ public class Planning extends AbstractEntity {
 	 */
 
 	public void setLectures(List<Lecture> lectures) {
-		Objects.requireNonNull(lectures);
-		this.lectures = lectures;
-	}
-
-	/**
-	 * Adding a lecture to this planning's lectures
-	 * 
-	 * @param lecture can't be <code>null</code>
-	 */
-	
-
-	public void addLecture (final Lecture lecture) {
-		this.lectures.add(Objects.requireNonNull(lecture));
+		this.lectures = Objects.requireNonNull(lectures);
 	}
 
 }
