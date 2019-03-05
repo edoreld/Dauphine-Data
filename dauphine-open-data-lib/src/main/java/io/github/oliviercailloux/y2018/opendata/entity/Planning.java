@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
  * 
  * Planning concerns all the courses of a person in particular 
  * a teacher over a given period of time
+ * As there is a need for persistence, we have considered it as an entity
  * 
  * @author elhadj diallo
  * 
