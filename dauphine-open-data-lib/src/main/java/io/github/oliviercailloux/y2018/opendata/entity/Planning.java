@@ -56,7 +56,7 @@ public class Planning extends AbstractEntity {
 	}
 
 	/**
-	 * Returns this planning's lectures
+	 * Returns this planning's lectures whose changes are reflected in this object
 	 * 
 	 * @return not <code>null</code>
 	 */
