@@ -37,9 +37,19 @@ Le projet va se décomposer en 2 parties.
 ** Planning au format VCal
 ** Person au format VCard
 * Réalisation d'un client simple pour une démo
-* Récupération des informations dans Dauphine Centrale avec un cache de validité
+* Déploiement dans IBM Cloud
+* Prise de contact avec la DSI de dauphine pour anticiper les fonctionnalites de l'itération 3 (URGENT)
 
 ### Itération 3 :
-* déploiement dans IBM Cloud
 * Interop avec PoleInfo pour exposer une partie de leur API
-* Mise en place du système d'authentification
+* Système d'authentification :
+** les clients de l'api dauphine-data devront être authentifiés via le  serveur d'authentification central de Dauphine
+** documentation de la procédure d'authentification de Dauphine
+** intégration avec les servlets JAX-RS
+* Connection avec la base de données de Dauphine :
+** connexion et authentification à la base de données de dauphine
+** accès aux données ? 3 options :
+*** 1. accès direct : nécéssite l'adaptation de nos entités pour qu'elles soient compatibles avec la base de données de Dauphine
+*** 2. accès indirect: base de données tampon, chargement des données en appliquant des transformations, mise à jour périodique.
+*** 3. hybride : base de données tampon avec un cache d'invalidité, chargement des données nécéssaires au moment de la requète
+
