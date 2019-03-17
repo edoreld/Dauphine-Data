@@ -12,3 +12,11 @@ script:
 cache:
   directories:
   - "$HOME/.m2"
+deploy:
+  provider: bluemixcloudfoundry
+  skip_cleanup: true
+  username: taric.gandi@dauphine.psl.eu
+  password: $BLUEMIX_PASSWORD
+  organization: taric.gandi@dauphine.psl.eu
+  space: dev
+  region: eu-gb
