@@ -20,3 +20,5 @@ deploy:
   organization: taric.gandi@dauphine.psl.eu
   space: dev
   region: eu-gb
+  on:
+    branch: feat/ibmcloud
