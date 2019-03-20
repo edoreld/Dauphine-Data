@@ -53,3 +53,12 @@ Le projet va se décomposer en 2 parties.
 *** 2. accès indirect: base de données tampon, chargement des données en appliquant des transformations, mise à jour périodique.
 *** 3. hybride : base de données tampon avec un cache d'invalidité, chargement des données nécéssaires au moment de la requète
 
+## Connexion au cloud d'IBM
+
+    * Pour vous connecter au cloud, vous disposer de :
+    ** l'URL de base à l'adresse : https://dauphine-open-datas.eu-gb.mybluemix.net
+    
+    ** Voici un exemple d'utilisation d'URL faisant appel à un get :
+    
+   https://dauphine-open-datas.eu-gb.mybluemix.net/resource/home
+
