@@ -10,6 +10,6 @@ public class IbmCloudHello {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String sayHello() {
-		return "Site Dauphine Open Data en construction....il sera bientôt  disponible!";
+		return "Site Dauphine Open Data en construction....";
 	}
 }
