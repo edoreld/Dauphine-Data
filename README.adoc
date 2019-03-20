@@ -58,7 +58,5 @@ Le projet va se décomposer en 2 parties.
     * Pour vous connecter au cloud, vous disposer de :
     ** l'URL de base à l'adresse : https://dauphine-open-datas.eu-gb.mybluemix.net
     
-    ** Voici un exemple d'utilisation d'URL faisant appel à un get :
-    
-   https://dauphine-open-datas.eu-gb.mybluemix.net/resource/home
+    ** Voici un exemple d'utilisation d'URL faisant appel à un get : https://dauphine-open-datas.eu-gb.mybluemix.net/resource/home
 
