@@ -30,9 +30,9 @@ public class MapperVcard {
 			vcard.addEmail(personalMail);
 
 		});
-
-		if (person.getIne() != null) {
-			vcard.addInterest(person.getIne());
+		
+		if(person.getOffice() != null) {
+			vcard.addRole(person.getOffice());
 		}
 
 		if (person.getPhoneNumer() != null) {
@@ -40,7 +40,7 @@ public class MapperVcard {
 		}
 
 		if (person.getTraining() != null) {
-			vcard.setSortString(person.getTraining());
+			vcard.addExpertise(person.getTraining());
 		}
 
 		if (person.getFax() != null) {
