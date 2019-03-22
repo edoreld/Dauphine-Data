@@ -6,7 +6,7 @@ import io.github.oliviercailloux.y2018.opendata.entity.Person;
 
 
 /**
- * @author Omardjalo
+ * @author Elhadj Diallo
  * 
  * This class convert a person entity into an VCard entity
  */
