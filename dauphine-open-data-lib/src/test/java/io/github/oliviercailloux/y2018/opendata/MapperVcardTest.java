@@ -17,10 +17,10 @@ public class MapperVcardTest {
 	@Test
 	public void testPersonToVcard() {
 		Person person = new Person();
-		person.setFirstName("Prenom");
-		person.setLastName("Nom");		
+		person.setFirstName("firstNameTest");
+		person.setLastName("lastNameTest");		
 		MapperVcard MV = new MapperVcard();
 		VCard vcard = MV.PersonToVcard(person);
-		assertEquals("Prenom",vcard.getStructuredName().getGiven());		
+		assertEquals("firstNameTest",vcard.getStructuredName().getGiven());
 	}
 }
