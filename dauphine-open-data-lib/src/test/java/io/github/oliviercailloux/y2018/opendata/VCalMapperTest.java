@@ -17,6 +17,12 @@ import io.github.oliviercailloux.y2018.opendata.mapper.VCalMapper;
 
 public class VCalMapperTest {
 
+	/**
+	 * Creates a planning with a few lectures. Then, maps the planning to an
+	 * ICalendar object. Finally, it tests that the description of the course of the
+	 * first lecture of the ICalendar object is equal to the one that we manually
+	 * set.
+	 */
 	@Test
 	public void testEncodePlanningToICalendar() {
 		Person olivier = new Person();
