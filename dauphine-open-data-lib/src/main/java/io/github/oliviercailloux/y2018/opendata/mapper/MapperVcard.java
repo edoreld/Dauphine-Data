@@ -28,14 +28,19 @@ public class MapperVcard {
 	public VCard PersonToVcard(Person person) {
 
 		VCard vcard = new VCard();
-		StructuredName m = new StructuredName();
-		m.setFamily(person.getLastName());
-		m.setGiven(person.getFirstName());
-		vcard.setStructuredName(m);
-
-		person.getPersonalMail().forEach((personalMail) -> {
-			vcard.addEmail(personalMail);
-		});
+		
+		if(person.getFirstName() != null && person.getLastName() != null) {
+			StructuredName m = new StructuredName();
+			m.setFamily(person.getLastName());
+			m.setGiven(person.getFirstName());
+			vcard.setStructuredName(m);
+		}
+		
+		if(person.getPersonalMail() != null) {
+			person.getPersonalMail().forEach((personalMail) -> {
+				vcard.addEmail(personalMail);
+			});
+		}
 		
 		if(person.getOffice() != null) {
 			vcard.addNote(person.getOffice());
