@@ -48,14 +48,19 @@ public class VCalMapper {
 		event.setDateEnd(end);
 		event.setLocation(lecture.getRoom());
 		event.setOrganizer(getOrganizerFromLecture(lecture));
-
 		event.setDescription(lecture.getCourse().getCourseDescription());
+		event.setSummary(lecture.getCourse().getCourseName());
 		return event;
 	}
 
 	private Organizer getOrganizerFromLecture(Lecture lecture) {
 		String organizerName = lecture.getTeacher().getFirstName();
-		String organizerEmail = lecture.getTeacher().getDauphineMail().get(0);
+		String organizerEmail = new String();
+		if (lecture.getTeacher().getDauphineMail().size() > 0)
+			organizerEmail = lecture.getTeacher().getDauphineMail().get(0);
+		else
+			organizerEmail = "";
+
 		return new Organizer(organizerName, organizerEmail);
 	}
 
