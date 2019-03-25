@@ -7,7 +7,7 @@ addons:
   sonarcloud:
     organization: edoreld-github
     token: "$SONAR_TOKEN"
-script:
+install:
 - mvn -Dsonar.projectKey=edoreld_Dauphine-Open-Data -Dsonar.organization=edoreld-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN clean dependency:unpack@wildfly install sonar:sonar
 cache:
   directories:
