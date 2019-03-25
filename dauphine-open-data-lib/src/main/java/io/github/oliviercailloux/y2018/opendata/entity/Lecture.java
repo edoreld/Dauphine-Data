@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import com.google.common.base.Strings;
 
@@ -72,6 +73,7 @@ public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.
 	/**
 	 * the teacher responsible for the lecture.
 	 */
+	@OneToOne
 	@JoinColumn(nullable = false)
 	private Person teacher = new Person();
 

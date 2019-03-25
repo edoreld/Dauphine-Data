@@ -124,6 +124,9 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 	@Path("{id}")
 	public Response get(@PathParam("id") Long id) {
 		LOGGER.info("[{}] - finding entity with id [{}] ..", resourceName, id);
+		if (id == null) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
 		final Optional<E> entityOpt = dao.findOne(id);
 		if (entityOpt.isPresent()) {
 			return Response.ok(entityOpt.get()).build();
