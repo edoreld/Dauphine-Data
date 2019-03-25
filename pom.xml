@@ -36,7 +36,7 @@
 		<version.maven.failsafe.plugin>3.0.0-M2</version.maven.failsafe.plugin>
 		<version.tidy>1.1.0</version.tidy>
 		<version.surefire.plugin>2.17</version.surefire.plugin>
-		<path.distrib.wildfly>distrib/wildfly/</path.distrib.wildfly>
+		<path.distrib.wildfly>${project.basedir}/distrib/wildfly/</path.distrib.wildfly>
 		<path.jboss.home>${path.distrib.wildfly}/wildfly-${version.wildfly}/</path.jboss.home>
 		<version.mockito>1.10.19</version.mockito>
 		<version.lombok>1.18.4</version.lombok>
