@@ -23,9 +23,9 @@ public class VCalMapperTest {
 
 	/**
 	 * Creates a planning with a few lectures. Then, maps the planning to an
-	 * ICalendar object. Finally, it tests that the description of the course of the
-	 * first lecture of the ICalendar object is equal to the one that we manually
-	 * set.
+	 * ICalendar object. Finally, it tests that the description of the first event
+	 * of the ICalendar object matches the description of the first event of a
+	 * pre-created file that corresponds to the ICalendar object being created.
 	 *
 	 * @throws IOException
 	 */
