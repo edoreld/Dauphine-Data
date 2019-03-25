@@ -213,7 +213,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>unpack-wildfly</id>
+						<id>wildfly</id>
 						<phase>none</phase>
 						<goals>
 							<goal>unpack</goal>
