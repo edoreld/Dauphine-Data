@@ -1,10 +1,10 @@
 package io.github.oliviercailloux.y2018.opendata.mapper;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
@@ -43,7 +43,9 @@ public class VCalMapper {
 	public VEvent transformLectureToEvent(Lecture lecture) {
 		VEvent event = new VEvent();
 		Date start = Date.from(lecture.getDate());
-		Date end = DateUtils.addMinutes(start, lecture.getDuration());
+		Instant startInstant = start.toInstant();
+		Instant endInstant = startInstant.plus(Duration.ofMinutes(lecture.getDuration()));
+		Date end = Date.from(endInstant);
 		event.setDateStart(start);
 		event.setDateEnd(end);
 		event.setLocation(lecture.getRoom());
