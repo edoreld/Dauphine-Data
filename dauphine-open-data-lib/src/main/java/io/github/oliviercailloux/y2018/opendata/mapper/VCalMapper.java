@@ -48,13 +48,21 @@ public class VCalMapper {
 		Date end = Date.from(endInstant);
 		event.setDateStart(start);
 		event.setDateEnd(end);
-		event.setLocation(lecture.getRoom());
+		if (!lecture.getRoom().isEmpty())
+			event.setLocation(lecture.getRoom());
 		event.setOrganizer(getOrganizerFromLecture(lecture));
 		event.setDescription(lecture.getCourse().getCourseDescription());
 		event.setSummary(lecture.getCourse().getCourseName());
 		return event;
 	}
 
+	/**
+	 * Creates an {@link Organizer} object from a {@link Lecture} object. If the
+	 * lecture's teacher has several emails, only the first one is used.
+	 *
+	 * @param lecture
+	 * @return the lecture's organizer
+	 */
 	private Organizer getOrganizerFromLecture(Lecture lecture) {
 		String organizerName = lecture.getTeacher().getFirstName();
 		String organizerEmail = new String();
