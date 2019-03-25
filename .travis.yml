@@ -22,3 +22,14 @@ deploy:
   region: eu-gb
   on:
     branch: feat/ibmcloud
+deploy:
+  provider: bluemixcloudfoundry
+  skip_cleanup: true
+  username: taric.gandi@dauphine.psl.eu
+  password: $BLUEMIX_PASSWORD
+  organization: taric.gandi@dauphine.psl.eu
+  space: dev
+  region: eu-gb
+  app_name: dauphine-open-datas-client
+  on:
+    branch: feat/client
