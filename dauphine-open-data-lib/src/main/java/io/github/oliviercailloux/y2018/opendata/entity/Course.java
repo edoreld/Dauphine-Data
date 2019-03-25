@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,7 @@ public class Course implements io.github.oliviercailloux.y2018.opendata.entity.E
 	@XmlElement
 	private String instructionLanguage;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "Course_Part")
 	@MapKeyEnumerated(EnumType.STRING)
 	@MapKeyColumn(name = "type", nullable = false)

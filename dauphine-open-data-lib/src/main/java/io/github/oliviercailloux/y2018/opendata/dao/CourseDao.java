@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import io.github.oliviercailloux.y2018.opendata.entity.Course;
@@ -25,8 +24,7 @@ public class CourseDao implements Dao<Course> {
 
 	@Override
 	public List<Course> findAll() {
-		final Query query = entityManager.createQuery("SELECT c FROM Course c");
-		return query.getResultList();
+		return entityManager.createQuery("SELECT c FROM Course c", Course.class).getResultList();
 	}
 
 	@Override
