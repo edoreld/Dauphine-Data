@@ -4,8 +4,8 @@ import java.net.URI;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -47,7 +47,7 @@ import io.github.oliviercailloux.y2018.opendata.entity.Entity;
  * @param <E> The entity
  * @param <D> The entity Dao
  */
-@RequestScoped
+@Transactional
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class AbstractResource<E extends Entity, D extends Dao<E>> {
@@ -151,7 +151,8 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 			final E persistedEntity = dao.persist(entity);
 			return makeCreatedResponse(persistedEntity.getId());
 		} catch (final EntityAlreadyExistsDaoException e) {
-			LOGGER.info("[{}] - entity [{}] already exist ..", resourceName, entity, e);
+			LOGGER.info("[{}] - entity [{}] already exists", resourceName, entity);
+			LOGGER.debug("debug stack trace: ", e);
 			return Response.status(Status.CONFLICT).entity("entity already exists").build();
 		}
 	}
@@ -210,7 +211,8 @@ public class AbstractResource<E extends Entity, D extends Dao<E>> {
 			dao.remove(id);
 			return Response.noContent().build();
 		} catch (final EntityDoesNotExistDaoException e) {
-			LOGGER.info("[{}] - removal failed, entity [{}] does not exist", resourceName, id, e);
+			LOGGER.info("[{}] - removal failed, entity [{}] does not exist", resourceName, id);
+			LOGGER.debug("debug stack trace: ", e);
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}

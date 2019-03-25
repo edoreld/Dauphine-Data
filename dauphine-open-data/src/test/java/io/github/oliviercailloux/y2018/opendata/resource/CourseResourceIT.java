@@ -10,7 +10,6 @@ import org.junit.Ignore;
 import io.github.oliviercailloux.y2018.opendata.dao.CourseDao;
 import io.github.oliviercailloux.y2018.opendata.entity.Course;
 
-@Ignore
 public class CourseResourceIT extends AbstractResourceIT<Course, CourseDao> {
 
 	@Inject

@@ -23,42 +23,44 @@ public class CourseDao implements Dao<Course> {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
-	@Transactional
 	@Override
 	public List<Course> findAll() {
 		final Query query = entityManager.createQuery("SELECT c FROM Course c");
 		return query.getResultList();
 	}
 
-	@Transactional
 	@Override
 	public Optional<Course> findOne(Long id) {
 		return Optional.ofNullable(entityManager.find(Course.class, id));
 	}
 
-	@Transactional
+	private boolean courseAlreadyExists(Course course) {
+		return course.getId() != null && findOne(course.getId()).isPresent();
+	}
+
 	@Override
-	public Course persist(Course entity) {
+	public Course persist(Course entity) throws EntityAlreadyExistsDaoException {
+		if (courseAlreadyExists(entity)) {
+			throw new EntityAlreadyExistsDaoException();
+		}
 		entityManager.persist(entity);
 		return entity;
 	}
 
-	@Transactional
 	@Override
 	public Course merge(Course entity) {
 		return entityManager.merge(entity);
 	}
 
-	@Transactional
 	@Override
-	public void remove(Long id) {
+	public void remove(Long id) throws EntityDoesNotExistDaoException {
 		final Course course = entityManager.find(Course.class, id);
-		if (course != null) {
-			entityManager.remove(course);
+		if (course == null) {
+			throw new EntityDoesNotExistDaoException();
 		}
+		entityManager.remove(course);
 	}
 
-	@Transactional
 	@Override
 	public void flush() {
 		entityManager.flush();
