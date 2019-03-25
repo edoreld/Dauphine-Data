@@ -15,7 +15,6 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -27,26 +26,32 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.google.common.base.Preconditions;
 
-import io.github.oliviercailloux.y2018.opendata.TestUtils;
+import io.github.oliviercailloux.y2018.opendata.ArquillianUtils;
 import io.github.oliviercailloux.y2018.opendata.dao.Dao;
 import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
 
+@RunWith(Arquillian.class)
 public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y2018.opendata.entity.Entity, D extends Dao<E>> {
 
 	protected static final Random RAND = new Random(1L);
 	protected static final String WAR_NAME = "resource-it-war";
 
-	@Inject
+	@ArquillianResource
 	private URL url;
+
 	private URI uri;
 
 	protected final Client client;
@@ -61,6 +66,11 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		this(ResteasyClientBuilder.newClient(), resourcePath);
 	}
 
+	@Deployment
+	public static WebArchive makeWar() {
+		return ArquillianUtils.makeWar(WAR_NAME);
+	}
+
 	protected abstract D getDao();
 
 	@Before
@@ -72,10 +82,6 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	@After
 	public void after() {
 		client.close();
-	}
-
-	public static WebArchive makeWar() {
-		return TestUtils.makeWar(WAR_NAME);
 	}
 
 	protected abstract GenericType<List<E>> getEntitiesType();
@@ -94,6 +100,21 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	protected WebTarget getWebTarget(final String path) {
 		return getWebTarget().path(path);
+	}
+
+	protected Builder sendContentType(final String contentType, final Builder builder) {
+		builder.header(HttpHeaders.CONTENT_TYPE, contentType);
+		return builder;
+	}
+
+	protected Builder sendXml(final Builder builder) {
+		sendContentType(MediaType.APPLICATION_XML, builder);
+		return builder;
+	}
+
+	protected Builder sendJson(final Builder builder) {
+		sendContentType(MediaType.APPLICATION_JSON, builder);
+		return builder;
 	}
 
 	protected Builder acceptCharset(final String charset, final Builder builder) {
@@ -127,20 +148,17 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		return accept(MediaType.APPLICATION_XML, builder);
 	}
 
-	protected Builder acceptJsonUTF8English(final String path) {
+	protected Builder sendJsonAcceptJsonUTF8English(final String path) {
 		final Builder builder = getResourceWebTarget(path).request();
+		sendJson(builder);
 		acceptEnglish(builder);
 		acceptJson(builder);
 		acceptUTF8(builder);
 		return builder;
 	}
 
-	protected Builder acceptJsonUTF8English() {
-		final Builder builder = getResourceWebTarget().request();
-		acceptEnglish(builder);
-		acceptJson(builder);
-		acceptUTF8(builder);
-		return builder;
+	protected Builder sendJsonAcceptJsonUTF8English() {
+		return sendJsonAcceptJsonUTF8English("");
 	}
 
 	protected InputStream getInputStream(final Response response) {
@@ -212,7 +230,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	public void testGet() throws Exception {
 		getDao().persist(makeEntity());
 		final List<E> entities = getDao().findAll();
-		final Response response = acceptJsonUTF8English().get();
+		final Response response = sendJsonAcceptJsonUTF8English().get();
 		assertStatusIsOk(response);
 		assertContentTypeIsJsonUTF8(response);
 		response.bufferEntity();
@@ -225,7 +243,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	public void testGetId() throws Exception {
 		final E c = makeEntity();
 		final E persistedEntity = getDao().persist(c);
-		final Response response = acceptJsonUTF8English(persistedEntity.getId().toString()).get();
+		final Response response = sendJsonAcceptJsonUTF8English(persistedEntity.getId().toString()).get();
 		assertStatusIsOk(response);
 		assertContentTypeIsJsonUTF8(response);
 		assertEntityIs(persistedEntity, response);
@@ -233,13 +251,13 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	@Test
 	public void testGetIdBadRequest() throws IOException, DaoException {
-		final Response response = acceptJsonUTF8English("abc").get();
-		assertStatusIsBadRequest(response);
+		final Response response = sendJsonAcceptJsonUTF8English("abc").get();
+		assertStatusIsNotFound(response);
 	}
 
 	@Test
 	public void testGetIdNotFound() throws IOException, DaoException {
-		final Response response = acceptJsonUTF8English("123456789").get();
+		final Response response = sendJsonAcceptJsonUTF8English("123456789").get();
 		assertStatusIsNotFound(response);
 	}
 
@@ -247,7 +265,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	public void testPostAlreadyExists() throws Exception {
 		final E c = makeEntity();
 		final E persistedEntity = getDao().persist(c);
-		final Response response = acceptJsonUTF8English().post(Entity.json(persistedEntity));
+		final Response response = sendJsonAcceptJsonUTF8English().post(Entity.json(persistedEntity));
 		assertStatusCodeIs(Status.CONFLICT.getStatusCode(), response);
 	}
 
@@ -255,7 +273,8 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	public void testPutIdsDifferent() throws Exception {
 		final E c = makeEntity();
 		final E persistedEntity = getDao().persist(c);
-		final Response response = acceptJsonUTF8English(c.getId().toString() + 1).put(Entity.json(persistedEntity));
+		final Response response = sendJsonAcceptJsonUTF8English(c.getId().toString() + 1)
+				.put(Entity.json(persistedEntity));
 		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), response);
 	}
 
@@ -264,14 +283,14 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		final E notPersistedEntity = makeEntity();
 		final Long id = 123456L;
 		ReflectionTestUtils.setField(notPersistedEntity, "id", id);
-		final Response response = acceptJsonUTF8English(id.toString()).put(Entity.json(notPersistedEntity));
+		final Response response = sendJsonAcceptJsonUTF8English(id.toString()).put(Entity.json(notPersistedEntity));
 		assertStatusIsNotFound(response);
 	}
 
 	@Test
 	public void testPutEntityDoesntExistNoId() {
 		final E c = makeEntity();
-		final Response response = acceptJsonUTF8English(Long.toString(12345L)).put(Entity.json(c));
+		final Response response = sendJsonAcceptJsonUTF8English(Long.toString(12345L)).put(Entity.json(c));
 		assertStatusIsForbidden(response);
 	}
 
@@ -279,7 +298,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	public void testPutMerge() throws Exception {
 		final E c = makeEntity();
 		final E persistedEntity = getDao().persist(c);
-		final Response response = acceptJsonUTF8English(c.getId().toString()).put(Entity.json(persistedEntity));
+		final Response response = sendJsonAcceptJsonUTF8English(c.getId().toString()).put(Entity.json(persistedEntity));
 		assertStatusIsNoContent(response);
 	}
 
@@ -287,14 +306,14 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	public void testDelete() throws Exception {
 		final E c = makeEntity();
 		final E persistedEntity = getDao().persist(c);
-		final Response response = acceptJsonUTF8English(persistedEntity.getId().toString()).delete();
+		final Response response = sendJsonAcceptJsonUTF8English(persistedEntity.getId().toString()).delete();
 		assertStatusIsNoContent(response);
 		assertFalse("entity was not removed", getDao().findOne(persistedEntity.getId()).isPresent());
 	}
 
 	@Test
 	public void testDeleteNotExisting() throws DaoException {
-		final Response response = acceptJsonUTF8English("-1").delete();
+		final Response response = sendJsonAcceptJsonUTF8English("-1").delete();
 		assertStatusIsNotFound(response);
 	}
 

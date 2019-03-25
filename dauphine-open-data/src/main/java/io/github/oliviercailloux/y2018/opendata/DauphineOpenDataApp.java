@@ -9,7 +9,7 @@ import javax.ws.rs.core.Application;
  * @author Dauphine - CLAUDEL Arnaud
  *
  */
-@ApplicationPath("resource")
+@ApplicationPath("/")
 public class DauphineOpenDataApp extends Application {
-
+	// empty to active the scan
 }

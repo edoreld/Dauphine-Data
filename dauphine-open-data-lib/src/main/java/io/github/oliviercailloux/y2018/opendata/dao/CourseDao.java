@@ -33,7 +33,7 @@ public class CourseDao implements Dao<Course> {
 	@Transactional
 	@Override
 	public Optional<Course> findOne(Long id) {
-		return Optional.of(entityManager.find(Course.class, id));
+		return Optional.ofNullable(entityManager.find(Course.class, id));
 	}
 
 	@Transactional
