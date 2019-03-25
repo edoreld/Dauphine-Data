@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,29 +48,25 @@ public class VCalMapperTest {
 		/**
 		 * write ICalendar to file
 		 */
-//		ical.write(new File("./src/test/resources/example.ics"));
+		ical.write(new File("./src/test/resources/example.ics"));
 
 		/**
 		 * Read the expected file and get the summary
 		 */
-		File file = new File("./src/test/resources/example.ics");
-		ICalReader reader = null;
-		VEvent event;
-		try {
-			reader = new ICalReader(file);
+		URL fileURL = this.getClass().getResource("/example.ics");
+		File file = new File(fileURL.getFile());
+
+		try (ICalReader reader = new ICalReader(file)) {
+
 			ICalendar ical2;
 			ical2 = reader.readNext();
-			event = ical2.getEvents().get(0);
+			VEvent event = ical2.getEvents().get(0);
 
 			String summaryEventWritten = ical.getEvents().get(0).getSummary().getValue();
 			String summaryEventFile = event.getSummary().getValue();
 
 			assertEquals(summaryEventWritten, summaryEventFile);
 
-		} finally {
-			if (reader != null)
-				reader.close();
 		}
-
 	}
 }
