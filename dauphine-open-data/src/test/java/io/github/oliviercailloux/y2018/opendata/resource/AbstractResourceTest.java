@@ -67,6 +67,10 @@ public class AbstractResourceTest {
 		assertEquals("status code KO", HttpServletResponse.SC_NOT_FOUND, response.getStatus());
 	}
 
+	private void assertResponseBadRequest(final Response response) {
+		assertEquals("status code KO", HttpServletResponse.SC_BAD_REQUEST, response.getStatus());
+	}
+
 	@Test
 	public void testCheckFieldInitialized() {
 		resource.checkFieldInitialized();
@@ -100,6 +104,14 @@ public class AbstractResourceTest {
 		final Response response = resource.get(entity.getId());
 		then(dao).should(Mockito.atLeastOnce()).findOne(entity.getId());
 		assertResponseNotFound(response);
+		assertNull("entity KO", response.getEntity());
+	}
+
+	@Test
+	public void testGetIdNull() throws Exception {
+		final Response response = resource.get(null);
+		then(dao).should(Mockito.never()).findOne(Mockito.any());
+		assertResponseBadRequest(response);
 		assertNull("entity KO", response.getEntity());
 	}
 
