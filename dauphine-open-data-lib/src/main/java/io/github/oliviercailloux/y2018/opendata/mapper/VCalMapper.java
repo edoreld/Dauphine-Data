@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
+import biweekly.property.Organizer;
 import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 import io.github.oliviercailloux.y2018.opendata.entity.Planning;
 
@@ -17,10 +20,6 @@ import io.github.oliviercailloux.y2018.opendata.entity.Planning;
  */
 @ApplicationScoped
 public class VCalMapper {
-
-	/**
-	 * Maps a {@link Planning} entity into an {@link ICalendar} Object
-	 */
 	public VCalMapper() {
 	}
 
@@ -44,10 +43,20 @@ public class VCalMapper {
 	public VEvent transformLectureToEvent(Lecture lecture) {
 		VEvent event = new VEvent();
 		Date start = Date.from(lecture.getDate());
+		Date end = DateUtils.addMinutes(start, lecture.getDuration());
 		event.setDateStart(start);
+		event.setDateEnd(end);
 		event.setLocation(lecture.getRoom());
+		event.setOrganizer(getOrganizerFromLecture(lecture));
+
 		event.setDescription(lecture.getCourse().getCourseDescription());
 		return event;
+	}
+
+	private Organizer getOrganizerFromLecture(Lecture lecture) {
+		String organizerName = lecture.getTeacher().getFirstName();
+		String organizerEmail = lecture.getTeacher().getDauphineMail().get(0);
+		return new Organizer(organizerName, organizerEmail);
 	}
 
 }
