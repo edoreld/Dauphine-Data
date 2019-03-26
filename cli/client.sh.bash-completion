@@ -69,20 +69,50 @@ _()
     # It's modelled as an associative array for efficient key lookup
     declare -A operations
     operations["createCourse"]=1
+    operations["createLecture"]=1
+    operations["createPerson"]=1
+    operations["createPlanning"]=1
     operations["deleteCourse"]=1
+    operations["deleteLecture"]=1
+    operations["deletePerson"]=1
+    operations["deletePlanning"]=1
     operations["getCourse"]=1
+    operations["getLecture"]=1
+    operations["getPerson"]=1
+    operations["getPlanning"]=1
     operations["listCourses"]=1
+    operations["listLectures"]=1
+    operations["listPersons"]=1
+    operations["listPlannings"]=1
     operations["replaceCourse"]=1
+    operations["replaceLecture"]=1
+    operations["replacePerson"]=1
+    operations["replacePlanning"]=1
     operations["sayHello"]=1
 
     # An associative array of operations to their parameters
     # Only include path, query and header parameters
     declare -A operation_parameters
     operation_parameters["createCourse"]=""
+    operation_parameters["createLecture"]=""
+    operation_parameters["createPerson"]=""
+    operation_parameters["createPlanning"]=""
     operation_parameters["deleteCourse"]="id= "
+    operation_parameters["deleteLecture"]="id= "
+    operation_parameters["deletePerson"]="id= "
+    operation_parameters["deletePlanning"]="id= "
     operation_parameters["getCourse"]="id= "
+    operation_parameters["getLecture"]="id= "
+    operation_parameters["getPerson"]="id= "
+    operation_parameters["getPlanning"]="id= "
     operation_parameters["listCourses"]=""
+    operation_parameters["listLectures"]=""
+    operation_parameters["listPersons"]=""
+    operation_parameters["listPlannings"]=""
     operation_parameters["replaceCourse"]="id= "
+    operation_parameters["replaceLecture"]="id= "
+    operation_parameters["replacePerson"]="id= "
+    operation_parameters["replacePlanning"]="id= "
     operation_parameters["sayHello"]=""
 
     # An associative array of possible values for enum parameters
