@@ -46,8 +46,7 @@ public class AbstractResourceTest {
 	@Mock
 	private Dao<FakeEntity> dao;
 
-	private final AbstractResource<FakeEntity, Dao<FakeEntity>> resource = new AbstractResource<>("FakeEntity",
-			"fakeEntity");
+	private final FakeResource resource = new FakeResource();
 
 	@Before
 	public void before() {
@@ -235,6 +234,14 @@ class FakeEntity implements Entity {
 	@Override
 	public Long getId() {
 		return id;
+	}
+
+}
+
+class FakeResource extends AbstractResource<FakeEntity, Dao<FakeEntity>> {
+
+	public FakeResource() {
+		super("FakeEntity", "fakeEntity");
 	}
 
 }

@@ -50,7 +50,7 @@ import io.github.oliviercailloux.y2018.opendata.entity.Entity;
 @Transactional
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-public class AbstractResource<E extends Entity, D extends Dao<E>> {
+public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResource.class);
 
