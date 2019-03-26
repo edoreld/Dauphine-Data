@@ -7,6 +7,8 @@ applications:
    Disk_quota : 1G
    buildpacks:
     - https://github.com/cloudfoundry-community/jboss-buildpack.git
+   env:
+    JAVA_OPTS: "-Xmx256m"
  - name: dauphine-open-datas-swagger-ui
    random-route: false
    memory: 64M
