@@ -32,7 +32,7 @@ deploy:
 # rather than giving travis your master ibmcloud password in plain text.
 deploy:
   provider: script
-  script: bash script/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest-client.yaml
+  script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest-client.yaml
   on:
     branch: feat/client
   skip_cleanup: true
