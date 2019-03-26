@@ -127,14 +127,14 @@
 			<artifactId>guava</artifactId>
 			<version>${version.google.guava}</version>
 		</dependency>
-		
+
 		<!-- vCard -->
 		<dependency>
 			<groupId>com.googlecode.ez-vcard</groupId>
 			<artifactId>ez-vcard</artifactId>
 			<version>${version.ez.vcard}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

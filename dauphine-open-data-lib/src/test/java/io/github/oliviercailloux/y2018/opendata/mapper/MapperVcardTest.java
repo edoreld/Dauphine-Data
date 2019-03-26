@@ -1,4 +1,4 @@
-package io.github.oliviercailloux.y2018.opendata;
+package io.github.oliviercailloux.y2018.opendata.mapper;
 
 import static org.junit.Assert.assertEquals;
 
