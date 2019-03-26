@@ -68,27 +68,21 @@ _()
     # The list of available operation in the REST service
     # It's modelled as an associative array for efficient key lookup
     declare -A operations
-    operations["delete"]=1
-    operations["delete_0"]=1
-    operations["get"]=1
-    operations["get1"]=1
-    operations["get2"]=1
-    operations["post"]=1
-    operations["put"]=1
-    operations["put_0"]=1
+    operations["createCourse"]=1
+    operations["deleteCourse"]=1
+    operations["getCourse"]=1
+    operations["listCourses"]=1
+    operations["replaceCourse"]=1
     operations["sayHello"]=1
 
     # An associative array of operations to their parameters
     # Only include path, query and header parameters
     declare -A operation_parameters
-    operation_parameters["delete"]="id= "
-    operation_parameters["delete_0"]="id= "
-    operation_parameters["get"]="id= "
-    operation_parameters["get1"]="id= "
-    operation_parameters["get2"]=""
-    operation_parameters["post"]=""
-    operation_parameters["put"]="id= "
-    operation_parameters["put_0"]="id= "
+    operation_parameters["createCourse"]=""
+    operation_parameters["deleteCourse"]="id= "
+    operation_parameters["getCourse"]="id= "
+    operation_parameters["listCourses"]=""
+    operation_parameters["replaceCourse"]="id= "
     operation_parameters["sayHello"]=""
 
     # An associative array of possible values for enum parameters

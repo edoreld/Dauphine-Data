@@ -24,8 +24,8 @@ source /etc/bash-completion.d/\n\
 #
 # Setup prompt
 #
-RUN echo 'export PS1="[] \$ "' >> ~/.bashrc
-RUN echo 'export PROMPT="[] \$ "' >> ~/.zshrc
+RUN echo 'export PS1="[Dauphine Open Data API specification] \$ "' >> ~/.bashrc
+RUN echo 'export PROMPT="[Dauphine Open Data API specification] \$ "' >> ~/.zshrc
 
 #
 # Setup a welcome message with basic instruction
@@ -33,7 +33,7 @@ RUN echo 'export PROMPT="[] \$ "' >> ~/.zshrc
 RUN echo 'cat << EOF\n\
 \n\
 This Docker provides preconfigured environment for running the command\n\
-line REST client for $(tput setaf 6)$(tput sgr0).\n\
+line REST client for $(tput setaf 6)Dauphine Open Data API specification$(tput sgr0).\n\
 \n\
 For convenience, you can export the following environment variables:\n\
 \n\
