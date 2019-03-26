@@ -1,7 +1,7 @@
-#  Bash client
+# Dauphine Open Data API specification Bash client
 
 ## Overview
-This is a Bash client script for accessing  service.
+This is a Bash client script for accessing Dauphine Open Data API specification service.
 
 The script uses cURL underneath for making all REST calls.
 
@@ -94,21 +94,17 @@ All URIs are relative to **
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**delete**](docs/DefaultApi.md#delete) | **DELETE** /{id} | 
-*DefaultApi* | [**delete_0**](docs/DefaultApi.md#delete_0) | **DELETE** /course/{id} | 
-*DefaultApi* | [**get**](docs/DefaultApi.md#get) | **GET** /{id} | 
-*DefaultApi* | [**get1**](docs/DefaultApi.md#get1) | **GET** /course/{id} | 
-*DefaultApi* | [**get2**](docs/DefaultApi.md#get2) | **GET** /course | 
-*DefaultApi* | [**post**](docs/DefaultApi.md#post) | **POST** /course | 
-*DefaultApi* | [**put**](docs/DefaultApi.md#put) | **PUT** /{id} | 
-*DefaultApi* | [**put_0**](docs/DefaultApi.md#put_0) | **PUT** /course/{id} | 
+*DefaultApi* | [**createCourse**](docs/DefaultApi.md#createcourse) | **POST** /course | 
+*DefaultApi* | [**deleteCourse**](docs/DefaultApi.md#deletecourse) | **DELETE** /course/{id} | 
+*DefaultApi* | [**getCourse**](docs/DefaultApi.md#getcourse) | **GET** /course/{id} | 
+*DefaultApi* | [**listCourses**](docs/DefaultApi.md#listcourses) | **GET** /course | 
+*DefaultApi* | [**replaceCourse**](docs/DefaultApi.md#replacecourse) | **PUT** /course/{id} | 
 *DefaultApi* | [**sayHello**](docs/DefaultApi.md#sayhello) | **GET** /home | 
 
 
 ## Documentation For Models
 
  - [Course](docs/Course.md)
- - [Entity](docs/Entity.md)
 
 
 ## Documentation For Authorization

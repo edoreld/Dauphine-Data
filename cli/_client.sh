@@ -296,14 +296,11 @@ case $state in
   ops)
     # Operations
     _values "Operations" \
-            "delete[]" \
-            "delete_0[]" \
-            "get[]" \
-            "get1[]" \
-            "get2[]" \
-            "post[]" \
-            "put[]" \
-            "put_0[]" \
+            "createCourse[]" \
+            "deleteCourse[]" \
+            "getCourse[]" \
+            "listCourses[]" \
+            "replaceCourse[]" \
             "sayHello[]" 
     _arguments "(--help)--help[Print information about operation]"
 
@@ -311,54 +308,33 @@ case $state in
     ;;
   args)
     case $line[1] in
-      delete)
-        local -a _op_arguments
-        _op_arguments=(
-          "id=:[PATH] "
-                    )
-        _describe -t actions 'operations' _op_arguments -S '' && ret=0
-        ;;
-      delete_0)
-        local -a _op_arguments
-        _op_arguments=(
-          "id=:[PATH] "
-                    )
-        _describe -t actions 'operations' _op_arguments -S '' && ret=0
-        ;;
-      get)
-        local -a _op_arguments
-        _op_arguments=(
-          "id=:[PATH] "
-                    )
-        _describe -t actions 'operations' _op_arguments -S '' && ret=0
-        ;;
-      get1)
-        local -a _op_arguments
-        _op_arguments=(
-          "id=:[PATH] "
-                    )
-        _describe -t actions 'operations' _op_arguments -S '' && ret=0
-        ;;
-      get2)
+      createCourse)
         local -a _op_arguments
         _op_arguments=(
                               )
         _describe -t actions 'operations' _op_arguments -S '' && ret=0
         ;;
-      post)
-        local -a _op_arguments
-        _op_arguments=(
-                              )
-        _describe -t actions 'operations' _op_arguments -S '' && ret=0
-        ;;
-      put)
+      deleteCourse)
         local -a _op_arguments
         _op_arguments=(
           "id=:[PATH] "
                     )
         _describe -t actions 'operations' _op_arguments -S '' && ret=0
         ;;
-      put_0)
+      getCourse)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      listCourses)
+        local -a _op_arguments
+        _op_arguments=(
+                              )
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      replaceCourse)
         local -a _op_arguments
         _op_arguments=(
           "id=:[PATH] "
