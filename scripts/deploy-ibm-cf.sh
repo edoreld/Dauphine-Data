@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-set -x
+set -xe
 
+ibmcloud login --apikey ${1} -r eu-gb
 ibmcloud target -o ${2} -s ${3}
-ibmcloud login --api-key ${1} -r eu-gb
 ibmcloud cf push -f ${4}
