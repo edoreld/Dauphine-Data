@@ -84,15 +84,4 @@ public class Course implements io.github.oliviercailloux.y2018.opendata.entity.E
 	@XmlElement
 	private Map<CoursePart, Integer> volumes = new EnumMap<>(CoursePart.class);
 	
-	/**
-	 * Returns the business id of the course
-	 *
-	 * @since 1.0
-	 */
-
-	@Override
-	public Long getId() {
-		return id;
-	}
-	
 }

@@ -70,10 +70,5 @@ public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.
 	@ManyToOne(optional = true)
 	@XmlElement
 	private Person teacher;
-	
-	@Override
-	public Long getId() {
-		return id;
-	}
 
 }

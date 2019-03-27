@@ -1,12 +1,12 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptEnglish;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptJson;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptUTF8;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertContentTypeIsJsonUTF8;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertEntityIs;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusCodeIs;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsCreated;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsForbidden;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNoContent;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNotFound;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsOk;
@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -45,6 +46,7 @@ import com.google.common.base.Preconditions;
 import io.github.oliviercailloux.y2018.opendata.ArquillianUtils;
 import io.github.oliviercailloux.y2018.opendata.dao.Dao;
 import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
+import io.github.oliviercailloux.y2018.opendata.entity.Planning;
 
 @RunWith(Arquillian.class)
 public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y2018.opendata.entity.Entity, D extends Dao<E>> {
@@ -199,6 +201,11 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	public void testDeleteNotExisting() throws DaoException {
 		final Response response = sendJsonAcceptJsonUTF8English("-1").delete();
 		assertStatusIsNotFound(response);
+	}
+	
+	public static void main(String[] args) {
+		assertEquals(new Planning(1L, "test-name", new ArrayList<>()), new Planning(1L, "test-name", new ArrayList<>()));
+		System.out.println("ok");
 	}
 
 }

@@ -1,12 +1,13 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,6 +48,7 @@ public class Person implements io.github.oliviercailloux.y2018.opendata.entity.E
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@XmlElement
 	private Long id;
 
 	/**
@@ -92,38 +94,19 @@ public class Person implements io.github.oliviercailloux.y2018.opendata.entity.E
 	/**
 	 * This represent fax of the person
 	 */
+	@Column(nullable = true)
+	@XmlElement
 	private String fax;
 
 	/**
-	 * this field represent the personal mail of the person.a person can have many
-	 * personal mail
+	 * this field represent the mail of the person.a person can have many mail
 	 */
 	@Column(nullable = false)
-	@ElementCollection
-	@CollectionTable(name = "Personal_Mail_table")
-	@XmlElementWrapper(name = "personalMails")
-	@XmlElement(name = "personalMail")
-	private List<String> personalMail = new LinkedList<>();
-
-	/**
-	 * a person in this context have mandatory dauphine mail so it can't be empty
-	 */
-	@Column(nullable = false)
-	@ElementCollection
-	@CollectionTable(name = "dauphine_Mail_table")
-	@XmlElementWrapper(name = "dauphineMails")
-	@XmlElement(name = "dauphineMail")
-	private List<String> dauphineMail = new LinkedList<>();
-
-	/**
-	 * This field is madatory and help to know the membership group
-	 */
-	@Column(nullable = false)
-	@ElementCollection
-	@CollectionTable(name = "memberShip_table")
-	@XmlElementWrapper(name = "memberShipMails")
-	@XmlElement(name = "memberShipMail")
-	private List<String> memberShip = new LinkedList<>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "Mail")
+	@XmlElementWrapper(name = "mails")
+	@XmlElement(name = "mail")
+	private List<String> mails = new ArrayList<>();
 
 	/**
 	 * This field help to distinguish persons currentlty present(active) in the
@@ -133,10 +116,6 @@ public class Person implements io.github.oliviercailloux.y2018.opendata.entity.E
 	@Column(nullable = false)
 	@XmlElement
 	private Boolean isActive;
-
-	@Override
-	public Long getId() {
-		return id;
-	}
+	
 }
 

@@ -36,12 +36,6 @@ public class MapperVcard {
 			vcard.setStructuredName(m);
 		}
 		
-		if(person.getPersonalMail() != null) {
-			person.getPersonalMail().forEach((personalMail) -> {
-				vcard.addEmail(personalMail);
-			});
-		}
-		
 		if(person.getOffice() != null) {
 			vcard.addNote(person.getOffice());
 		}

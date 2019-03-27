@@ -178,10 +178,6 @@ public class AbstractResourceTest {
 		then(dao).should(Mockito.atLeastOnce()).merge(entity);
 		assertResponseCreated(response);
 	}
-	
-	private void assertResponseForbidden(final Response response) {
-		assertEquals("status code KO", HttpServletResponse.SC_FORBIDDEN, response.getStatus());
-	}
 
 	@Test
 	public void testDeleteOk() throws Exception {

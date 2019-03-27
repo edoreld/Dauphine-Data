@@ -7,6 +7,9 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class ArquillianUtils {
 
 	public static String makeWarName(final String warName) {

@@ -2,25 +2,23 @@ package io.github.oliviercailloux.y2018.opendata.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import io.github.oliviercailloux.y2018.opendata.entity.Course.CoursePart;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -59,13 +57,9 @@ public class Planning implements io.github.oliviercailloux.y2018.opendata.entity
 	private String name;
 
 	@NonNull
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@XmlElementWrapper(name = "lectures")
 	@XmlElement(name = "lecture")
 	private List<Lecture> lectures = new ArrayList<>();
 	
-	@Override
-	public Long getId() {
-		return id;
-	}
 }

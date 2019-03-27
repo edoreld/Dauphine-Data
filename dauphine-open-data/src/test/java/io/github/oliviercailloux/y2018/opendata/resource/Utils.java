@@ -15,8 +15,9 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.common.base.Optional;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class Utils {
 
 	public static Builder sendContentType(final String contentType, final Builder builder) {

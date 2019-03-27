@@ -163,12 +163,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 		final E persistedEntity = Errors.rethrow().wrap(() -> dao.persist(entity)).get();
 		return makeCreatedResponse(persistedEntity.getId());
 	}
-	
-	private Response entityNotFound() {
-		LOGGER.info("[{}] - entity does not exist", resourceName);
-		return Response.status(Status.NOT_FOUND).build();
-	}
-	
+
 	private Response mergeEntity(E entity) {
 		dao.merge(entity);
 		return Response.noContent().build();

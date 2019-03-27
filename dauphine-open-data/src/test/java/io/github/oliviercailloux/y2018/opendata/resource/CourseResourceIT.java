@@ -27,17 +27,13 @@ public class CourseResourceIT extends AbstractResourceIT<Course, CourseDao> {
 	@Override
 	protected GenericType<List<Course>> getEntitiesType() {
 		return new GenericType<List<Course>>() {
+			// no implementation required
 		};
 	}
 
 	@Override
 	protected Course makeEntity() {
-		final Course c = new Course();
-		c.setCourseName("test-name");
-		c.setCourseDescription("test-description");
-		c.setInstructionLanguage("test-lang");
-		c.setCourseID("test-id");
-		return c;
+		return new Course("test-id", "test-name", "test-description", "test-lang");
 	}
 
 }
