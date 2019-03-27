@@ -56,6 +56,12 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<!--  vCal -->
+		<dependency>
+    		<groupId>net.sf.biweekly</groupId>
+    		<artifactId>biweekly</artifactId>
+    		<version>0.6.3</version>
+		</dependency>		
 		<!-- arquillian -->
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
