@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.diffplug.common.base.Errors;
 import com.google.common.base.Preconditions;
 
 import io.github.oliviercailloux.y2018.opendata.dao.Dao;
@@ -157,9 +158,29 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 		}
 	}
 
+	private Response persistEntity(E entity) {
+		LOGGER.info("[{}] - entity has no id, creating it ..", resourceName);
+		final E persistedEntity = Errors.rethrow().wrap(() -> dao.persist(entity)).get();
+		return makeCreatedResponse(persistedEntity.getId());
+	}
+	
+	private Response entityNotFound() {
+		LOGGER.info("[{}] - entity does not exist", resourceName);
+		return Response.status(Status.NOT_FOUND).build();
+	}
+	
+	private Response mergeEntity(E entity) {
+		dao.merge(entity);
+		return Response.noContent().build();
+	}
+	
+	private Response createWithMergeEntity(E entity) {
+		dao.merge(entity);
+		return makeCreatedResponse(entity.getId());
+	}
+	
 	/**
 	 * Creates or updates the given element of the given id.<br />
-	 * - FORBIDDEN if the given element has a different id than the given one.<br />
 	 * - CREATED if the creation was successful. Note that a different id may be
 	 * used for the creation.<br />
 	 * - NO_CONTENT if the merge was successful.<br />
@@ -171,27 +192,16 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 *                      {@link Dao#merge(Entity)}
 	 */
 	@PUT
-	@Path("{id}")
-	public Response put(@PathParam("id") Long id, E entity) {
-		LOGGER.info("[{}] - merging entity with id [{}] ..", resourceName, id);
+	public Response put(E entity) {
+		LOGGER.info("[{}] - putting entity with id [{}] ..", resourceName, entity);
+
 		if (entity.getId() == null) {
-			LOGGER.warn("[{}] - the provided id is null, creation not allowed", resourceName);
-			return Response.status(Status.FORBIDDEN).build();
+			return persistEntity(entity);
 		}
 
-		if (!id.equals(entity.getId())) {
-			LOGGER.warn("[{}] - the provided id [{}] is different than the url one [{}]", resourceName, entity.getId(),
-					id);
-			return Response.status(Status.FORBIDDEN).build();
-		}
-
-		if (!dao.findOne(id).isPresent()) {
-			LOGGER.info("[{}] - entity does not exist", resourceName);
-			return Response.status(Status.NOT_FOUND).build();
-		} else {
-			dao.merge(entity);
-			return Response.noContent().build();
-		}
+		return dao.findOne(entity.getId())
+				.map(this::mergeEntity)
+				.orElseGet(() -> createWithMergeEntity(entity));
 	}
 
 	/**

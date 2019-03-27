@@ -1,28 +1,31 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptJson;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptUTF8;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertContentTypeIsJsonUTF8;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertEntityIs;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsCreated;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsForbidden;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNoContent;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNotFound;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsOk;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.sendJson;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicLong;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -46,7 +49,7 @@ import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
 @RunWith(Arquillian.class)
 public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y2018.opendata.entity.Entity, D extends Dao<E>> {
 
-	protected static final Random RAND = new Random(1L);
+	protected static final AtomicLong INC = new AtomicLong(100_000L);
 	protected static final String WAR_NAME = "resource-it-war";
 
 	@ArquillianResource
@@ -102,52 +105,6 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		return getWebTarget().path(path);
 	}
 
-	protected Builder sendContentType(final String contentType, final Builder builder) {
-		builder.header(HttpHeaders.CONTENT_TYPE, contentType);
-		return builder;
-	}
-
-	protected Builder sendXml(final Builder builder) {
-		sendContentType(MediaType.APPLICATION_XML, builder);
-		return builder;
-	}
-
-	protected Builder sendJson(final Builder builder) {
-		sendContentType(MediaType.APPLICATION_JSON, builder);
-		return builder;
-	}
-
-	protected Builder acceptCharset(final String charset, final Builder builder) {
-		builder.header(HttpHeaders.ACCEPT_CHARSET, charset);
-		return builder;
-	}
-
-	protected Builder acceptUTF8(final Builder builder) {
-		return acceptCharset(StandardCharsets.UTF_8.name(), builder);
-	}
-
-	protected Builder acceptLanguage(final String language, final Builder builder) {
-		builder.header(HttpHeaders.ACCEPT_LANGUAGE, language);
-		return builder;
-	}
-
-	protected Builder acceptEnglish(final Builder builder) {
-		return acceptLanguage(Locale.ENGLISH.getLanguage(), builder);
-	}
-
-	protected Builder accept(final String accept, final Builder builder) {
-		builder.header(HttpHeaders.ACCEPT, accept);
-		return builder;
-	}
-
-	protected Builder acceptJson(final Builder builder) {
-		return accept(MediaType.APPLICATION_JSON, builder);
-	}
-
-	protected Builder acceptXml(final Builder builder) {
-		return accept(MediaType.APPLICATION_XML, builder);
-	}
-
 	protected Builder sendJsonAcceptJsonUTF8English(final String path) {
 		final Builder builder = getResourceWebTarget(path).request();
 		sendJson(builder);
@@ -156,72 +113,9 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		acceptUTF8(builder);
 		return builder;
 	}
-
+	
 	protected Builder sendJsonAcceptJsonUTF8English() {
 		return sendJsonAcceptJsonUTF8English("");
-	}
-
-	protected InputStream getInputStream(final Response response) {
-		return (InputStream) response.getEntity();
-	}
-
-	protected Scanner getScanner(final Response response) throws IOException {
-		return new Scanner(new BufferedInputStream(getInputStream(response)));
-	}
-
-	protected <T extends io.github.oliviercailloux.y2018.opendata.entity.Entity> T getEntity(final Response response,
-			final Class<T> entityType) {
-		response.bufferEntity();
-		return response.readEntity(entityType);
-	}
-
-	protected void assertStatusCodeIs(final int expectedStatusCode, final Response response) {
-		assertEquals("status code KO", expectedStatusCode, response.getStatus());
-	}
-
-	protected void assertStatusIsOk(final Response response) {
-		assertStatusCodeIs(HttpServletResponse.SC_OK, response);
-	}
-
-	protected void assertStatusIsNoContent(final Response response) {
-		assertStatusCodeIs(HttpServletResponse.SC_NO_CONTENT, response);
-	}
-
-	protected void assertStatusIsNotFound(final Response response) {
-		assertStatusCodeIs(HttpServletResponse.SC_NOT_FOUND, response);
-	}
-
-	protected void assertStatusIsForbidden(final Response response) {
-		assertStatusCodeIs(HttpServletResponse.SC_FORBIDDEN, response);
-	}
-
-	protected void assertStatusIsBadRequest(final Response response) {
-		assertStatusCodeIs(HttpServletResponse.SC_BAD_REQUEST, response);
-	}
-
-	protected void assertStatusIsCreated(final Response response) {
-		assertStatusCodeIs(HttpServletResponse.SC_CREATED, response);
-	}
-
-	protected void assertContentTypeIs(final String contentType, final Response response) {
-		assertEquals("Content-Type KO", contentType, response.getHeaderString(HttpHeaders.CONTENT_TYPE));
-	}
-
-	protected void assertContentTypeIsJsonUTF8(final Response response) {
-		assertContentTypeIs("application/json; charset=UTF-8", response);
-	}
-
-	protected void assertContentTypeIsXmlUTF8(final Response response) {
-		assertContentTypeIs("application/xml; charset=UTF-8", response);
-	}
-
-	protected void assertBodyIs(final String expectedBody, final Response response) throws IOException {
-		assertEquals("Body KO", expectedBody, getScanner(response).nextLine());
-	}
-
-	protected <T extends io.github.oliviercailloux.y2018.opendata.entity.Entity> void assertEntityIs(
-			final T expectedEntity, final Response response) {
-		assertEquals("Entity KO", expectedEntity, getEntity(response, expectedEntity.getClass()));
 	}
 
 	protected abstract E makeEntity();
@@ -270,36 +164,26 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 	}
 
 	@Test
-	public void testPutIdsDifferent() throws Exception {
-		final E c = makeEntity();
-		final E persistedEntity = getDao().persist(c);
-		final Response response = sendJsonAcceptJsonUTF8English(c.getId().toString() + 1)
-				.put(Entity.json(persistedEntity));
-		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), response);
-	}
-
-	@Test
-	public void testPutEntityDoesntExistWithId() {
-		final E notPersistedEntity = makeEntity();
-		final Long id = 123456L;
-		ReflectionTestUtils.setField(notPersistedEntity, "id", id);
-		final Response response = sendJsonAcceptJsonUTF8English(id.toString()).put(Entity.json(notPersistedEntity));
-		assertStatusIsNotFound(response);
-	}
-
-	@Test
-	public void testPutEntityDoesntExistNoId() {
-		final E c = makeEntity();
-		final Response response = sendJsonAcceptJsonUTF8English(Long.toString(12345L)).put(Entity.json(c));
-		assertStatusIsForbidden(response);
-	}
-
-	@Test
 	public void testPutMerge() throws Exception {
 		final E c = makeEntity();
 		final E persistedEntity = getDao().persist(c);
-		final Response response = sendJsonAcceptJsonUTF8English(c.getId().toString()).put(Entity.json(persistedEntity));
+		final Response response = sendJsonAcceptJsonUTF8English().put(Entity.json(persistedEntity));
 		assertStatusIsNoContent(response);
+	}
+	
+	@Test
+	public void testPutCreateNullId() throws Exception {
+		final E c = makeEntity();
+		final Response response = sendJsonAcceptJsonUTF8English().put(Entity.json(c));
+		assertStatusIsCreated(response);
+	}
+	
+	@Test
+	public void testPutCreateNonNullId() throws Exception {
+		final E c = makeEntity();
+		ReflectionTestUtils.setField(c, "id", INC.incrementAndGet());
+		final Response response = sendJsonAcceptJsonUTF8English().put(Entity.json(c));
+		assertStatusIsCreated(response);
 	}
 
 	@Test

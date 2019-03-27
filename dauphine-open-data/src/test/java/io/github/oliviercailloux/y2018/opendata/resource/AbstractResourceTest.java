@@ -57,6 +57,11 @@ public class AbstractResourceTest {
 		final Long id = INC.incrementAndGet();
 		return new FakeEntity(id, id + "-name");
 	}
+	
+	private FakeEntity makeFakeEntityNullId() {
+		final Long id = INC.incrementAndGet();
+		return new FakeEntity(null, id + "-name");
+	}
 
 	private void assertResponseOK(final Response response) {
 		assertEquals("status code KO", HttpServletResponse.SC_OK, response.getStatus());
@@ -143,52 +148,37 @@ public class AbstractResourceTest {
 	}
 
 	@Test
-	public void testPutOk() throws Exception {
+	public void testPutMerge() throws Exception {
 		final FakeEntity entity = makeFakeEntity();
-		given(dao.merge(entity)).willReturn(entity);
 		given(dao.findOne(entity.getId())).willReturn(Optional.of(entity));
-		final Response response = resource.put(entity.getId(), entity);
+		given(dao.merge(entity)).willReturn(entity);
+		final Response response = resource.put(entity);
 		then(dao).should(Mockito.atLeastOnce()).merge(entity);
+		then(dao).should(Mockito.atLeastOnce()).findOne(Mockito.anyLong());
 		assertResponseNoContent(response);
 	}
-
+	
 	@Test
-	public void testPutOkSameIdButDifferentRefs() throws Exception {
-		final FakeEntity entity = makeFakeEntity();
-		given(dao.merge(entity)).willReturn(entity);
-		given(dao.findOne(entity.getId())).willReturn(Optional.of(entity));
-		final Response response = resource.put(new Long(entity.getId()), entity);
-		then(dao).should(Mockito.atLeastOnce()).merge(entity);
-		assertResponseNoContent(response);
+	public void testPutCreateNullId() throws Exception {
+		final FakeEntity entity = makeFakeEntityNullId();
+		given(dao.persist(entity)).willReturn(entity);
+		final Response response = resource.put(entity);
+		then(dao).should(Mockito.never()).findOne(Mockito.anyLong());
+		then(dao).should(Mockito.atLeastOnce()).persist(entity);
+		assertResponseCreated(response);
 	}
-
+	
 	@Test
-	public void testPutForbiddenDifferentId() throws Exception {
-		final FakeEntity entity = makeFakeEntity();
-		final Response response = resource.put(entity.getId() + 1, entity);
-		Mockito.verifyZeroInteractions(dao);
-		assertResponseForbidden(response);
-	}
-
-	@Test
-	public void testPutForbiddenNoId() throws Exception {
-		final FakeEntity entity = new FakeEntity(null, "testPutForbiddenNoId-fakeEntity");
-		final Response response = resource.put(entity.getId(), entity);
-		Mockito.verifyZeroInteractions(dao);
-		assertResponseForbidden(response);
-	}
-
-	@Test
-	public void testPutNotFound() throws Exception {
+	public void testPutCreateNonNullId() throws Exception {
 		final FakeEntity entity = makeFakeEntity();
 		given(dao.findOne(entity.getId())).willReturn(Optional.empty());
-		final Response response = resource.put(entity.getId(), entity);
-		then(dao).should(Mockito.atLeastOnce()).findOne(entity.getId());
-		then(dao).should(Mockito.never()).persist(entity);
-		then(dao).should(Mockito.never()).merge(entity);
-		assertResponseNotFound(response);
+		given(dao.merge(entity)).willReturn(entity);
+		final Response response = resource.put(entity);
+		then(dao).should(Mockito.atLeastOnce()).findOne(Mockito.anyLong());
+		then(dao).should(Mockito.atLeastOnce()).merge(entity);
+		assertResponseCreated(response);
 	}
-
+	
 	private void assertResponseForbidden(final Response response) {
 		assertEquals("status code KO", HttpServletResponse.SC_FORBIDDEN, response.getStatus());
 	}
