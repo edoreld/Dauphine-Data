@@ -42,13 +42,13 @@ public class VCalMapper {
 	 */
 	public VEvent transformLectureToEvent(Lecture lecture) {
 		VEvent event = new VEvent();
-		Date start = Date.from(lecture.getDate());
+		Date start = lecture.getDate();
 		Instant startInstant = start.toInstant();
 		Instant endInstant = startInstant.plus(Duration.ofMinutes(lecture.getDuration()));
 		Date end = Date.from(endInstant);
 		event.setDateStart(start);
 		event.setDateEnd(end);
-		if (!lecture.getRoom().isEmpty())
+		if (lecture.getRoom() != null)
 			event.setLocation(lecture.getRoom());
 		event.setOrganizer(getOrganizerFromLecture(lecture));
 		event.setDescription(lecture.getCourse().getCourseDescription());
@@ -66,8 +66,8 @@ public class VCalMapper {
 	private Organizer getOrganizerFromLecture(Lecture lecture) {
 		String organizerName = lecture.getTeacher().getFirstName();
 		String organizerEmail = new String();
-		if (lecture.getTeacher().getDauphineMail().size() > 0)
-			organizerEmail = lecture.getTeacher().getDauphineMail().get(0);
+		if (lecture.getTeacher().getMails().size() > 0)
+			organizerEmail = lecture.getTeacher().getMails().get(0);
 		else
 			organizerEmail = "";
 
