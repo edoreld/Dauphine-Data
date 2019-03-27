@@ -20,12 +20,20 @@ import org.w3c.dom.NodeList;
 /**
  * 
  * this class allows the conversion of a java object into XML elements
- *and from XML elements to build java objects from the class Race 
+ * 
+ * and from XML elements to build java objects from the class Race
+ *
  * @author Mohamed EL AMRANI
  */
 
 public class CourseXML {
 
+	/**
+	 * @param courses entity to encode cannot be null
+	 * 
+	 * @param file    path to store the XML file
+	 * 
+	 */
 	public void encodeCourse(Course courses, String file) throws Exception {
 		try {
 			SchemaFactory schemaFactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
@@ -53,6 +61,12 @@ public class CourseXML {
 		}
 	}
 
+	/**
+	 * 
+	 * @param file path to decode the XML file to course object
+	 * 
+	 * @return courses list of course object
+	 */
 	public List<Course> decodeCourse(String file) throws Exception {
 		List<Course> courses = new ArrayList<Course>();
 		File inputFile = new File(file);
@@ -79,5 +93,4 @@ public class CourseXML {
 		return courses;
 	}
 
-	
 }
