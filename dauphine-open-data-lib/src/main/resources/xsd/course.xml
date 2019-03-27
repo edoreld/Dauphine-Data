@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<course>
+    <courseID>aaa</courseID>
+    <courseName>hello</courseName>
+    <courseDescription>descp</courseDescription>
+    <instructionLanguage>english</instructionLanguage>
+</course>
