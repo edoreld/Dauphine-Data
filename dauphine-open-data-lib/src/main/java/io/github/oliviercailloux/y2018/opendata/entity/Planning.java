@@ -2,15 +2,28 @@ package io.github.oliviercailloux.y2018.opendata.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import io.github.oliviercailloux.y2018.opendata.entity.Course.CoursePart;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -24,53 +37,35 @@ import javax.xml.bind.annotation.XmlAccessorType;
  *
  */
 
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Planning implements Entity {
+@Entity
+@NoArgsConstructor
+@RequiredArgsConstructor	
+@AllArgsConstructor
+@Data
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+public class Planning implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
 	private static final long serialVersionUID = -5050839598082807501L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@XmlElement
 	private Long id;
 
+	@NonNull
 	@Column(nullable = false)
-	private final String name;
+	@XmlElement
+	private String name;
 
+	@NonNull
 	@ManyToMany
+	@XmlElementWrapper(name = "lectures")
+	@XmlElement(name = "lecture")
 	private List<Lecture> lectures = new ArrayList<>();
-
-	/**
-	 * Constructor
-	 */
-
-	public Planning(String name, Person person, final List<Lecture> lecture) {
-		this.name = name;
-		this.lectures = Objects.requireNonNull(lecture);
-	}
-
+	
 	@Override
 	public Long getId() {
 		return id;
 	}
-
-	/**
-	 * Returns this planning's lectures whose changes are reflected in this object
-	 *
-	 * @return not <code>null</code>
-	 */
-
-	public List<Lecture> getLectures() {
-		return lectures;
-	}
-
-	/**
-	 * Sets this planning's lectures
-	 *
-	 * @param lectures can't be <code>null</code>
-	 */
-
-	public void setLectures(List<Lecture> lectures) {
-		this.lectures = Objects.requireNonNull(lectures);
-	}
-
 }

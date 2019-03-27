@@ -47,7 +47,7 @@ public class LectureResourceIT extends AbstractResourceIT<Lecture, LectureDao> {
 
 	@Override
 	protected Lecture makeEntity() {
-		return new Lecture(makePersistedCourse(), new Date(), 30, "test-room", "test-group", null);
+		return new Lecture(makePersistedCourse(), new Date(), 30, "test-group");
 	}
 
 }

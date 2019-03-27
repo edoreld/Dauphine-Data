@@ -14,4 +14,23 @@
 
 	<name>Dauphine Open Data Lib</name>
 	<description>Common lib with entities and utility classes</description>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>start-wildfly</id>
+						<phase>pre-integration-test</phase>
+					</execution>
+					<execution>
+						<id>stop-wildfly</id>
+						<phase>post-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

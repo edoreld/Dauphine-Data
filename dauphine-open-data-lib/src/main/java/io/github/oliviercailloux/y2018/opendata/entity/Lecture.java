@@ -17,9 +17,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Data
 @XmlRootElement
@@ -68,16 +70,6 @@ public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.
 	@ManyToOne(optional = true)
 	@XmlElement
 	private Person teacher;
-
-	public Lecture(@NonNull Course course, @NonNull Date date, @NonNull Integer duration, String room,
-			@NonNull String group, Person teacher) {
-		this.course = course;
-		this.date = date;
-		this.duration = duration;
-		this.room = room;
-		this.groupName = group;
-		this.teacher = teacher;
-	}
 	
 	@Override
 	public Long getId() {

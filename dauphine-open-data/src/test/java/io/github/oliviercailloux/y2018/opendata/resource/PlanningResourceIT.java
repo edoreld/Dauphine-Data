@@ -34,8 +34,7 @@ public class PlanningResourceIT extends AbstractResourceIT<Planning, PlanningDao
 
 	@Override
 	protected Planning makeEntity() {
-		final Planning c = new Planning("test-name", null, Collections.emptyList());
-
+		final Planning c = new Planning("test-name");
 		return c;
 	}
 

@@ -6,6 +6,7 @@
 	<persistence-unit name="dauphine-opendata" transaction-type="JTA">
 		<!-- class>io.github.oliviercailloux.y2018.opendata.entity.Course</class -->
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<validation-mode>CALLBACK</validation-mode>
 		<properties>
 			<property
 				name="javax.persistence.schema-generation.database.action"

@@ -26,6 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a Dauphine Course. It's meant to be a subset of the CDM-fr schema.
@@ -35,6 +36,7 @@ import lombok.NonNull;
  */
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Data
 @XmlRootElement
@@ -81,15 +83,6 @@ public class Course implements io.github.oliviercailloux.y2018.opendata.entity.E
 	@XmlElementWrapper
 	@XmlElement
 	private Map<CoursePart, Integer> volumes = new EnumMap<>(CoursePart.class);
-
-	public Course(@NonNull @Unique String courseID, @NonNull String courseName, @NonNull String courseDescription,
-			@NonNull String instructionLanguage, @NonNull Map<CoursePart, Integer> volumes) {
-		this.courseID = courseID;
-		this.courseName = courseName;
-		this.courseDescription = courseDescription;
-		this.instructionLanguage = instructionLanguage;
-		this.volumes = volumes;
-	}
 	
 	/**
 	 * Returns the business id of the course
