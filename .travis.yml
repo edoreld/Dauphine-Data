@@ -34,5 +34,5 @@ deploy:
   provider: script
   script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest-client.yaml
   on:
-    branch: feat/client
+    branch: feat/client-2
   skip_cleanup: true
