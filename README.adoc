@@ -41,22 +41,65 @@ Le projet va se décomposer en 2 parties.
 * Prise de contact avec la DSI de dauphine pour anticiper les fonctionnalites de l'itération 3 (URGENT)
 
 ### Itération 3 :
+
+Si le groupe PoleInfo est prêt :
 * Interop avec PoleInfo pour exposer une partie de leur API
-* Système d'authentification :
-** les clients de l'api dauphine-data devront être authentifiés via le  serveur d'authentification central de Dauphine
-** documentation de la procédure d'authentification de Dauphine
-** intégration avec les servlets JAX-RS
-* Connection avec la base de données de Dauphine :
-** connexion et authentification à la base de données de dauphine
-** accès aux données ? 3 options :
-*** 1. accès direct : nécéssite l'adaptation de nos entités pour qu'elles soient compatibles avec la base de données de Dauphine
-*** 2. accès indirect: base de données tampon, chargement des données en appliquant des transformations, mise à jour périodique.
-*** 3. hybride : base de données tampon avec un cache d'invalidité, chargement des données nécéssaires au moment de la requète
+
+
+
+
+Si le groupe PoleInfo est prêt, retirer une fonctionnalité du la liste ci-dessous:
+* Création d'une entité `User` avec un token d'accès généré à la création et un role (`admin` ou `standard`)
+* Page formulaire de création d'un utilisateur qui affiche le token d'accès à la fin du processus
+* tracage de toutes les requêtes dans une table spécifique (route, timestamp, user)
+* regles de filtrage qui autorise ou rejète les requetes en se basant sur différentes règles:
+  * utilisateur authentifié
+  * quotas d'utilisation respectés (maxiumum X req à la seconde)
+  * accès à des routes réservées à l'admin
+
+
+* Création d'un jeu de données de démonstration réaliste
+
+* Script d'injection des données de démonstration au démarrage de l'application
+
+
+El Amrani:
+  - import vcal
+  - injecteur vcal démarrage
+
+Omar:
+  - import vcard
+  - injecteur vcard démarrage
+
+Taric :
+  - route pour faire des filtres sur l'entité Person
+
+Javier:
+  - à définir
+
+**disclaimer**: ce qui va suivre est effectivement une usine à gaz
+
+Arnaud et Barth (à partager):
+  - Entité utilisateur (nom + token + roles)
+  - Entité privilège
+    - pour commencer, deux privilèges : "view_all" et "write_all"
+  - Entité role permettant de regrouper les privilèges
+    - Pour commencer, deux rôles : "admin" et "standard"
+  - Un système d'annotation sur les routes JAX-RS pour indiquer les privilèges requis
+  - Authentification des requetes (verification du token, ajout de l'user dans le contexte de la requete)
+  - Authorization des requetes en faisant correspondre les annotations de la resource demandée aux privilège de l'utilisateur authentifié
+
+Arnaud et Barth (à partager):
+  - Entité Evenement pour tracer les requète (utilisateur, timestamp, route)
+  - Entité Quotas indiquant pour chaque utilisateur le nombre de requete maxiumum par fenetre de temps
+  - Tracage de toutes les requetes via un middleware jax-rs
+  - Statistiques de requetage par utilisateur sur une fenetre de temps à définir
+  - Rejet des requetes qui font dépasser le quota de l'utilisateur
 
 ## Connexion au cloud d'IBM
 
     * Pour vous connecter au cloud, vous disposer de :
     ** l'URL de base à l'adresse : https://dauphine-open-datas.eu-gb.mybluemix.net
-    
+
     ** Voici un exemple d'utilisation d'URL faisant appel à un get : https://dauphine-open-datas.eu-gb.mybluemix.net/resource/home
 
