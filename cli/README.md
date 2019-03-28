@@ -94,35 +94,11 @@ All URIs are relative to **
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**createCourse**](docs/DefaultApi.md#createcourse) | **POST** /course | 
-*DefaultApi* | [**createLecture**](docs/DefaultApi.md#createlecture) | **POST** /lecture | 
-*DefaultApi* | [**createPerson**](docs/DefaultApi.md#createperson) | **POST** /person | 
-*DefaultApi* | [**createPlanning**](docs/DefaultApi.md#createplanning) | **POST** /planning | 
-*DefaultApi* | [**deleteCourse**](docs/DefaultApi.md#deletecourse) | **DELETE** /course/{id} | 
-*DefaultApi* | [**deleteLecture**](docs/DefaultApi.md#deletelecture) | **DELETE** /lecture/{id} | 
-*DefaultApi* | [**deletePerson**](docs/DefaultApi.md#deleteperson) | **DELETE** /person/{id} | 
-*DefaultApi* | [**deletePlanning**](docs/DefaultApi.md#deleteplanning) | **DELETE** /planning/{id} | 
-*DefaultApi* | [**getCourse**](docs/DefaultApi.md#getcourse) | **GET** /course/{id} | 
-*DefaultApi* | [**getLecture**](docs/DefaultApi.md#getlecture) | **GET** /lecture/{id} | 
-*DefaultApi* | [**getPerson**](docs/DefaultApi.md#getperson) | **GET** /person/{id} | 
-*DefaultApi* | [**getPlanning**](docs/DefaultApi.md#getplanning) | **GET** /planning/{id} | 
-*DefaultApi* | [**listCourses**](docs/DefaultApi.md#listcourses) | **GET** /course | 
-*DefaultApi* | [**listLectures**](docs/DefaultApi.md#listlectures) | **GET** /lecture | 
-*DefaultApi* | [**listPersons**](docs/DefaultApi.md#listpersons) | **GET** /person | 
-*DefaultApi* | [**listPlannings**](docs/DefaultApi.md#listplannings) | **GET** /planning | 
-*DefaultApi* | [**replaceCourse**](docs/DefaultApi.md#replacecourse) | **PUT** /course/{id} | 
-*DefaultApi* | [**replaceLecture**](docs/DefaultApi.md#replacelecture) | **PUT** /lecture/{id} | 
-*DefaultApi* | [**replacePerson**](docs/DefaultApi.md#replaceperson) | **PUT** /person/{id} | 
-*DefaultApi* | [**replacePlanning**](docs/DefaultApi.md#replaceplanning) | **PUT** /planning/{id} | 
 *DefaultApi* | [**sayHello**](docs/DefaultApi.md#sayhello) | **GET** /home | 
 
 
 ## Documentation For Models
 
- - [Course](docs/Course.md)
- - [Lecture](docs/Lecture.md)
- - [Person](docs/Person.md)
- - [Planning](docs/Planning.md)
 
 
 ## Documentation For Authorization
