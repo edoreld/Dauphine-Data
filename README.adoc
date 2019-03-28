@@ -42,59 +42,45 @@ Le projet va se décomposer en 2 parties.
 
 ### Itération 3 :
 
-Si le groupe PoleInfo est prêt :
-* Interop avec PoleInfo pour exposer une partie de leur API
-
-
-
-
-Si le groupe PoleInfo est prêt, retirer une fonctionnalité du la liste ci-dessous:
-* Création d'une entité `User` avec un token d'accès généré à la création et un role (`admin` ou `standard`)
-* Page formulaire de création d'un utilisateur qui affiche le token d'accès à la fin du processus
-* tracage de toutes les requêtes dans une table spécifique (route, timestamp, user)
-* regles de filtrage qui autorise ou rejète les requetes en se basant sur différentes règles:
-  * utilisateur authentifié
-  * quotas d'utilisation respectés (maxiumum X req à la seconde)
-  * accès à des routes réservées à l'admin
-
-
-* Création d'un jeu de données de démonstration réaliste
-
-* Script d'injection des données de démonstration au démarrage de l'application
-
 
 El Amrani:
-  - import vcal
-  - injecteur vcal démarrage
+
+* import vcal
+* injecteur vcal démarrage
 
 Omar:
-  - import vcard
-  - injecteur vcard démarrage
+
+* import vcard
+* injecteur vcard démarrage
 
 Taric :
-  - route pour faire des filtres sur l'entité Person
+
+* route pour faire des filtres sur l'entité Person
 
 Javier:
-  - à définir
+
+* à définir
 
 **disclaimer**: ce qui va suivre est effectivement une usine à gaz
 
 Arnaud et Barth (à partager):
-  - Entité utilisateur (nom + token + roles)
-  - Entité privilège
-    - pour commencer, deux privilèges : "view_all" et "write_all"
-  - Entité role permettant de regrouper les privilèges
-    - Pour commencer, deux rôles : "admin" et "standard"
-  - Un système d'annotation sur les routes JAX-RS pour indiquer les privilèges requis
-  - Authentification des requetes (verification du token, ajout de l'user dans le contexte de la requete)
-  - Authorization des requetes en faisant correspondre les annotations de la resource demandée aux privilège de l'utilisateur authentifié
+
+* Entité utilisateur (nom + token + roles)
+* Entité privilège
+  * pour commencer, deux privilèges : "view_all" et "write_all"
+* Entité role permettant de regrouper les privilèges
+  * pour commencer, deux rôles : "admin" et "standard"
+* Un système d'annotation sur les routes JAX-RS pour indiquer les privilèges requis
+* Authentification des requetes (verification du token, ajout de l'user dans le contexte de la requete)
+* Authorization des requetes en faisant correspondre les annotations de la resource demandée aux privilège de l'utilisateur authentifié
 
 Arnaud et Barth (à partager):
-  - Entité Evenement pour tracer les requète (utilisateur, timestamp, route)
-  - Entité Quotas indiquant pour chaque utilisateur le nombre de requete maxiumum par fenetre de temps
-  - Tracage de toutes les requetes via un middleware jax-rs
-  - Statistiques de requetage par utilisateur sur une fenetre de temps à définir
-  - Rejet des requetes qui font dépasser le quota de l'utilisateur
+
+* Entité Evenement pour tracer les requète (utilisateur, timestamp, route)
+* Entité Quotas indiquant pour chaque utilisateur le nombre de requete maxiumum par fenetre de temps
+* Tracage de toutes les requetes via un middleware jax-rs
+* Statistiques de requetage par utilisateur sur une fenetre de temps à définir
+* Rejet des requetes qui font dépasser le quota de l'utilisateur
 
 ## Connexion au cloud d'IBM
 
