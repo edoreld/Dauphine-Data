@@ -67,9 +67,9 @@ Arnaud et Barth (à partager):
 
 * Entité utilisateur (nom + token + roles)
 * Entité privilège
-  * pour commencer, deux privilèges : "view_all" et "write_all"
+** pour commencer, deux privilèges : "view_all" et "write_all"
 * Entité role permettant de regrouper les privilèges
-  * pour commencer, deux rôles : "admin" et "standard"
+** pour commencer, deux rôles : "admin" et "standard"
 * Un système d'annotation sur les routes JAX-RS pour indiquer les privilèges requis
 * Authentification des requetes (verification du token, ajout de l'user dans le contexte de la requete)
 * Authorization des requetes en faisant correspondre les annotations de la resource demandée aux privilège de l'utilisateur authentifié
