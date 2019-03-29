@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -32,16 +32,19 @@ public class VCalMapperTest {
 	 */
 	@Test
 	public void testEncodePlanningToICalendar() throws IOException {
-		Person olivier = new Person();
+		Person olivier = new Person("test-firstname", "test-lastname", true);
 		Course course = new Course();
 		course.setCourseDescription("test");
 		course.setCourseName("Programmation en Java");
-		Lecture lecture1 = new Lecture(course, Instant.now(), 0, null, null, olivier);
-		Lecture lecture2 = new Lecture(course, Instant.now(), 0, null, null, olivier);
+		Lecture lecture1 = new Lecture(course, new Date(), 30, "group1");
+		lecture1.setTeacher(olivier);
+		Lecture lecture2 = new Lecture(course, new Date(), 30, "group2");
+		lecture2.setTeacher(olivier);
 		List<Lecture> lectures = new ArrayList<>();
 		lectures.add(lecture1);
 		lectures.add(lecture2);
-		Planning planning = new Planning("planning", new Person(), lectures);
+		Planning planning = new Planning("planning");
+		planning.setLectures(lectures);
 
 		VCalMapper iCalendarMapper = new VCalMapper();
 		ICalendar ical = iCalendarMapper.encodePlanningToICalendar(planning);

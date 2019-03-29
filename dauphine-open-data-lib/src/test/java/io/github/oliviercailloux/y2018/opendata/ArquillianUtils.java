@@ -7,7 +7,10 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
-public class TestUtils {
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public class ArquillianUtils {
 
 	public static String makeWarName(final String warName) {
 		return warName + ".war";
@@ -18,7 +21,9 @@ public class TestUtils {
 				.withTransitivity().asFile();
 
 		final JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
-				.addPackages(true, "io.github.oliviercailloux.y2018.opendata").addClass(DauphineOpenDataApp.class)
+				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.entity")
+				.addAsResource("META-INF/persistence.xml")
+				.addAsResource("log4j2.xml")
 				.addAsResource("arquillian.xml");
 
 		final WebArchive war = ShrinkWrap.create(WebArchive.class, makeWarName(warName)).addAsLibraries(libs)

@@ -1,61 +1,81 @@
 package io.github.oliviercailloux.y2018.opendata.dao;
 
-import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import com.google.common.base.Preconditions;
 
 import io.github.oliviercailloux.y2018.opendata.entity.Entity;
 
-/**
- * Provides a base implementation of the interface {@link Dao}.<br />
- * <br />
- * This implementation uses an {@link EntityManager} to interact with the
- * persistence layer. Only the class and the name of the entity are required to
- * implement all methods.<br />
- * <br />
- *
- * @author Dauphine - CLAUDEL Arnaud
- *
- * @param <E> The entity
- */
+@Transactional
 public abstract class AbstractDao<E extends Entity> implements Dao<E> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDao.class);
+	@PersistenceContext
+	protected EntityManager em;
 
-	protected final EntityManager entityManager;
-
-	/**
-	 * The class of the entity, used with the entity manager.
-	 */
+	protected final String tableName;
 	protected final Class<E> entityClass;
 
-	/**
-	 * The name of entity, should match with the table name since it is used to
-	 * build SQL query.
-	 */
-	protected final String entityName;
+	public AbstractDao(String tableName, Class<E> entityClass) {
+		super();
+		this.tableName = Preconditions.checkNotNull(tableName, "tableName");
+		this.entityClass = Preconditions.checkNotNull(entityClass, "entityClass");
+	}
 
-	/**
-	 * This constructor expects both managed entity manager.
-	 *
-	 * @param entityManager A managed entity manager
-	 * @param entityClass   The class of the entity, used with the entity manager
-	 * @param entityName    The name of entity, should match with the table name
-	 *                      since it is used to build SQL query
-	 */
-	public AbstractDao(EntityManager entityManager, Class<E> entityClass, String entityName) {
-		this.entityManager = Preconditions.checkNotNull(entityManager, "entityManager");
-		this.entityClass   = Preconditions.checkNotNull(entityClass, "entityClass");
-		this.entityName    = Preconditions.checkNotNull(entityName, "entityName");
+	@PostConstruct
+	public void postConstruct() {
+		Preconditions.checkNotNull(em, "em");
+	}
+
+	@Override
+	public List<E> findAll() {
+		return em.createQuery("SELECT e FROM " + tableName + " e", entityClass).getResultList();
+	}
+
+	@Override
+	public Optional<E> findOne(Long id) {
+		Preconditions.checkNotNull(id, "id");
+		return Optional.ofNullable(em.find(entityClass, id));
+	}
+
+	private boolean entityAlreadyExists(E entity) {
+		return entity.getId() != null && findOne(entity.getId()).isPresent();
+	}
+
+	@Override
+	public E persist(E entity) throws EntityAlreadyExistsDaoException {
+		Preconditions.checkNotNull(entity, "entity");
+		if (entityAlreadyExists(entity)) {
+			throw new EntityAlreadyExistsDaoException();
+		}
+		em.persist(entity);
+		return entity;
+	}
+
+	@Override
+	public E merge(E entity) {
+		Preconditions.checkNotNull(entity, "entity");
+		return em.merge(entity);
+	}
+
+	@Override
+	public void remove(Long id) throws EntityDoesNotExistDaoException {
+		Preconditions.checkNotNull(id, "id");
+		final Optional<E> entityOpt = findOne(id);
+		if (!entityOpt.isPresent()) {
+			throw new EntityDoesNotExistDaoException();
+		}
+		em.remove(entityOpt.get());
 	}
 
 	@Override
 	public void flush() {
-		LOGGER.info("flushing entity manager ..");
-		entityManager.flush();
+		em.flush();
 	}
 
 }

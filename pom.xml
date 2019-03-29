@@ -24,7 +24,7 @@
 		<version.wildfly>14.0.1.Final</version.wildfly>
 		<version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
 		<version.plugin.resources>3.1.0</version.plugin.resources>
-		<version.jacoco.plugin>0.8.2</version.jacoco.plugin>
+		<version.jacoco.plugin>0.8.3</version.jacoco.plugin>
 		<version.slf4j.api>1.7.25</version.slf4j.api>
 		<version.slf4j.log4j12>1.7.25</version.slf4j.log4j12>
 		<version.google.guava>27.0.1-jre</version.google.guava>
@@ -36,10 +36,11 @@
 		<version.maven.failsafe.plugin>3.0.0-M2</version.maven.failsafe.plugin>
 		<version.tidy>1.1.0</version.tidy>
 		<version.surefire.plugin>2.17</version.surefire.plugin>
-		<path.distrib.wildfly>distrib/wildfly/</path.distrib.wildfly>
+		<path.distrib.wildfly>${user.home}/distrib/wildfly/</path.distrib.wildfly>
 		<path.jboss.home>${path.distrib.wildfly}/wildfly-${version.wildfly}/</path.jboss.home>
-
-
+		<version.mockito>1.10.19</version.mockito>
+		<version.lombok>1.18.4</version.lombok>
+		<version.ez.vcard>0.10.5</version.ez.vcard>
 		<wildfly.exec.skip>true</wildfly.exec.skip>
 		<unpack.wildfly.skip>true</unpack.wildfly.skip>
 	</properties>
@@ -110,6 +111,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- JEE API -->
 
 		<dependency>
@@ -125,14 +133,26 @@
 			<artifactId>guava</artifactId>
 			<version>${version.google.guava}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.diffplug.durian</groupId>
+			<artifactId>durian</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+
 		<!-- vCard -->
 		<dependency>
 			<groupId>com.googlecode.ez-vcard</groupId>
 			<artifactId>ez-vcard</artifactId>
-			<version>0.10.5</version>
+			<version>${version.ez.vcard}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.4</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -163,6 +183,27 @@
 				<version>${version.surefire.plugin}</version>
 			</plugin>
 
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${version.jacoco.plugin}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
 			<!-- integration tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -184,14 +225,12 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>unpack-wildfly</id>
-						<phase>generate-sources</phase>
+						<id>wildfly</id>
+						<phase>none</phase>
 						<goals>
 							<goal>unpack</goal>
 						</goals>
-						<inherited>false</inherited>
 						<configuration>
-							<skip>${unpack.wildfly.skip}</skip>
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.wildfly</groupId>
@@ -214,19 +253,16 @@
 				<version>${version.wildfly.maven.plugin}</version>
 				<configuration>
 					<jbossHome>${path.jboss.home}</jbossHome>
-					<skip>${wildfly.exec.skip}</skip>
 				</configuration>
 				<executions>
 					<execution>
 						<id>start-wildfly</id>
-						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>start</goal>
 						</goals>
 					</execution>
 					<execution>
 						<id>stop-wildfly</id>
-						<phase>post-integration-test</phase>
 						<goals>
 							<goal>shutdown</goal>
 						</goals>

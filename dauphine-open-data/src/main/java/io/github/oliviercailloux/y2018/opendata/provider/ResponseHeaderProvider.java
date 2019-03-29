@@ -1,6 +1,7 @@
 package io.github.oliviercailloux.y2018.opendata.provider;
 
-import com.google.common.base.Preconditions;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -10,8 +11,8 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
+
+import com.google.common.base.Preconditions;
 
 /**
  * Provider that sets the default attribute of any outgoing
