@@ -43,7 +43,7 @@ public class Course extends AbstractEntity {
     @XmlElement
     private String instructionLanguage;
 
-    /*@ElementCollection
+    @ElementCollection
     @CollectionTable(name = "Course_Part")
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "type", nullable = false)
@@ -53,7 +53,7 @@ public class Course extends AbstractEntity {
 
     public enum CoursePart {
         CM, TP, TD, HOMEWORK, PROFESSTRAINING, TRAININGWEEKS, ALL
-    }*/
+    }
 
     /**
      * Returns the business id of the course

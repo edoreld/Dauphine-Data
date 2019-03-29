@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
+  <!--
+
+Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.3.0 
+Voir <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
+Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+Généré le : 2019.03.29 à 03:56:28 AM WET 
+
+  -->
+  <jaxb:bindings if-exists="true" scd="x-schema::">
+    <jaxb:schemaBindings map="false">
+      <jaxb:package name="xjc"/>
+    </jaxb:schemaBindings>
+    <jaxb:bindings if-exists="true" scd="CDM">
+      <jaxb:class ref="xjc.CDM"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~programType">
+      <jaxb:class ref="xjc.ProgramType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~infoBlockType">
+      <jaxb:class ref="xjc.InfoBlockType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="adr">
+      <jaxb:class ref="xjc.Adr"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~personType">
+      <jaxb:class ref="xjc.PersonType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~courseType">
+      <jaxb:class ref="xjc.CourseType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~teachingActivityType">
+      <jaxb:class ref="xjc.TeachingActivityType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~timetableType">
+      <jaxb:class ref="xjc.TimetableType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~examType">
+      <jaxb:class ref="xjc.ExamType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~contactDataType">
+      <jaxb:class ref="xjc.ContactDataType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~textType">
+      <jaxb:class ref="xjc.TextType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~orgUnitType">
+      <jaxb:class ref="xjc.OrgUnitType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="program">
+      <jaxb:class ref="xjc.Program"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="webLink">
+      <jaxb:class ref="xjc.WebLink"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="qualification">
+      <jaxb:class ref="xjc.Qualification"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="credits">
+      <jaxb:class ref="xjc.Credits"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="br">
+      <jaxb:class ref="xjc.Br"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="refOrgUnit">
+      <jaxb:class ref="xjc.RefOrgUnit"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="refProgram">
+      <jaxb:class ref="xjc.RefProgram"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="refCourse">
+      <jaxb:class ref="xjc.RefCourse"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="refPerson">
+      <jaxb:class ref="xjc.RefPerson"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="degree">
+      <jaxb:class ref="xjc.Degree"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="level">
+      <jaxb:class ref="xjc.Level"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="admissionInfo">
+      <jaxb:class ref="xjc.AdmissionInfo"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="studentPlaces">
+      <jaxb:class ref="xjc.StudentPlaces"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~CDMdateTime">
+      <jaxb:class ref="xjc.CDMdateTime"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="teachingPlace">
+      <jaxb:class ref="xjc.TeachingPlace"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~CDMlocation">
+      <jaxb:class ref="xjc.CDMlocation"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="formOfTeaching">
+      <jaxb:class ref="xjc.FormOfTeaching"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="programDuration">
+      <jaxb:class ref="xjc.ProgramDuration"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="expenses">
+      <jaxb:class ref="xjc.Expenses"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="contacts">
+      <jaxb:class ref="xjc.Contacts"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="person">
+      <jaxb:class ref="xjc.Person"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="subProgram">
+      <jaxb:class ref="xjc.SubProgram"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="course">
+      <jaxb:class ref="xjc.Course"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="teachingTerm">
+      <jaxb:class ref="xjc.TeachingTerm"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="instructionLanguage">
+      <jaxb:class ref="xjc.InstructionLanguage"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~CDMdate">
+      <jaxb:class ref="xjc.CDMdate"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~CDMtime">
+      <jaxb:class ref="xjc.CDMtime"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~degreeValueType">
+      <jaxb:typesafeEnumClass ref="xjc.DegreeValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~levelValueType">
+      <jaxb:typesafeEnumClass ref="xjc.LevelValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~levelCompetenceYieldingValueType">
+      <jaxb:typesafeEnumClass ref="xjc.LevelCompetenceYieldingValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~formOfTeachingOrgValueType">
+      <jaxb:typesafeEnumClass ref="xjc.FormOfTeachingOrgValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~formOfTeachingMethodValueType">
+      <jaxb:typesafeEnumClass ref="xjc.FormOfTeachingMethodValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~studyPaceValueType">
+      <jaxb:typesafeEnumClass ref="xjc.StudyPaceValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~timeOfDayValueType">
+      <jaxb:typesafeEnumClass ref="xjc.TimeOfDayValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~teachingTermValueType">
+      <jaxb:typesafeEnumClass ref="xjc.TeachingTermValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~orgUnitCodeValueSet">
+      <jaxb:typesafeEnumClass ref="xjc.OrgUnitCodeValueSet"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~orgUnitKindValueType">
+      <jaxb:typesafeEnumClass ref="xjc.OrgUnitKindValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~programCodeValueSet">
+      <jaxb:typesafeEnumClass ref="xjc.ProgramCodeValueSet"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~courseCodeValueSet">
+      <jaxb:typesafeEnumClass ref="xjc.CourseCodeValueSet"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~examKindValueType">
+      <jaxb:typesafeEnumClass ref="xjc.ExamKindValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~examFormValueType">
+      <jaxb:typesafeEnumClass ref="xjc.ExamFormValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~partStructureValueType">
+      <jaxb:typesafeEnumClass ref="xjc.PartStructureValueType"/>
+    </jaxb:bindings>
+    <jaxb:bindings if-exists="true" scd="~teachingActivityValueType">
+      <jaxb:typesafeEnumClass ref="xjc.TeachingActivityValueType"/>
+    </jaxb:bindings>
+  </jaxb:bindings>
+</jaxb:bindings>
