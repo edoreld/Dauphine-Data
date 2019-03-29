@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<course>
+    <courseID>Course 1</courseID>
+    <courseName xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">JAVA</courseName>
+    <courseDescription blockLang="Apprendre a programmer en orienté objet"/>
+    <instructionLanguage teachingLang="English"/>
+</course>

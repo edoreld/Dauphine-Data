@@ -122,12 +122,13 @@ public class Course extends AbstractEntity {
         this.courseDescription = courseDescription;
     }
 
+    /*
     /**
      * @return sets the coursePart associated with {@code key} to value
      * {@code value}
      */
-    public void setCoursePart(CoursePart key, Integer value) {
-        this.volumes.put(key, value);
+   /* public void setCoursePart(CoursePart key, Integer value) {
+        this.overlap.put(key, value);
     }
 
     /**
@@ -136,7 +137,7 @@ public class Course extends AbstractEntity {
      * @param key key whose mapping is to be removed from the map
      * @return the value previously associated with this key
      */
-    public Integer removeCoursePart(CoursePart key) {
+   /* public Integer removeCoursePart(CoursePart key) {
         return this.volumes.remove(key);
     }
 
@@ -145,9 +146,9 @@ public class Course extends AbstractEntity {
      *
      * @return
      */
-    public Set<Map.Entry<CoursePart, Integer>> entrySet() {
+   /* public Set<Map.Entry<CoursePart, Integer>> entrySet() {
         return this.volumes.entrySet();
-    }
+    }*/
 
     /**
      * Returns the language of the course

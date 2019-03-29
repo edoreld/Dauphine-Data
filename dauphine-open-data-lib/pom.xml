@@ -14,4 +14,37 @@
 
 	<name>Dauphine Open Data Lib</name>
 	<description>Common lib with entities and utility classes</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.14.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaDirectory>src/main/resources/xsd</schemaDirectory>
+					<schemaIncludes>
+						<include>CDM-norv-2.0.2.xsd</include>
+					</schemaIncludes>
+					<generateDirectory>src/main/resources/xjc/</generateDirectory>
+					<generatePackage>xjc</generatePackage>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
 </project>
