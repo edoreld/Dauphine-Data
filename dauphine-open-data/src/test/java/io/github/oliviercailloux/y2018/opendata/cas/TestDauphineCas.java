@@ -8,20 +8,24 @@ import javax.enterprise.inject.Default;
  */
 @ApplicationScoped
 @Default
-class TestDauphineCas implements DauphineCas {
+public class TestDauphineCas implements DauphineCas {
+    
+    public final static String TEST_USERNAME = "user";
+    public final static String TEST_PASSWORD = "password";
+    public final static String TEST_TOKEN = "test-token";
     
     @Override
     public String authenticate(Credentials credentials) throws Exception {
-        if (credentials.getUsername().equals("user") && credentials.getPassword().equals("password")) {
-            return "test-token";
+        if (credentials.getUsername().equals(TEST_USERNAME) && credentials.getPassword().equals(TEST_PASSWORD)) {
+            return TEST_TOKEN;
         }
         throw new Exception();
     }
     
     @Override
     public String validateToken(String token) throws Exception {
-        if (token.equals("test-token")) {
-            return "user";
+        if (token.equals(TEST_TOKEN)) {
+            return TEST_USERNAME;
         }
         throw new Exception();
     }

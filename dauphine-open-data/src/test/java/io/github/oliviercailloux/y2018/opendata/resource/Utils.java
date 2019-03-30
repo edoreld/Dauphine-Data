@@ -25,6 +25,11 @@ public class Utils {
 		return builder;
 	}
 
+	public static Builder sendToken(final String token, final Builder builder) {
+		builder.header(HttpHeaders.AUTHORIZATION, "bearer " + token);
+		return builder;
+	}
+	
 	public static Builder sendXml(final Builder builder) {
 		sendContentType(MediaType.APPLICATION_XML, builder);
 		return builder;
