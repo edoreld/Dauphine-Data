@@ -43,44 +43,33 @@ Le projet va se décomposer en 2 parties.
 ### Itération 3 :
 
 
-El Amrani:
+#### El Amrani
 
 * import vcal
 * injecteur vcal démarrage
 
-Omar:
+#### Omar
 
 * import vcard
 * injecteur vcard démarrage
 
-Taric :
+#### Taric
 
 * route pour faire des filtres sur l'entité Person
 
-Javier:
+#### Javier
 
 * à définir
 
-**disclaimer**: ce qui va suivre est effectivement une usine à gaz
+#### Barth
 
-Arnaud et Barth (à partager):
+* Gestion des comptes et authentification
+* Gestion des privilèges et controle d'accès
 
-* Entité utilisateur (nom + token + roles)
-* Entité privilège
-** pour commencer, deux privilèges : "view_all" et "write_all"
-* Entité role permettant de regrouper les privilèges
-** pour commencer, deux rôles : "admin" et "standard"
-* Un système d'annotation sur les routes JAX-RS pour indiquer les privilèges requis
-* Authentification des requetes (verification du token, ajout de l'user dans le contexte de la requete)
-* Authorization des requetes en faisant correspondre les annotations de la resource demandée aux privilège de l'utilisateur authentifié
+#### Arnaud
 
-Arnaud et Barth (à partager):
-
-* Entité Evenement pour tracer les requète (utilisateur, timestamp, route)
-* Entité Quotas indiquant pour chaque utilisateur le nombre de requete maxiumum par fenetre de temps
-* Tracage de toutes les requetes via un middleware jax-rs
-* Statistiques de requetage par utilisateur sur une fenetre de temps à définir
-* Rejet des requetes qui font dépasser le quota de l'utilisateur
+* Tracage des requetes
+* Gestion des quotas
 
 ## Connexion au cloud d'IBM
 
