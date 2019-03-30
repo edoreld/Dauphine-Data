@@ -59,7 +59,8 @@ Le projet va se décomposer en 2 parties.
 
 #### Javier
 
-* à définir
+* route pour faire des filtres sur l'entité Course
+* création de classe pour faciliter la création des filtres pour la recherche des entités
 
 #### Barth
 
