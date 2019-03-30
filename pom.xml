@@ -36,7 +36,7 @@
 		<version.maven.failsafe.plugin>3.0.0-M2</version.maven.failsafe.plugin>
 		<version.tidy>1.1.0</version.tidy>
 		<version.surefire.plugin>2.17</version.surefire.plugin>
-		<path.distrib.wildfly>${user.home}/distrib/wildfly/</path.distrib.wildfly>
+		<path.distrib.wildfly>distrib/wildfly/</path.distrib.wildfly>
 		<path.jboss.home>${path.distrib.wildfly}/wildfly-${version.wildfly}/</path.jboss.home>
 		<version.mockito>1.10.19</version.mockito>
 		<version.lombok>1.18.4</version.lombok>
@@ -115,6 +115,26 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-rest-client-api</artifactId>
+			<version>1.0.0.Alpha4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-rest-client-impl-3x</artifactId>
+			<version>1.0.0.Alpha4</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.5.1.Final</version>
 			<scope>test</scope>
 		</dependency>
 
