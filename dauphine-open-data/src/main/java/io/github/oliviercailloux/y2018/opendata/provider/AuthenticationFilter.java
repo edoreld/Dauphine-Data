@@ -10,8 +10,10 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.security.Principal;
 
 /**
  * This filter is called before the request is processed and is responsible of authentication based on the bearer token
@@ -25,7 +27,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private DauphineCas dauphineCas;
     
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
         
         // warning: http header `authorization` contains authentication information, as the name does not suggest
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -41,12 +43,39 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         try {
             String username = dauphineCas.validateToken(token);
-            // TODO: store the username in the context
+            attachUsernameToContext(username, requestContext);
         }
         catch (Exception e) {
             // abort request if the CAS has not validated the token
             abortRequest(requestContext);
         }
+    }
+    
+    private void attachUsernameToContext(String username, ContainerRequestContext requestContext) {
+        final SecurityContext currentSecurityContext = requestContext.getSecurityContext();
+        requestContext.setSecurityContext(new SecurityContext() {
+        
+            @Override
+            public Principal getUserPrincipal() {
+                return () -> username;
+            }
+        
+            @Override
+            public boolean isUserInRole(String role) {
+                // TODO: Role based access
+                return true;
+            }
+        
+            @Override
+            public boolean isSecure() {
+                return currentSecurityContext.isSecure();
+            }
+        
+            @Override
+            public String getAuthenticationScheme() {
+                return "Bearer";
+            }
+        });
     }
     
     private void abortRequest(ContainerRequestContext requestContext) {

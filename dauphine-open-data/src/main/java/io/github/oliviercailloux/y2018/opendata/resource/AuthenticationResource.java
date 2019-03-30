@@ -1,16 +1,16 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
+import io.github.oliviercailloux.y2018.opendata.annotation.Secured;
 import io.github.oliviercailloux.y2018.opendata.cas.Credentials;
 import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  * This route allows the user to authenticate through the dauphine cas, generating a token for later access.
@@ -20,6 +20,9 @@ public class AuthenticationResource {
 
     @Inject
     private DauphineCas dauphineCas;
+    
+    @Context
+    private SecurityContext securityContext;
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -32,5 +35,14 @@ public class AuthenticationResource {
         catch (Exception e) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
+    }
+    
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Secured
+    @Path("whoami")
+    public Response whoAmI() {
+        String username = securityContext.getUserPrincipal().getName();
+        return Response.ok(username).build();
     }
 }

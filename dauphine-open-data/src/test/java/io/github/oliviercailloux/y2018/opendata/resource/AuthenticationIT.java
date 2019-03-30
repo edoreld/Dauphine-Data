@@ -53,8 +53,8 @@ public class AuthenticationIT {
 	
 	@Test
 	@RunAsClient
-	public void secureAccess(@ArquillianResteasyResource("person") final WebTarget authenticationEndpoint) {
-		Response response = authenticationEndpoint.request()
+	public void secureAccess(@ArquillianResteasyResource("person") final WebTarget endpoint) {
+		Response response = endpoint.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.TEST_TOKEN)
 				.get();
 		assertTrue(response.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE));
@@ -63,8 +63,8 @@ public class AuthenticationIT {
 	
 	@Test
 	@RunAsClient
-	public void invalidToken(@ArquillianResteasyResource("person") final WebTarget authenticationEndpoint) {
-		Response response = authenticationEndpoint.request()
+	public void invalidToken(@ArquillianResteasyResource("person") final WebTarget endpoint) {
+		Response response = endpoint.request()
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + "wrong-token")
 				.get();
 		assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
@@ -73,9 +73,27 @@ public class AuthenticationIT {
 	
     @Test
     @RunAsClient
-    public void missingToken(@ArquillianResteasyResource("person") final WebTarget authenticationEndpoint) {
-        Response response = authenticationEndpoint.request()
+    public void missingToken(@ArquillianResteasyResource("person") final WebTarget endpoint) {
+        Response response = endpoint.request()
                 .get();
+        assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
+        assertNotNull(response.getHeaderString(HttpHeaders.WWW_AUTHENTICATE));
+    }
+    
+    @Test
+    @RunAsClient
+    public void whoAmI(@ArquillianResteasyResource("authentication/whoami") final WebTarget endpoint) {
+        Response response = endpoint.request()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.TEST_TOKEN).get();
+        assertEquals(200, response.getStatus());
+        assertTrue(response.getMediaType().isCompatible(MediaType.TEXT_PLAIN_TYPE));
+        assertEquals(TestDauphineCas.TEST_USERNAME, response.readEntity(String.class));
+    }
+    
+    @Test
+    @RunAsClient
+    public void iAmNobody(@ArquillianResteasyResource("authentication/whoami") final WebTarget endpoint) {
+        Response response = endpoint.request().get();
         assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
         assertNotNull(response.getHeaderString(HttpHeaders.WWW_AUTHENTICATE));
     }
