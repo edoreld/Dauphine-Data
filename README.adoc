@@ -66,6 +66,7 @@ Le projet va se décomposer en 2 parties.
 
 * Gestion des comptes et authentification
 * Gestion des privilèges et controle d'accès
+* Ces deux fonctionnalités seront développées de facon à être au maximum réutilisables lors de l'intégration avec le CAS de dauphine
 
 #### Arnaud
 
