@@ -2,7 +2,7 @@ applications:
  - name: dauphine-open-datas
    path: dauphine-open-data/target/dauphine-open-data.war
    instances: 1
-   memory: 256M
-   Disk_quota : 1G
+   memory: 1G
+   Disk_quota : 2G
    env:
       JBP_CONFIG_LIBERTY: 'app_archive: {implicit_cdi: true, features: [webProfile-8.0]}'
