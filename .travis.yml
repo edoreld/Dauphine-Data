@@ -21,4 +21,4 @@ deploy:
   space: dev
   region: eu-gb
   on:
-    branch: feat/ibmcloudTest
+    branch: feat/ibmcloud
