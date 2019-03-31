@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.diffplug.common.base.Errors;
 import com.google.common.base.Preconditions;
 
+import io.github.oliviercailloux.y2018.opendata.dao.AbstractDao;
 import io.github.oliviercailloux.y2018.opendata.dao.Dao;
 import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
 import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoException;
@@ -56,8 +57,8 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResource.class);
 
 	@Inject
-	protected D dao;
-
+	protected Dao<E> dao;
+	//protected D dao;
 	/**
 	 * The name of the resource, mostly used for logging.
 	 */
@@ -77,6 +78,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	public AbstractResource(String resourceName, String resourcePath) {
 		this.resourceName = Preconditions.checkNotNull(resourceName, "resourceName");
 		this.resourcePath = Preconditions.checkNotNull(resourcePath, "resourcePath");
+	   
 		// dao and transaction will be set via injection
 	}
 
@@ -165,7 +167,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	}
 
 	private Response mergeEntity(E entity) {
-		dao.merge(entity);
+		dao.merge(entity);																																																																																																																																																																																																																																																																																																																																
 		return Response.noContent().build();
 	}
 	
