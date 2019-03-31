@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -52,9 +53,11 @@ import io.github.oliviercailloux.y2018.opendata.entity.Entity;
 @Transactional
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+@Named("GenericDAO")
 public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResource.class);
+	
 
 	@Inject
 	protected Dao<E> dao;
