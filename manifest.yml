@@ -2,9 +2,9 @@ applications:
  - name: dauphine-open-datas
    path: dauphine-open-data/target/dauphine-open-data.war
    instances: 1
-   memory: 256M
+   memory: 512M
    Disk_quota : 1G
    buildpacks :
     - https://github.com/cloudfoundry-community/jboss-buildpack.git
    env:
-    JAVA_OPTS: "-Xmx256m"
+    JBP_CONFIG_LIBERTY: 'app_archive: {implicit_cdi: true, features: [webProfile-8.0]}'
