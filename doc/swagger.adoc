@@ -10,12 +10,12 @@ de sortie, typage, formats d'échange acceptés, etc.
 Une API REST qui veut respecter le standard OpenAPI doit simplement exposer une route `/openapi.[json,yaml]` contenant
 toutes les informations nécéssaires pour être ensuite consommé par les clients.
 
-L'avantage d'avoir une telle description disponible est de pouvoir utiliser tout une suite d'outils bien pratique :
-https://github.com/OpenAPITools/openapi-generator[génération automatique] de client, de serveur, de documentation...
+L'avantage d'avoir une telle description disponible est de pouvoir utiliser une suite d'outils bien pratique :
+https://github.com/OpenAPITools/openapi-generator[génération automatique] de clients, de serveurs, de documentation...
 
 == 2 Intégration JAX-RS
 
-Dans le projet, nous avons généré le fichier openapi.[json,yaml] automatiquement à partir des servlet JAX-RS. Pour cela
+Dans le projet, nous avons généré le fichier `openapi.[json,yaml]` automatiquement à partir des servlet JAX-RS. Pour cela
 nous avons utilisé l'artifact maven : `swagger-jaxrs2-servlet-initializer` :
 
   <dependency>
@@ -41,10 +41,9 @@ de clients.
 
 == 3 Swagger-ui
 
-Swagger-ui est une interface web qui se branche sur une API REST OpenAPI-compatible est génere une interface pour pouvoir tester
-les routes facilement. C'est en quelque sorte un explorateur d'API ou une documentation interactive.
+Swagger-ui est une interface web qui se branche sur une API REST OpenAPI-compatible et génère une interface permettant de tester les routes facilement. C'est en quelque sorte un explorateur d'API ou une documentation interactive.
 
-Le code de swagger-ui a été embarqué dans de répertoire git sous forme de site web static : link:../swagger-ui-dist[swagger-ui-dist].
+Le code de swagger-ui a été embarqué dans de répertoire git sous forme de site web statique : link:../swagger-ui-dist[swagger-ui-dist].
 
 Ce site web est publié sur ibmcloud via le buildback `static-website` (voir le link:../manifest.yaml[manifest]).
 
@@ -55,6 +54,6 @@ d'une description OpenAPI.
 
 Nous l'avons utilisé pour générer un link:../cli[client en ligne de commande] (codé en bash).
 
-Pour régénérer le client (quand l'API change) il faut executer le scripts link:../scripts/generate-cli.sh[generate-cli.sh].
+Pour régénérer le client (quand l'API change) il faut executer le script link:../scripts/generate-cli.sh[generate-cli.sh].
 
-NOTE: Il faut avoir installé openapi-generator via npm ou https://github.com/OpenAPITools/openapi-generator#1---installation[un autre gestionnaire de paquets disponible].
+NOTE: Il faut avoir installé openapi-generator via npm ou https://github.com/OpenAPITools/openapi-generator#1---installation[un autre gestionnaire de paquets].
