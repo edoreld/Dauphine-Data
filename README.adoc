@@ -41,22 +41,42 @@ Le projet va se décomposer en 2 parties.
 * Prise de contact avec la DSI de dauphine pour anticiper les fonctionnalites de l'itération 3 (URGENT)
 
 ### Itération 3 :
-* Interop avec PoleInfo pour exposer une partie de leur API
-* Système d'authentification :
-** les clients de l'api dauphine-data devront être authentifiés via le  serveur d'authentification central de Dauphine
-** documentation de la procédure d'authentification de Dauphine
-** intégration avec les servlets JAX-RS
-* Connection avec la base de données de Dauphine :
-** connexion et authentification à la base de données de dauphine
-** accès aux données ? 3 options :
-*** 1. accès direct : nécéssite l'adaptation de nos entités pour qu'elles soient compatibles avec la base de données de Dauphine
-*** 2. accès indirect: base de données tampon, chargement des données en appliquant des transformations, mise à jour périodique.
-*** 3. hybride : base de données tampon avec un cache d'invalidité, chargement des données nécéssaires au moment de la requète
+
+
+#### El Amrani
+
+* import vcal
+* injecteur vcal démarrage
+
+#### Omar
+
+* import vcard
+* injecteur vcard démarrage
+
+#### Taric
+
+* route pour faire des filtres sur l'entité Person
+
+#### Javier
+
+* route pour faire des filtres sur l'entité Course
+* création de classe pour faciliter la création des filtres pour la recherche des entités
+
+#### Barth
+
+* Gestion des comptes et authentification
+* Gestion des privilèges et controle d'accès
+* Ces deux fonctionnalités seront développées de facon à être au maximum réutilisables lors de l'intégration avec le CAS de dauphine
+
+#### Arnaud
+
+* Tracage des requetes
+* Gestion des quotas
 
 ## Connexion au cloud d'IBM
 
     * Pour vous connecter au cloud, vous disposer de :
     ** l'URL de base à l'adresse : https://dauphine-open-datas.eu-gb.mybluemix.net
-    
+
     ** Voici un exemple d'utilisation d'URL faisant appel à un get : https://dauphine-open-datas.eu-gb.mybluemix.net/resource/home
 
