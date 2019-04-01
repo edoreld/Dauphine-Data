@@ -53,15 +53,13 @@ import io.github.oliviercailloux.y2018.opendata.entity.Entity;
 @Transactional
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-@Named("GenericDAO")
 public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResource.class);
 	
 
 	@Inject
-	protected Dao<E> dao;
-	//protected D dao;
+	protected D dao;
 	/**
 	 * The name of the resource, mostly used for logging.
 	 */
