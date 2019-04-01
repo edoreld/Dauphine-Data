@@ -36,8 +36,7 @@ Le fichier `openapi.[json,yaml]` est accessible sur `http://<url>:<port>/<contex
 **customisation**
 
 Nous avons customisé la génération du fichier `openapi.[json|yaml]` en implémentant un https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Extensions#reader-listeners[ReaderListener] : link:../dauphine-open-data/src/main/java/io/github/oliviercailloux/y2018/opendata/resource/SwaggerOperationIdModifier.java[SwaggerOperationIdModifier.java].
-Celui ci renomme les ID des routes autogénéré pour leur donner des noms plus explicites qui sont ensuite utilisés par le générateur
-de clients.
+Celui ci renomme les ID autogénérés des routes pour leur donner des noms plus explicites qui sont ensuite utilisés par le générateur de clients.
 
 == 3 Swagger-ui
 
