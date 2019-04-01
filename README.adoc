@@ -77,6 +77,36 @@ Le projet va se décomposer en 2 parties.
 
     * Pour vous connecter au cloud, vous disposer de :
     ** l'URL de base à l'adresse : https://dauphine-open-datas.eu-gb.mybluemix.net
+    ** Voici un exemple d'utilisation d'URL faisant appel à un get : https://dauphine-open-datas.eu-gb.mybluemix.net/home
 
-    ** Voici un exemple d'utilisation d'URL faisant appel à un get : https://dauphine-open-datas.eu-gb.mybluemix.net/resource/home
+## Swagger
 
+La doc sur swagger se trouve link:doc/swagger.adoc[ici]
+
+## Swagger-ui
+
+Swagger-ui est déployé automatiquement sur ibmcloud : https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
+
+Pour le lancer localement :
+* installer le package npm http-server
+* `cd swagger-ui-dist && http-server --cors`
+
+## CLI
+
+Un client en ligne de commande est généré par le script `./scripts/generate-cli.sh`.
+
+Pour créer un cours:
+
+  ./cli/client.sh  createCourse courseID=="42" courseName==maths courseDescription==complique instructionLanguage==fr
+
+Pour lister les cours:
+
+  ./cli/client.sh listCourses
+
+Pour récupérer le cours avec l'identifiant 1:
+
+  ./cli/client.sh getCourse id=1
+
+Pour afficher toutes les commandes disponibles:
+
+  ./cli/client.sh --help
