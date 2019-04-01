@@ -1,5 +1,5 @@
 resourcePackages:
-- io.github.oliviercailloux.y2018.opendata.resource
+  - io.github.oliviercailloux.y2018.opendata.resource
 # ignore AbstractResource
 ignoredRoutes:
   - "/{id}"

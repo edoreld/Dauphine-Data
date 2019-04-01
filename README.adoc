@@ -79,6 +79,10 @@ Le projet va se décomposer en 2 parties.
     ** l'URL de base à l'adresse : https://dauphine-open-datas.eu-gb.mybluemix.net
     ** Voici un exemple d'utilisation d'URL faisant appel à un get : https://dauphine-open-datas.eu-gb.mybluemix.net/home
 
+## Swagger
+
+La doc sur swagger se trouve link:doc/swagger.adoc[ici]
+
 ## Swagger-ui
 
 Swagger-ui est déployé automatiquement sur ibmcloud : https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
@@ -91,50 +95,18 @@ Pour le lancer localement :
 
 Un client en ligne de commande est généré par le script `./scripts/generate-cli.sh`.
 
-Voici la liste des commandes:
-
-* createCourse
-* createLecture
-* createPerson
-* createPlanning
-* deleteCourse
-* deleteLecture
-* deletePerson
-* deletePlanning
-* getCourse
-* getLecture
-* getPerson
-* getPlanning
-* listCourses
-* listLectures
-* listPersons
-* listPlannings
-* replaceCourse
-* replaceLecture
-* replacePerson
-* replacePlanning
-* sayHello
-
 Pour créer un cours:
-[source]
----
-./cli/client.sh  createCourse courseID=="42" courseName==maths courseDescription==complique instructionLanguage==fr
----
+
+  ./cli/client.sh  createCourse courseID=="42" courseName==maths courseDescription==complique instructionLanguage==fr
 
 Pour lister les cours:
-[source]
----
-./cli/client.sh listCourses
----
+
+  ./cli/client.sh listCourses
 
 Pour récupérer le cours avec l'identifiant 1:
-[source]
----
-./cli/client.sh getCourse id=1
----
+
+  ./cli/client.sh getCourse id=1
 
 Pour afficher toutes les commandes disponibles:
-[source]
----
-./cli/client.sh --help
----
+
+  ./cli/client.sh --help
