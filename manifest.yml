@@ -7,4 +7,5 @@ applications:
    buildpacks :
     - https://github.com/cloudfoundry-community/jboss-buildpack.git
    env:
-      JBP_CONFIG_LIBERTY: 'app_archive: {implicit_cdi: true, features: [webProfile-8.0]}'
+    JAVA_OPTS: "-Xmx256m"
+  
