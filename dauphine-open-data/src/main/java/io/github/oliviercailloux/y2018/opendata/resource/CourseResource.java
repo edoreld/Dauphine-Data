@@ -2,7 +2,6 @@ package io.github.oliviercailloux.y2018.opendata.resource;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.DefaultValue;
@@ -13,8 +12,6 @@ import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Preconditions;
 
 import io.github.oliviercailloux.y2018.opendata.dao.CourseDao;
 import io.github.oliviercailloux.y2018.opendata.entity.Course;
@@ -27,19 +24,12 @@ public class CourseResource extends AbstractResource<Course, CourseDao> {
 	@PersistenceContext
 	protected EntityManager em;
 
-	public CourseResource(String resourceName, String resourcePath) {
-		super(resourceName, resourcePath);
+	public CourseResource() {
+		super(null, null);
 	}
 
-	/**
-	 * Checks whether the field injection worked.
-	 *
-	 * @throws NullPointerException If a field is null
-	 */
-	@Override
-	@PostConstruct
-	public void checkFieldInitialized() {
-		Preconditions.checkNotNull(dao, "dao");
+	public CourseResource(String resourceName, String resourcePath) {
+		super(resourceName, resourcePath);
 	}
 
 	/**
