@@ -17,22 +17,11 @@ cache:
 before_deploy:
 - curl -sL https://ibm.biz/idt-installer | bash
 
-deploy:
-  provider: bluemixcloudfoundry
-  skip_cleanup: true
-  username: taric.gandi@dauphine.psl.eu
-  password: $BLUEMIX_PASSWORD
-  organization: taric.gandi@dauphine.psl.eu
-  space: dev
-  region: eu-gb
-  on:
-    branch: feat/ibmcloud
-
 # this is similar to `provider: bluemixcloudfoundry` but allows usage of ibm api key (rbac)
 # rather than giving travis your master ibmcloud password in plain text.
 deploy:
   provider: script
   script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest-client.yaml
   on:
-    branch: feat/client-2
+    branch: feat/cloudibmTest
   skip_cleanup: true
