@@ -12,13 +12,10 @@ install:
 cache:
   directories:
   - "$HOME/.m2"
-deploy:
-  provider: bluemixcloudfoundry
-  skip_cleanup: true
-  username: taric.gandi@dauphine.psl.eu
-  password: $BLUEMIX_PASSWORD
-  organization: taric.gandi@dauphine.psl.eu
-  space: dev
-  region: eu-gb
+  
+ deploy:
+  provider: script
+  script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest.yaml
   on:
     branch: feat/ibmcloudTest
+  skip_cleanup: true
