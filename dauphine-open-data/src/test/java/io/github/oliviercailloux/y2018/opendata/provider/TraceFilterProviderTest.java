@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoException;
@@ -78,6 +79,11 @@ public class TraceFilterProviderTest {
 		assertPersisted(httpAudit);
 	}
 	
+	private void startAndAssertNoPersist() throws EntityAlreadyExistsDaoException {
+		traceFilterProvider.filter(requestContext);
+		then(httpAuditDao).should(Mockito.never()).persist(Mockito.any());
+	}
+	
 	@Test
 	public void testNominal() throws EntityAlreadyExistsDaoException {
 		final String method = "GET";
@@ -114,6 +120,17 @@ public class TraceFilterProviderTest {
 		setUpNotAuthenticatedSecurityContext2();
 		final HttpAudit httpAudit = new HttpAudit(new Date(1L), path, HttpMethod.from(method));
 		startAndAssertPersisted(httpAudit);
+	}
+	
+	@Test
+	public void testUnsupportedHttpMethod() throws EntityAlreadyExistsDaoException {
+		final String method = "UNSUPPORTED";
+		final String path = "/home";
+		final String user = "arnaud";
+		final Date date = new Date(1L);
+		setUpNominalRequest(method, path, date);
+		setUpNominalSecurityContext(user);
+		startAndAssertNoPersist();
 	}
 	
 }

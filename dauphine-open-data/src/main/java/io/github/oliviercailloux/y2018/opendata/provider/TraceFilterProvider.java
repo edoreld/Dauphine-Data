@@ -2,6 +2,7 @@ package io.github.oliviercailloux.y2018.opendata.provider;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -46,24 +47,30 @@ public class TraceFilterProvider implements ContainerRequestFilter {
 		}
 	}
 	
-	private HttpAudit makeHttpAudit(ContainerRequestContext requestContext, DateService dateService) {
+	private Optional<HttpAudit> makeHttpAudit(ContainerRequestContext requestContext, DateService dateService) {
+		final HttpMethod httpMethod;
+		try {
+			httpMethod = HttpMethod.from(requestContext.getMethod());
+		} catch(IllegalArgumentException e) {
+			LOGGER.error("cannot parse http method {}", requestContext.getMethod(), e);
+			return Optional.empty();
+		}
 		final Date date = dateService.getCurrentDate();
 		final String path = requestContext.getUriInfo().getPath();
-		final HttpMethod httpMethod = HttpMethod.from(requestContext.getMethod());
 		final HttpAudit httpAudit = new HttpAudit(date, path, httpMethod);
 		setUserIfAuthenticated(httpAudit, requestContext);
-		return httpAudit;
+		return Optional.of(httpAudit);
 	}
 
-	private HttpAudit makeHttpAudit(ContainerRequestContext requestContext) {
+	private Optional<HttpAudit> makeHttpAudit(ContainerRequestContext requestContext) {
 		return makeHttpAudit(requestContext, dateService);
 	}
 	
 	@Override
 	public void filter(ContainerRequestContext requestContext) {		
 		try {
-			final HttpAudit httpAudit = makeHttpAudit(requestContext);
-			httpAuditDao.persist(httpAudit);
+			final Optional<HttpAudit> httpAuditOpt = makeHttpAudit(requestContext);
+			httpAuditOpt.ifPresent(httpAuditDao::persist);
 		} catch (EntityAlreadyExistsDaoException e) {
 			LOGGER.error("failed to insert HttpAudit", e);
 		}
