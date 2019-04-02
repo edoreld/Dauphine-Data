@@ -25,7 +25,7 @@ public class CourseResource extends AbstractResource<Course, CourseDao> {
 	protected EntityManager em;
 
 	public CourseResource() {
-		super(null, null);
+		this(null, null);
 	}
 
 	public CourseResource(String resourceName, String resourcePath) {
