@@ -25,20 +25,20 @@ public class CourseResource extends AbstractResource<Course, CourseDao> {
 	protected EntityManager em;
 
 	public CourseResource() {
-		this(null, null);
-	}
-
-	public CourseResource(String resourceName, String resourcePath) {
-		super(resourceName, resourcePath);
+		super("Course", "course");
 	}
 
 	/**
-	 * Filters a user query by name, desc or lang depending on the existing query parameters
+	 * Adds search functionality to courses. Users can search courses by name, description or language.
+	 *
+	 * An example search URL would be:
+	 * <app-root>/course/search?name=java&desc=a nice course
 	 * @param lang {@link Course#instructionLanguage}
 	 * @param desc {@link Course#courseDescription}
 	 * @param name {@link Course#courseName}
 	 * @return list of {@link Course} entities that match the query parameters
 	 */
+	@Path("search")
 	@GET
 	public Response filter(@DefaultValue("") @QueryParam("name") String name,
 			@DefaultValue("") @QueryParam("desc") String desc, @DefaultValue("") @QueryParam("lang") String lang) {

@@ -18,25 +18,40 @@ public class CourseDao extends AbstractDao<Course> {
 		super("Course", Course.class);
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * Returns the list of courses that match the parameters passed by argument
+	 *
+	 * We work with the assumption that someone using our program is trying to find data with non-empty fields.
+	 * If a parameter is empty, it's not used in the SQL query.
+	 * Therefore, if all parameters are empty, no results are returned
+	 *
+	 * The search works like SQL LIKE. If a course is named "Java", it will be returned
+	 * whether the query is "Java", "Javaa" or "aJava". On the other hand, "Jva", "Jaa" or "Jvaa" won't be returned.
+	 *
+	 * @param name
+	 * @param desc
+	 * @param lang
+	 * @return
+	 */
+
 	public List<Course> findByNameDescLang(String name, String desc, String lang) {
 		if (name.isEmpty() && desc.isEmpty() && lang.isEmpty()) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		CriteriaQuery<Course> q = cb.createQuery(Course.class);
-		Root<Course> c = q.from(Course.class); // ~eq to FROM
+		Root<Course> c = q.from(Course.class); // similar to FROM
 
 		if (!name.isEmpty()) {
-			q.where(cb.equal(c.get("courseName"), name));
+			q.where(cb.like(c.<String>get("courseName"), "%" + name + "%"));
 		}
-		if (!name.isEmpty()) {
-			q.where(cb.equal(c.get("courseDescription"), name));
+		if (!desc.isEmpty()) {
+			q.where(cb.like(c.<String>get("courseDescription"), "%" + desc + "%"));
 		}
-		if (!name.isEmpty()) {
-			q.where(cb.equal(c.get("instructionLanguage"), name));
+		if (!lang.isEmpty()) {
+			q.where(cb.like(c.<String>get("instructionLanguage"), "%" + lang + "%"));
 		}
 
 		TypedQuery<Course> query = em.createQuery(q);
