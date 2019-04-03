@@ -99,6 +99,10 @@ public class Utils {
 	public static void assertStatusIsForbidden(final Response response) {
 		assertStatusCodeIs(HttpServletResponse.SC_FORBIDDEN, response);
 	}
+	
+	public static void assertStatusIsServerError(final Response response) {
+		assertStatusCodeIs(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, response);
+	}
 
 	public static void assertStatusIsBadRequest(final Response response) {
 		assertStatusCodeIs(HttpServletResponse.SC_BAD_REQUEST, response);
