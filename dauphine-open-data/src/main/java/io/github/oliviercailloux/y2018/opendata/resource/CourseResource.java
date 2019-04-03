@@ -7,8 +7,9 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,13 +40,14 @@ public class CourseResource extends AbstractResource<Course, CourseDao> {
 	 * @return list of {@link Course} entities that match the query parameters
 	 */
 	@Path("search")
+	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	public Response filter(@DefaultValue("") @QueryParam("name") String name,
+	public List<Course> filter(@DefaultValue("") @QueryParam("name") String name,
 			@DefaultValue("") @QueryParam("desc") String desc, @DefaultValue("") @QueryParam("lang") String lang) {
 
 		LOGGER.info("[{}] - finding entities by name [{}], description [{}] and language [{}] ..", resourceName, name,
 				desc, lang);
 		List<Course> courses = dao.findByNameDescLang(name, desc, lang);
-		return Response.ok(courses).build();
+		return courses;
 	}
 }
