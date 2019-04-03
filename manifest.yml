@@ -1,5 +1,6 @@
 applications:
  - name: dauphine-data-edoreld
+   no-route: true
    path: dauphine-open-data/target/dauphine-open-data.war
    instances: 1
    memory: 256M
