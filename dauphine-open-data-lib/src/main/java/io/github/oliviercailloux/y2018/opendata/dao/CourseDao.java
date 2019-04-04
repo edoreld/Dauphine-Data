@@ -45,13 +45,13 @@ public class CourseDao extends AbstractDao<Course> {
 		Root<Course> c = q.from(Course.class); // similar to FROM
 
 		if (!name.isEmpty()) {
-			q.where(cb.like(c.<String>get("courseName"), "%" + name + "%"));
+			q.where(cb.like(c.get("courseName"), "%" + name + "%"));
 		}
 		if (!desc.isEmpty()) {
-			q.where(cb.like(c.<String>get("courseDescription"), "%" + desc + "%"));
+			q.where(cb.like(c.get("courseDescription"), "%" + desc + "%"));
 		}
 		if (!lang.isEmpty()) {
-			q.where(cb.like(c.<String>get("instructionLanguage"), "%" + lang + "%"));
+			q.where(cb.like(c.get("instructionLanguage"), "%" + lang + "%"));
 		}
 
 		TypedQuery<Course> query = em.createQuery(q);
