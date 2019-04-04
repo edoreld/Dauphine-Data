@@ -5,6 +5,11 @@ import javax.enterprise.context.ApplicationScoped;
 import ezvcard.VCard;
 import io.github.oliviercailloux.y2018.opendata.entity.Person;
 
+/**
+ * @author Elhadj Diallo
+ *
+ */
+
 @ApplicationScoped
 public class VcardImport {
 	
@@ -26,15 +31,11 @@ public class VcardImport {
 			person.setPhoneNumer(vcard.getTelephoneNumbers().get(0).getText());	
 		}
 		
-		if(vcard.getTelephoneNumbers().get(1).getText() != null) {
-			person.setFax(vcard.getTelephoneNumbers().get(1).getText());
-		}
-		
-		if(vcard.getNotes() != null) {
+		if(vcard.getNotes().toString() != null) {
 			person.setOffice(vcard.getNotes().toString());
 		}
 		
-		if(vcard.getExpertise() != null) {
+		if(vcard.getExpertise().toString() != null) {
 			person.setTraining(vcard.getExpertise().toString());	
 		}
 		
