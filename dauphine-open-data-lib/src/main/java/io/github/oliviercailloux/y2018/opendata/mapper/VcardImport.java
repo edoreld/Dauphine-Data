@@ -31,12 +31,16 @@ public class VcardImport {
 			person.setPhoneNumer(vcard.getTelephoneNumbers().get(0).getText());	
 		}
 		
-		if(vcard.getNotes().toString() != null) {
-			person.setOffice(vcard.getNotes().toString());
+		if(vcard.getTelephoneNumbers().get(1).getText() != null ) {
+			person.setFax(vcard.getTelephoneNumbers().get(1).getText());	
 		}
 		
-		if(vcard.getExpertise().toString() != null) {
-			person.setTraining(vcard.getExpertise().toString());	
+		if(vcard.getNotes().get(2).getType() != null) {
+			person.setOffice(vcard.getNotes().get(2).getType());
+		}
+		
+		if(vcard.getExpertise().get(3).getType() != null) {
+			person.setTraining(vcard.getExpertise().get(3).getType());	
 		}
 		
 		return person;
