@@ -36,3 +36,14 @@ deploy:
   on:
     branch: feat/client-2
   skip_cleanup: true
+
+deploy:
+  provider: bluemixcloudfoundry
+  skip_cleanup: true
+  username: edoreld@gmail.com
+  password: $BLUEMIX_PASSWORD_EDORELD
+  organization: edoreld@gmail.com
+  space: dev
+  region: eu-gb
+  on:
+    branch: feat/route-course
