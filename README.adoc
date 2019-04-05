@@ -79,7 +79,7 @@ Travis déploie l'application et Swagger-ui automatiquement depuis le branche ma
 
 Les URLs sont :
 
-* api: https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
+* api: https://dauphine-open-datas.eu-gb.mybluemix.net
 * swagger-ui: https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
 
 Voici un exemple de commande curl pour faire un post :
