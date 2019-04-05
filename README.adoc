@@ -119,3 +119,8 @@ Pour récupérer le cours avec l'identifiant 1:
 Pour afficher toutes les commandes disponibles:
 
   ./cli/client.sh --help
+
+## Authentification
+
+Une documentation qui explique le mécanisme d'authentification est disponible link:doc/authentification.adoc[ici].
+
