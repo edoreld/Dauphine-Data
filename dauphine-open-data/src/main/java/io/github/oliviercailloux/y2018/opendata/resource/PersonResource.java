@@ -28,6 +28,6 @@ public class PersonResource extends AbstractResource<Person, PersonDao> {
 		VCard vcard = Ezvcard.parse(vCardString).first();
 		VcardImport vcardImport = new VcardImport();
 		this.dao.persist(vcardImport.VcardToPerson(vcard));
-		return Response.ok("ok").build();
+		return Response.ok("ok\n").build();
 	}
 }
