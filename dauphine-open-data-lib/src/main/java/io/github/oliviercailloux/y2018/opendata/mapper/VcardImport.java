@@ -3,6 +3,7 @@ package io.github.oliviercailloux.y2018.opendata.mapper;
 import javax.enterprise.context.ApplicationScoped;
 
 import ezvcard.VCard;
+import ezvcard.parameter.TelephoneType;
 import io.github.oliviercailloux.y2018.opendata.entity.Person;
 
 /**
@@ -19,6 +20,8 @@ public class VcardImport {
 		
 		Person person = new Person();
 		
+		person.setIsActive(true);
+		
 		if(vcard.getStructuredName().getFamily() != null) {
 			person.setLastName(vcard.getStructuredName().getFamily()); 
 		}
@@ -27,20 +30,26 @@ public class VcardImport {
 			person.setFirstName(vcard.getStructuredName().getGiven());
 		}
 		
-		if(vcard.getTelephoneNumbers().get(0).getText() != null) {
-			person.setPhoneNumer(vcard.getTelephoneNumbers().get(0).getText());	
+		if(vcard.getUid().getValue() != null){
+			person.setIne(vcard.getUid().getValue());
 		}
 		
-		if(vcard.getTelephoneNumbers().get(1).getText() != null ) {
-			person.setFax(vcard.getTelephoneNumbers().get(1).getText());	
-		}
+		vcard.getTelephoneNumbers().stream()
+			.filter(t -> t.getTypes().contains(TelephoneType.CELL))
+			.findFirst()
+			.ifPresent(t -> person.setPhoneNumer(t.getText()));
 		
-		if(vcard.getNotes().get(2).getType() != null) {
-			person.setOffice(vcard.getNotes().get(2).getType());
-		}
+		vcard.getTelephoneNumbers().stream()
+			.filter(t -> t.getTypes().contains(TelephoneType.FAX))
+			.findFirst()
+			.ifPresent(t -> person.setFax(t.getText()));
 		
-		if(vcard.getExpertise().get(3).getType() != null) {
-			person.setTraining(vcard.getExpertise().get(3).getType());	
+		if (!vcard.getNotes().isEmpty()) {
+			person.setOffice(vcard.getNotes().get(0).getValue());
+		}
+				
+		if(!vcard.getExpertise().isEmpty()) {
+			person.setTraining(vcard.getExpertise().get(0).getValue());	
 		}
 		
 		return person;
