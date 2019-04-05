@@ -12,14 +12,16 @@ public class VcardImportTest {
 	@Test
 	public void TestEncodeVcardToPerson () {
 		VCard vcard = new VCard();
-		vcard.getStructuredName().setGiven("firstName");
-		vcard.getStructuredName().setFamily("lastName");
-		vcard.getTelephoneNumbers().get(0).setText("Telephone");
-		vcard.getTelephoneNumbers().get(1).setText("Fax");
+		
+		vcard.getStructuredName().setGiven("DUPOND");
+		vcard.getStructuredName().setFamily("Olive");
+		vcard.getTelephoneNumbers().get(0).setText("+33711111111");
+		vcard.getTelephoneNumbers().get(1).setText("+33911111111");
+		vcard.getNotes().get(2).setType("B400");
 		
 		VcardImport vcardImport = new VcardImport();
 		Person person = vcardImport.VcardToPerson(vcard);
-		assertEquals("firstName", person.getFirstName());
-		assertEquals("lastName", person.getLastName());
+		
+		assertEquals("Olive", person.getFirstName());
 	}
 }
