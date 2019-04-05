@@ -34,8 +34,13 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         
         // abort the request if not using authentication token
         if (authorizationHeader == null || !authorizationHeader.toLowerCase().startsWith("bearer ")) {
-            abortRequest(requestContext);
-            return ;
+            if (requestContext.getHeaderString("Bearer-Token") == null) {
+                abortRequest(requestContext);
+                return ;
+            }
+            
+            // fallback to Bearer-Token header
+            authorizationHeader = "Bearer " + requestContext.getHeaderString("Bearer-Token").trim();
         }
         
         // extract the token
