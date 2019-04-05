@@ -100,9 +100,13 @@ Pour le lancer localement :
 
 Un client en ligne de commande est généré par le script `./scripts/generate-cli.sh`.
 
+Pour s'authentifier, le client a besoin d'un token dans la variable `$DOD_TOKEN`:
+
+   export DOD_TOKEN=$(./cli/client.sh authenticate username==toto password==1234)
+
 Pour créer un cours:
 
-  ./cli/client.sh  createCourse courseID=="42" courseName==maths courseDescription==complique instructionLanguage==fr
+    ./cli/client.sh createCourse courseID=="42" courseName==maths courseDescription==complique instructionLanguage==fr
 
 Pour lister les cours:
 
