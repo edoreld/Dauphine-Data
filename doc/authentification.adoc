@@ -86,10 +86,13 @@ Pour cela :
 2. Si c'est le cas, il demande au CAS (via le bean `DauphineCas` qui y est injecté) si le token est valide et récupère le login associé.
 3. Il ajoute le login dans le `SecurityContexte` de la requête. De cette façon, les route auront accès à ce login si elles en ont besoin (voir la route `/authentication/whoami`).
 
-En cas d'erreur, la requête est rejeté avec le code `UNAUTHORIZED`.
+En cas d'erreur, la requête est rejetée avec le code `UNAUTHORIZED`.
 
 NOTE: l'annotation `@Priority(Priorities.AUTHENTICATION)` au dessus de cette classe indique que ce filtre est exécuté très tôt
 dans le traitement de la requête.
+
+NOTE: L'en-tête `Authorization` doit contenir la valeur `Bearer <token>`. Une alternative est d'utiliser l'en-tête `Bearer-Token`
+comme valeur `<token>` directement (ce header supplémentaire est utilisé pour simplifier l'utilisation de l'api via le client swagger-ui).
 
 === Annotation JAX-RS @Secured
 
