@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.GenericType;
 
 import org.junit.Ignore;
+import org.junit.runners.Suite.SuiteClasses;
 
 import io.github.oliviercailloux.y2018.opendata.dao.CourseDao;
 import io.github.oliviercailloux.y2018.opendata.entity.Course;

@@ -30,6 +30,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -48,6 +49,7 @@ import io.github.oliviercailloux.y2018.opendata.dao.Dao;
 import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
 import io.github.oliviercailloux.y2018.opendata.entity.Planning;
 
+@ArquillianSuiteDeployment
 @RunWith(Arquillian.class)
 public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y2018.opendata.entity.Entity, D extends Dao<E>> {
 
