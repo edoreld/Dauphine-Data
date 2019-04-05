@@ -20,6 +20,21 @@ public class PersonResource extends AbstractResource<Person, PersonDao> {
 		super("Person", "person");
 	}
 	
+	/**
+	 * @param lastName of the person
+	 * @param firstName of the person
+	 * @param ine of the person
+	 * @param office of the person
+	 * @param phoneNumber of the person
+	 * @param training of the person
+	 * @param fax of the person
+	 * @param mail of the person
+	 * 
+	 * We use VcardImport to import VCard information 
+	 * then we persist them using PersonDao
+	 * 
+	 * @return person
+	 */
 	@POST
 	@Path("importvcard")
 	@Consumes("text/plain")
