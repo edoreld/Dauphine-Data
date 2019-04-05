@@ -5,6 +5,7 @@ import java.net.URL;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation.Builder;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -21,7 +22,7 @@ import io.github.oliviercailloux.y2018.opendata.ArquillianUtils;
 @RunWith(Arquillian.class)
 public class HealthCheckIT {
 	
-	private Client client = ClientBuilder.newClient();;
+	private Client client = ClientBuilder.newClient();
 	
 	@ArquillianResource
 	private URL url;
@@ -38,7 +39,9 @@ public class HealthCheckIT {
 	
 	@Test
 	public void testHealthcheck() throws URISyntaxException {
-		Utils.assertStatusIsNoContent(client.target(url.toURI().toString()).path("/healthcheck").request().get());
+		Utils.assertStatusIsNoContent(Utils.getRequest(client, url, "healthcheck").get());
 	}
+
+	
 	
 }

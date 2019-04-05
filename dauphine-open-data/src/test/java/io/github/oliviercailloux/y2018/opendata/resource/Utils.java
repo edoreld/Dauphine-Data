@@ -5,20 +5,28 @@ import static org.junit.Assert.assertEquals;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Scanner;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.diffplug.common.base.Errors;
+
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Utils {
+	
+	public static Builder getRequest(Client client, URL url, String path) {
+		return Errors.rethrow().wrap(() -> client.target(url.toURI().toString()).path(path).request()).get();
+	}
 
 	public static Builder sendContentType(final String contentType, final Builder builder) {
 		builder.header(HttpHeaders.CONTENT_TYPE, contentType);

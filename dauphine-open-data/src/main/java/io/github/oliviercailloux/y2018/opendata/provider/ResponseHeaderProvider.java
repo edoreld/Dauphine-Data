@@ -21,7 +21,6 @@ import com.google.common.base.Preconditions;
  * @author Dauphine - CLAUDEL Arnaud
  */
 @Provider
-@RequestScoped
 public class ResponseHeaderProvider implements ContainerResponseFilter {
 
     private static final String DEFAULT_CHARSET = StandardCharsets.UTF_8.name();

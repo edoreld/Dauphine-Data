@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.ext.Provider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit;
 import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit.HttpMethod;
 import io.github.oliviercailloux.y2018.opendata.service.DateService;
 
+@Provider
 public class TraceFilterProvider implements ContainerRequestFilter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TraceFilterProvider.class);
