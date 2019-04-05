@@ -108,5 +108,4 @@ derby.log
 # ####################
 .sonar_token
 .db.tuto
-doc/
 distrib/
