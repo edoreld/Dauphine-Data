@@ -1,6 +1,6 @@
 ---
 applications:
- - name: barth-dauphine-open-datas
+ - name: dauphine-open-datas
    path: dauphine-open-data/target/dauphine-open-data.war
    instances: 1
    memory: 512M
