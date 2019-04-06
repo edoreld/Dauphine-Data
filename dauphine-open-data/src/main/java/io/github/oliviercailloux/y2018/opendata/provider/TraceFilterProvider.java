@@ -19,8 +19,8 @@ import com.google.common.base.Preconditions;
 import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoException;
 import io.github.oliviercailloux.y2018.opendata.dao.HttpAuditDao;
 import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit;
-import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit.HttpMethod;
 import io.github.oliviercailloux.y2018.opendata.service.DateService;
+import io.swagger.v3.oas.models.PathItem.HttpMethod;
 
 @Provider
 public class TraceFilterProvider implements ContainerRequestFilter {
@@ -52,7 +52,7 @@ public class TraceFilterProvider implements ContainerRequestFilter {
 	private Optional<HttpAudit> makeHttpAudit(ContainerRequestContext requestContext, DateService dateService) {
 		final HttpMethod httpMethod;
 		try {
-			httpMethod = HttpMethod.from(requestContext.getMethod());
+			httpMethod = HttpMethod.valueOf(requestContext.getMethod());
 		} catch(IllegalArgumentException e) {
 			LOGGER.error("cannot parse http method {}", requestContext.getMethod(), e);
 			return Optional.empty();

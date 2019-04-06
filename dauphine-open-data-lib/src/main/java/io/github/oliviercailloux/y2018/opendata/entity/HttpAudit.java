@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import io.swagger.v3.oas.models.PathItem.HttpMethod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,25 +32,6 @@ import lombok.RequiredArgsConstructor;
 public class HttpAudit implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
 	private static final long serialVersionUID = -5324014585041077131L;
-
-	public enum HttpMethod {
-		GET, POST, PUT, DELETE;
-
-		public static HttpMethod from(String method) {
-			switch (method) {
-			case "GET":
-				return GET;
-			case "POST":
-				return POST;
-			case "PYT":
-				return PUT;
-			case "DELETE":
-				return DELETE;
-			default:
-				throw new IllegalArgumentException("usupported http method : " + method);
-			}
-		}
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

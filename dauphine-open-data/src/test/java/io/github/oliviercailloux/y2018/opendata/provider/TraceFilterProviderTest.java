@@ -21,8 +21,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoException;
 import io.github.oliviercailloux.y2018.opendata.dao.HttpAuditDao;
 import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit;
-import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit.HttpMethod;
 import io.github.oliviercailloux.y2018.opendata.service.DateService;
+import io.swagger.v3.oas.models.PathItem.HttpMethod;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TraceFilterProviderTest {
@@ -93,7 +93,7 @@ public class TraceFilterProviderTest {
 		
 		setUpNominalRequest(method, path, date);
 		setUpNominalSecurityContext(user);
-		final HttpAudit httpAudit = new HttpAudit(date, path, HttpMethod.from(method));
+		final HttpAudit httpAudit = new HttpAudit(date, path, HttpMethod.valueOf(method));
 		httpAudit.setUser(user);
 		startAndAssertPersisted(httpAudit);
 	}
@@ -106,7 +106,7 @@ public class TraceFilterProviderTest {
 		
 		setUpNominalRequest(method, path, date);
 		setUpNotAuthenticatedSecurityContext1();
-		final HttpAudit httpAudit = new HttpAudit(new Date(1L), path, HttpMethod.from(method));
+		final HttpAudit httpAudit = new HttpAudit(new Date(1L), path, HttpMethod.valueOf(method));
 		startAndAssertPersisted(httpAudit);
 	}
 	
@@ -118,7 +118,7 @@ public class TraceFilterProviderTest {
 		
 		setUpNominalRequest(method, path, date);
 		setUpNotAuthenticatedSecurityContext2();
-		final HttpAudit httpAudit = new HttpAudit(new Date(1L), path, HttpMethod.from(method));
+		final HttpAudit httpAudit = new HttpAudit(new Date(1L), path, HttpMethod.valueOf(method));
 		startAndAssertPersisted(httpAudit);
 	}
 	
