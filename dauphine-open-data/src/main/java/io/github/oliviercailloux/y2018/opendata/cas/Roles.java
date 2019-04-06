@@ -7,7 +7,7 @@ package io.github.oliviercailloux.y2018.opendata.cas;
  * and define some constants for known roles.
  */
 public class Roles {
-    public static String ADMIN = "admin";
-    public static String TEACHER = "teacher";
-    public static String STUDENT = "student";
+    public static final String ADMIN = "admin";
+    public static final String TEACHER = "teacher";
+    public static final String STUDENT = "student";
 }

@@ -37,9 +37,9 @@ public class FakeDauphineCas implements DauphineCas {
     }
     
     @Override
-    public HashSet<String> getRoles(String username) throws DauphineCasException {
+    public String[] getRoles(String username) throws DauphineCasException {
         return userTable.getUser(username)
-                .map(u -> new HashSet<>(Arrays.asList(u.getRoles())))
+                .map(FakeUserRecord::getRoles)
                 .orElseThrow(() -> new DauphineCasException("Unknown user " + username));
     }
 }
