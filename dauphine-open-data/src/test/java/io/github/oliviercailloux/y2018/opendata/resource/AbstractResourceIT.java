@@ -1,16 +1,6 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptEnglish;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptJson;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptUTF8;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertContentTypeIsJsonUTF8;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertEntityIs;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusCodeIs;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsCreated;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNoContent;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNotFound;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsOk;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.sendJson;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -30,6 +20,8 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
+import io.github.oliviercailloux.y2018.opendata.cas.TestDauphineCas;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -107,13 +99,18 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		return getWebTarget().path(path);
 	}
 
-	protected Builder sendJsonAcceptJsonUTF8English(final String path) {
+	protected Builder sendJsonAcceptJsonUTF8English(final String path, final String token) {
 		final Builder builder = getResourceWebTarget(path).request();
+		sendToken(token, builder);
 		sendJson(builder);
 		acceptEnglish(builder);
 		acceptJson(builder);
 		acceptUTF8(builder);
 		return builder;
+	}
+	
+	protected Builder sendJsonAcceptJsonUTF8English(final String path) {
+		return sendJsonAcceptJsonUTF8English(path, TestDauphineCas.ADMIN_TOKEN);
 	}
 	
 	protected Builder sendJsonAcceptJsonUTF8English() {
@@ -164,7 +161,47 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		final Response response = sendJsonAcceptJsonUTF8English().post(Entity.json(persistedEntity));
 		assertStatusCodeIs(Status.CONFLICT.getStatusCode(), response);
 	}
-
+	
+	@Test
+	public void testGetIsAllowedToAll() {
+		assertStatusCodeIs(Status.OK.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.STUDENT_TOKEN).get());
+		assertStatusCodeIs(Status.OK.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.TEACHER_TOKEN).get());
+		assertStatusCodeIs(Status.OK.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.ADMIN_TOKEN).get());
+	}
+	
+	@Test
+	public void testGetIdIsAllowedToAll() {
+		assertStatusCodeIs(Status.NOT_FOUND.getStatusCode(), sendJsonAcceptJsonUTF8English("546545", TestDauphineCas.STUDENT_TOKEN).get());
+		assertStatusCodeIs(Status.NOT_FOUND.getStatusCode(), sendJsonAcceptJsonUTF8English("44564", TestDauphineCas.TEACHER_TOKEN).get());
+		assertStatusCodeIs(Status.NOT_FOUND.getStatusCode(), sendJsonAcceptJsonUTF8English("564564", TestDauphineCas.ADMIN_TOKEN).get());
+	}
+	
+	@Test
+	public void testPostIsReservedToAdmin() {
+		final E c = makeEntity();
+		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.STUDENT_TOKEN).post(Entity.json(c)));
+		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.TEACHER_TOKEN).post(Entity.json(c)));
+		assertStatusCodeIs(Status.CREATED.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.ADMIN_TOKEN).post(Entity.json(c)));
+	}
+	
+	@Test
+	public void testPutIsReservedToAdminAndTeacher() throws Exception {
+		final E c = makeEntity();
+		final E persistedEntity = getDao().persist(c);
+		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.STUDENT_TOKEN).put(Entity.json(persistedEntity)));
+		assertStatusCodeIs(Status.NO_CONTENT.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.TEACHER_TOKEN).put(Entity.json(persistedEntity)));
+		assertStatusCodeIs(Status.NO_CONTENT.getStatusCode(), sendJsonAcceptJsonUTF8English("", TestDauphineCas.ADMIN_TOKEN).put(Entity.json(persistedEntity)));
+	}
+	
+	@Test
+	public void testDeleteIsReservedToAdmin() throws Exception {
+		final E c = makeEntity();
+		final E persistedEntity = getDao().persist(c);
+		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), sendJsonAcceptJsonUTF8English(persistedEntity.getId().toString(), TestDauphineCas.STUDENT_TOKEN).delete());
+		assertStatusCodeIs(Status.FORBIDDEN.getStatusCode(), sendJsonAcceptJsonUTF8English(persistedEntity.getId().toString(), TestDauphineCas.TEACHER_TOKEN).delete());
+		assertStatusCodeIs(Status.NO_CONTENT.getStatusCode(), sendJsonAcceptJsonUTF8English(persistedEntity.getId().toString(), TestDauphineCas.ADMIN_TOKEN).delete());
+	}
+	
 	@Test
 	public void testPutMerge() throws Exception {
 		final E c = makeEntity();

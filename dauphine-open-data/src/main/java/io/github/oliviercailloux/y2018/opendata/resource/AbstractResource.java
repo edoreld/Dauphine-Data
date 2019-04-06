@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -18,6 +20,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import io.github.oliviercailloux.y2018.opendata.annotation.Secured;
+import io.github.oliviercailloux.y2018.opendata.cas.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,24 +56,23 @@ import io.github.oliviercailloux.y2018.opendata.entity.Entity;
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
-
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResource.class);
-
+	
 	@Inject
 	protected D dao;
-
+	
 	/**
 	 * The name of the resource, mostly used for logging.
 	 */
 	protected final String resourceName;
-
+	
 	/**
 	 * The path of the resource, used to build a URL.
 	 */
 	protected final String resourcePath;
-
+	
 	/**
-	 *
 	 * @param dao          The dao to use
 	 * @param resourceName The name of the resource, mostly used for logging
 	 * @param resourcePath The path of the resource, used to build a URL
@@ -79,7 +82,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 		this.resourcePath = Preconditions.checkNotNull(resourcePath, "resourcePath");
 		// dao and transaction will be set via injection
 	}
-
+	
 	/**
 	 * Checks whether the field injection worked.
 	 *
@@ -89,7 +92,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	public void checkFieldInitialized() {
 		Preconditions.checkNotNull(dao, "dao");
 	}
-
+	
 	/**
 	 * Makes a 201 - Created response with the location of the resource.<br />
 	 * The location is the following : /<tt>resourcePath</tt>/<tt>id</tt>.
@@ -100,7 +103,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	protected Response makeCreatedResponse(Long id) {
 		return Response.created(URI.create("/" + resourcePath + "/" + id)).build();
 	}
-
+	
 	/**
 	 * Returns all elements of the current resource.
 	 *
@@ -108,11 +111,13 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 * @throws DaoException If thrown by {@link Dao#findAll()}
 	 */
 	@GET
+	@Secured
+	@PermitAll
 	public Response get() {
 		LOGGER.info("[{}] - finding all entities ..", resourceName);
 		return Response.ok(dao.findAll()).build();
 	}
-
+	
 	/**
 	 * Returns the element of the current resource with the given id.<br />
 	 * - NOT_FOUND if the element does not exist.
@@ -123,6 +128,8 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@GET
 	@Path("{id}")
+	@Secured
+	@PermitAll
 	public Response get(@PathParam("id") Long id) {
 		LOGGER.info("[{}] - finding entity with id [{}] ..", resourceName, id);
 		if (id == null) {
@@ -135,7 +142,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
-
+	
 	/**
 	 * Creates the given element of the current resource.<br />
 	 * - CREATED if the creation was successful.<br />
@@ -146,6 +153,8 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 * @throws DaoException If thrown by {@link Dao#persist(Entity)}
 	 */
 	@POST
+	@Secured
+	@RolesAllowed({Roles.ADMIN})
 	public Response post(E entity) {
 		LOGGER.info("[{}] - creating entity [{}] ..", resourceName, entity);
 		try {
@@ -157,13 +166,13 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 			return Response.status(Status.CONFLICT).entity("entity already exists").build();
 		}
 	}
-
+	
 	private Response persistEntity(E entity) {
 		LOGGER.info("[{}] - entity has no id, creating it ..", resourceName);
 		final E persistedEntity = Errors.rethrow().wrap(() -> dao.persist(entity)).get();
 		return makeCreatedResponse(persistedEntity.getId());
 	}
-
+	
 	private Response mergeEntity(E entity) {
 		dao.merge(entity);
 		return Response.noContent().build();
@@ -187,18 +196,20 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 *                      {@link Dao#merge(Entity)}
 	 */
 	@PUT
+	@Secured
+	@RolesAllowed({Roles.ADMIN, Roles.TEACHER})
 	public Response put(E entity) {
 		LOGGER.info("[{}] - putting entity with id [{}] ..", resourceName, entity);
-
+		
 		if (entity.getId() == null) {
 			return persistEntity(entity);
 		}
-
+		
 		return dao.findOne(entity.getId())
 				.map(this::mergeEntity)
 				.orElseGet(() -> createWithMergeEntity(entity));
 	}
-
+	
 	/**
 	 * Deletes the element with the given id.<br />
 	 * - NOT_FOUND if the element does not exist.<br />
@@ -210,6 +221,8 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@DELETE
 	@Path("{id}")
+	@Secured
+	@RolesAllowed({Roles.ADMIN})
 	public Response delete(@PathParam("id") Long id) {
 		LOGGER.info("[{}] - removing entity with id [{}] ..", resourceName, id);
 		try {
@@ -221,5 +234,4 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
-
 }

@@ -11,6 +11,5 @@ openAPI:
     title: Dauphine Open Data API specification
     description: 'This API exposes data from Université Paris Dauphine'
   servers:
-    - url: https://barth-dauphine-open-datas.eu-gb.mybluemix.net
-    - url: https://dauphine-open-datas.eu-gb.mybluemix.net
+    - url: https://dauphine-open-datas2.eu-gb.mybluemix.net
     - url: http://localhost:8080
