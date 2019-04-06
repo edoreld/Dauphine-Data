@@ -30,6 +30,7 @@ import io.github.oliviercailloux.y2018.opendata.dao.Dao;
 import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoException;
 import io.github.oliviercailloux.y2018.opendata.dao.EntityDoesNotExistDaoException;
 import io.github.oliviercailloux.y2018.opendata.entity.Entity;
+import io.github.oliviercailloux.y2018.opendata.resource.AbstractResource;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

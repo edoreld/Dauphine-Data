@@ -1,11 +1,15 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNoContent;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsServerError;
+
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
+
+import io.github.oliviercailloux.y2018.opendata.resource.HealthCheck;
 
 public class HealthCheckTest {
 
