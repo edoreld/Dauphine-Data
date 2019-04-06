@@ -11,6 +11,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -48,26 +49,11 @@ public class TraceFilterProviderTest {
 	@Mock
 	private UriInfo uriInfo;
 	
-	private void setUpNominalRequest(final String method, final String path, final Date date) {
-		given(requestContext.getMethod()).willReturn(method);
-		given(requestContext.getUriInfo()).willReturn(uriInfo);
-		given(uriInfo.getPath()).willReturn(path);
-		given(dateService.getCurrentDate()).willReturn(date);
-	}
+	private RequestContextUtils requestContextUtils;
 	
-	private void setUpNominalSecurityContext(final String user) {
-		given(requestContext.getSecurityContext()).willReturn(securityContext);
-		given(principal.getName()).willReturn(user);
-		given(securityContext.getUserPrincipal()).willReturn(principal);
-	}
-	
-	private void setUpNotAuthenticatedSecurityContext1() {
-		given(requestContext.getSecurityContext()).willReturn(null);
-	}
-	
-	private void setUpNotAuthenticatedSecurityContext2() {
-		given(requestContext.getSecurityContext()).willReturn(securityContext);
-		given(securityContext.getUserPrincipal()).willReturn(null);
+	@Before
+	public void before() {
+		requestContextUtils = new RequestContextUtils(requestContext, securityContext, principal, uriInfo);
 	}
 	
 	private void assertPersisted(final HttpAudit httpAudit) throws EntityAlreadyExistsDaoException {
@@ -91,8 +77,9 @@ public class TraceFilterProviderTest {
 		final String user = "aclaudel";
 		final Date date = new Date(1L);
 		
-		setUpNominalRequest(method, path, date);
-		setUpNominalSecurityContext(user);
+		requestContextUtils.setUpNominalRequest(method, path);
+		given(dateService.getCurrentDate()).willReturn(date);
+		requestContextUtils.setUpNominalSecurityContext(user);
 		final HttpAudit httpAudit = new HttpAudit(date, path, HttpMethod.valueOf(method));
 		httpAudit.setUser(user);
 		startAndAssertPersisted(httpAudit);
@@ -104,8 +91,9 @@ public class TraceFilterProviderTest {
 		final String path = "/home";
 		final Date date = new Date(1L);
 		
-		setUpNominalRequest(method, path, date);
-		setUpNotAuthenticatedSecurityContext1();
+		requestContextUtils.setUpNominalRequest(method, path);
+		given(dateService.getCurrentDate()).willReturn(date);
+		requestContextUtils.setUpNotAuthenticatedSecurityContext1();
 		final HttpAudit httpAudit = new HttpAudit(new Date(1L), path, HttpMethod.valueOf(method));
 		startAndAssertPersisted(httpAudit);
 	}
@@ -116,8 +104,9 @@ public class TraceFilterProviderTest {
 		final String path = "/home";
 		final Date date = new Date(1L);
 		
-		setUpNominalRequest(method, path, date);
-		setUpNotAuthenticatedSecurityContext2();
+		requestContextUtils.setUpNominalRequest(method, path);
+		given(dateService.getCurrentDate()).willReturn(date);
+		requestContextUtils.setUpNotAuthenticatedSecurityContext2();
 		final HttpAudit httpAudit = new HttpAudit(new Date(1L), path, HttpMethod.valueOf(method));
 		startAndAssertPersisted(httpAudit);
 	}
@@ -128,8 +117,9 @@ public class TraceFilterProviderTest {
 		final String path = "/home";
 		final String user = "arnaud";
 		final Date date = new Date(1L);
-		setUpNominalRequest(method, path, date);
-		setUpNominalSecurityContext(user);
+		requestContextUtils.setUpNominalRequest(method, path);
+		given(dateService.getCurrentDate()).willReturn(date);
+		requestContextUtils.setUpNominalSecurityContext(user);
 		startAndAssertNoPersist();
 	}
 	

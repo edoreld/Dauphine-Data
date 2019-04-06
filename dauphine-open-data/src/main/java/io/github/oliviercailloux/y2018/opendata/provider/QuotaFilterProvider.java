@@ -1,9 +1,10 @@
 package io.github.oliviercailloux.y2018.opendata.provider;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -21,10 +22,17 @@ public class QuotaFilterProvider implements ContainerRequestFilter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuotaFilterProvider.class);
 	
-	private final Map<String, UserQuota> quotas = new HashMap<>();
+	private final ConcurrentHashMap<String, UserQuota> quotas = new ConcurrentHashMap<>();
+	
+	private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+	
+	private UserQuota registerQuota(UserQuota userquota) { 
+		executor.schedule(userquota::clearAll, userquota.getRate(), TimeUnit.SECONDS);
+		return userquota;
+	}
 	
 	private Function<String, UserQuota> makeDefaultQuota(String user) {
-		return (s) -> new UserQuota(user, 10, 10);
+		return s -> registerQuota(UserQuota.make(user, 10, 10));
 	}
 	
 	private UserQuota getUserQuota(String user) {
@@ -36,7 +44,7 @@ public class QuotaFilterProvider implements ContainerRequestFilter {
 	}
 	
 	@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException {
+	public void filter(ContainerRequestContext requestContext) {
 		final Optional<String> userOpt = ProviderCompanion.getUserFromRequest(requestContext);
 		
 		if(!userOpt.isPresent()) {
@@ -47,8 +55,9 @@ public class QuotaFilterProvider implements ContainerRequestFilter {
 		final String user = userOpt.get();
 		final String path = ProviderCompanion.getPathFromRequest(requestContext);
 		UserQuota quota = getUserQuota(user);
-		final boolean limitExceeded = quota.visit(path);
-		if(limitExceeded) {
+		final boolean limitNotExceed = quota.visit(path);
+		if(!limitNotExceed) {
+			LOGGER.info("aborting request because of exceed quota");
 			requestContext.abortWith(makeQuotaExceededResponse(quota));
 		}
 	}
