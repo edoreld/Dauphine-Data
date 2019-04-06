@@ -130,6 +130,58 @@ curl -X POST "http://localhost:8080/person" -H "accept: application/json" -H "Co
            ** Faites  un get pour si tout marche 
          
   curl http://localhost:8080/person/personfilter?lastName=Sana&firstName=Dani
-         
+  
+  ## Ajout de la fonctionnalité pour faciliter les recherches sur la classe lecture
+    4 champs ont été retenus pour la recherche:
+          * le nom du groupe    qui fait référence au champ : groupName
+          * le nom de la salle qui fait référence au champ :  room
+          * le cours  qui fait référence au champ : course
+          * le nom et le prénom de la personne qui donne le cours +
        
-    
+          * Voici quelques commandes pour faire des tests avec curl: +
+           
+  		  ** Faites un post avec en local avec curl comme ceci: +
+  		  
+  		curl -X POST \
+  http://localhost:8080/lecture \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 1010e637-ab55-4ab1-8cc0-e9a41ee26424' \
+  -H 'cache-control: no-cache' \
+  -d '{
+	"room" : "B048",
+	"course": 
+		
+		  {
+			"courseName":"jee",
+	    	"courseDescription" : "java",
+	    	"courseID" :"1",
+		    "instructionLanguage" :"abc"
+		   }
+		
+	,
+	"teacher":{
+		"firstName":"olivier",
+		"lastName" : "Cailloux",
+		"isActive" : true
+		
+	}
+	,
+		    "date" : "2012-04-23",
+		    "duration" : "1",
+		    "groupName": "SITN",
+		    "room":"B048"
+}'
++
+
+          ** Faites  un get comme ceci pour voir si tout marche ++
+       
+    curl -X GET \
+  'http://localhost:8080/lecture/lecturefilter?lfName=Massa&llName=Lolo' \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 90c51b0d-7f87-4c8d-a52c-7fe707ce79a3' \
+  -H 'cache-control: no-cache' \
+  -d '{
+	"firstName":"Taric",
+	"lastName" : "GANDI",
+	"isActive" : true
+}'
