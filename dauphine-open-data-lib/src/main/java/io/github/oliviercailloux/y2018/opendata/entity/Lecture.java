@@ -1,12 +1,15 @@
 package io.github.oliviercailloux.y2018.opendata.entity;
 
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -48,13 +51,15 @@ public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@XmlElement
+	@Column(insertable = false, updatable = false)
 	private Long id;
 
 	/**
 	 * The associated course
 	 */
 	@NonNull
-	@ManyToOne(cascade = CascadeType.ALL, optional = false)
+	@ManyToOne (cascade=CascadeType.PERSIST, optional = false)
+	@JoinColumn(name="courseID", nullable=false, updatable=false)
 	@XmlElement
 	private Course course;
 
@@ -82,7 +87,7 @@ public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.
 	/**
 	 * the associated teacher
 	 */
-	@ManyToOne(cascade = CascadeType.ALL, optional = true)
+	@ManyToOne(cascade=CascadeType.PERSIST, optional = true)
 	@XmlElement
 	private Person teacher;
 
