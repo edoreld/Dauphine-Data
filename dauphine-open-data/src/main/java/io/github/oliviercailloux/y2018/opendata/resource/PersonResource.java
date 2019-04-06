@@ -3,6 +3,7 @@ package io.github.oliviercailloux.y2018.opendata.resource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import ezvcard.VCard;
@@ -33,11 +34,12 @@ public class PersonResource extends AbstractResource<Person, PersonDao> {
 	 * We use VcardImport to import VCard information 
 	 * then we persist them using PersonDao
 	 * 
-	 * @return person
+	 * Accepted vcard versions are 4.0, 3.0 and 2.1
 	 */
+	
 	@POST
 	@Path("importvcard")
-	@Consumes("text/plain")
+	@Consumes("text/x-vcard")
 	public Response importVCard(String vCardString) throws EntityAlreadyExistsDaoException {
 				
 		VCard vcard = Ezvcard.parse(vCardString).first();
