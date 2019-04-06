@@ -47,21 +47,7 @@ public abstract class AbstractArquillianIT {
 	
 	@Deployment
 	public static WebArchive makeWar() {
-		final File[] libs = Maven.resolver().loadPomFromFile("pom.xml").importRuntimeAndTestDependencies().resolve()
-				.withTransitivity().asFile();
-
-		final JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
-				// TestDauphineCas is excluded in order to avoid conflict with FakeDauphineCas
-				.addClasses(Credentials.class, DauphineCas.class, TestDauphineCas.class)
-				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.provider")
-				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.annotation")
-				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.resource")
-				.addClass(DauphineOpenDataApp.class).addAsResource("arquillian.xml");
-
-		final WebArchive war = ShrinkWrap.create(WebArchive.class, "app.war").addAsLibraries(libs)
-				.addAsLibrary(jar);
-
-		return war;
+		return ArquillianUtils.makeWar("app-it");
 	}
 	
 	@Before
