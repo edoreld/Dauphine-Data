@@ -8,6 +8,7 @@ import javax.management.relation.Role;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.then;
 
@@ -45,7 +46,7 @@ public class FakeDauphineCasTest {
     
     @Test
     public void testRoles() throws DauphineCasException {
-        assertEquals(new HashSet<>(Collections.singletonList(Roles.STUDENT)), cas.getRoles("loic"));
+        assertArrayEquals(new String[] {Roles.STUDENT}, cas.getRoles("loic"));
     }
     
     @Test(expected = DauphineCasException.class)
