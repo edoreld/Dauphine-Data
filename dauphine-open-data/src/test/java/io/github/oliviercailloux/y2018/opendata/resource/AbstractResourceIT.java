@@ -1,16 +1,6 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptEnglish;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptJson;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptUTF8;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertContentTypeIsJsonUTF8;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertEntityIs;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusCodeIs;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsCreated;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNoContent;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNotFound;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsOk;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.sendJson;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -30,6 +20,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import io.github.oliviercailloux.y2018.opendata.cas.TestDauphineCas;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -109,6 +100,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	protected Builder sendJsonAcceptJsonUTF8English(final String path) {
 		final Builder builder = getResourceWebTarget(path).request();
+		sendToken(TestDauphineCas.TEST_TOKEN, builder);
 		sendJson(builder);
 		acceptEnglish(builder);
 		acceptJson(builder);
