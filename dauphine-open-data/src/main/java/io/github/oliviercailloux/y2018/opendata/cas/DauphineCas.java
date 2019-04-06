@@ -9,15 +9,22 @@ public interface DauphineCas {
      * Authenticate with the central dauphine CAS and issue a bearer token
      * @param credentials the dauphine credentials
      * @return the beared token
-     * @throws Exception if the credentials are invalid
+     * @throws DauphineCasException if the credentials are invalid
      */
-    String authenticate(Credentials credentials) throws Exception;
+    String authenticate(Credentials credentials) throws DauphineCasException;
     
     /**
      * Validate the token and return the username
      * @param token the bearer token
      * @return the username
-     * @throws Exception if the token in invalid
+     * @throws DauphineCasException if the token in invalid
      */
-    String validateToken(String token) throws Exception;
+    String validateToken(String token) throws DauphineCasException;
+    
+    /**
+     * Get the list of roles associated with a user
+     * @param username a dauphine login
+     * @return the list of roles
+     * @throws DauphineCasException if the list of roles can't be retrieved
+     */
 }

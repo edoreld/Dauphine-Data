@@ -21,18 +21,7 @@ before_deploy:
 # rather than giving travis your master ibmcloud password in plain text.
 deploy:
   provider: script
-  script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest-client.yaml
+  script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest.yml
   on:
-    branch: feat/client-2
+    branch: master
   skip_cleanup: true
-  
-deploy:
-  provider: bluemixcloudfoundry
-  skip_cleanup: true
-  username: edoreld@gmail.com
-  password: $BLUEMIX_PASSWORD_EDORELD
-  organization: edoreld@gmail.com
-  space: dev
-  region: eu-gb
-  on:
-    branch: feat/route-course
