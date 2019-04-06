@@ -1,10 +1,11 @@
-package io.github.oliviercailloux.y2018.opendata;
+package io.github.oliviercailloux.y2018.opendata.mapper;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,16 +49,17 @@ public class VCalMapperTest {
 
 		VCalMapper iCalendarMapper = new VCalMapper();
 		ICalendar ical = iCalendarMapper.encodePlanningToICalendar(planning);
+		
+		File file = Files.createTempFile(null, null).toFile();
+		
 		/**
 		 * write ICalendar to file
 		 */
-		ical.write(new File("./src/test/resources/example.ics"));
+		ical.write(file);
 
 		/**
 		 * Read the expected file and get the summary
 		 */
-		URL fileURL = this.getClass().getResource("/example.ics");
-		File file = new File(fileURL.getFile());
 
 		try (ICalReader reader = new ICalReader(file)) {
 
