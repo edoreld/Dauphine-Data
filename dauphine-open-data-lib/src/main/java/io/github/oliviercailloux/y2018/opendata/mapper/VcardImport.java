@@ -35,7 +35,6 @@ public class VcardImport {
 	 * 
 	 * This method that takes a vcard as a parameter and converts it
 	 * 
-	 * @return person
 	 */
 	
 	public Person VcardToPerson(VCard vcard) {
