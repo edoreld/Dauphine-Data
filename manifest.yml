@@ -1,8 +1,9 @@
+---
 applications:
- - name: dauphine-open-datas
+ - name: dauphine-data-edoreld
    path: dauphine-open-data/target/dauphine-open-data.war
    instances: 1
-   memory: 256M
+   memory: 512M
    Disk_quota : 1G
    env:
-      JBP_CONFIG_LIBERTY: 'app_archive: {implicit_cdi: true, features: [webProfile-8.0]}'
+    JAVA_OPTS: "-Xmx256m"

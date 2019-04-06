@@ -74,11 +74,16 @@ Le projet va se décomposer en 2 parties.
 * Gestion des quotas
 
 ## Connexion au cloud d'IBM
-
+Sur la base du déploiement que j'avais fait, Barthélémy a crée un client avec swagger.
     * Pour vous connecter au cloud, vous disposer de :
-    ** l'URL de base à l'adresse : https://dauphine-open-datas.eu-gb.mybluemix.net
-    ** Voici un exemple d'utilisation d'URL faisant appel à un get : https://dauphine-open-datas.eu-gb.mybluemix.net/home
-
+    ** l'URL de base à l'adresse : https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
+    
+    ** Voici un exemple de commande curl pour faire un post via le client swagger :
+    curl -X POST "https://barth-dauphine-open-datas.eu-gb.mybluemix.net/person" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"firstName\":\"Didier\",\"lastName\":\"Sana\",\"ine\":\"187383\",\"office\":\"B134\",\"phoneNumer\":\"0183738\",\"training\":\"Mangement\",\"fax\":\"183938\",\"isActive\":true}"
+    
+    **pour avoir la liste des personnes avec un get :
+  curl -X GET "https://barth-dauphine-open-datas.eu-gb.mybluemix.net/person" -H "accept: application/json"
+    
 ## Swagger
 
 La doc sur swagger se trouve link:doc/swagger.adoc[ici]
