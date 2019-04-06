@@ -18,6 +18,10 @@ public class TestDauphineCas implements DauphineCas {
     public final static String STUDENT_PASSWORD = "user-password";
     public final static String STUDENT_TOKEN = "user-token";
     
+    public final static String TEACHER_USERNAME = "teacher";
+    public final static String TEACHER_PASSWORD = "teacher-password";
+    public final static String TEACHER_TOKEN = "teacher-token";
+    
     
     @Override
     public String authenticate(Credentials credentials) throws DauphineCasException {
@@ -26,6 +30,9 @@ public class TestDauphineCas implements DauphineCas {
         }
         if (credentials.getUsername().equals(STUDENT_USERNAME) && credentials.getPassword().equals(STUDENT_PASSWORD)) {
             return STUDENT_TOKEN;
+        }
+        if (credentials.getUsername().equals(TEACHER_USERNAME) && credentials.getPassword().equals(TEACHER_PASSWORD)) {
+            return TEACHER_TOKEN;
         }
         throw new DauphineCasException();
     }
@@ -38,6 +45,9 @@ public class TestDauphineCas implements DauphineCas {
         if (token.equals(STUDENT_TOKEN)) {
             return STUDENT_USERNAME;
         }
+        if (token.equals(TEACHER_TOKEN)) {
+            return TEACHER_USERNAME;
+        }
         throw new DauphineCasException();
     }
     
@@ -48,6 +58,9 @@ public class TestDauphineCas implements DauphineCas {
         }
         if (username.equals(STUDENT_USERNAME)) {
             return new String[] {Roles.STUDENT};
+        }
+        if (username.equals(TEACHER_USERNAME)) {
+            return new String[] {Roles.TEACHER};
         }
         throw new DauphineCasException();
     }
