@@ -2,52 +2,50 @@ package io.github.oliviercailloux.y2018.opendata.dao;
 
 import java.util.Collections;
 import java.util.List;
-
-import javax.enterprise.context.Dependent;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 
-@Dependent
+@RequestScoped
 public class LectureDao extends AbstractDao<Lecture> {
 
-	@PersistenceContext
-	protected EntityManager em;
 	public LectureDao() {
 		super("Lecture", Lecture.class);
 	}
+	public List<Lecture> findByCriteria(String llName, String lfName, String gName, String lcroom, String lcName) {
 
-	public List<Lecture> findByCriteria(String llName, String lfName, String gName, String lcroom,String lcName) {
-
-		TypedQuery<Lecture> query = null ;
-		
-		if (llName.isEmpty() && lfName.isEmpty() && gName.isEmpty()&& lcroom.isEmpty() && lcName.isEmpty()) {
+		if (llName.isEmpty() && lfName.isEmpty() && gName.isEmpty() && lcroom.isEmpty() && lcName.isEmpty()) {
 
 			return Collections.<Lecture>emptyList();
 		}
-		
-		if(!llName.isEmpty() && !lfName.isEmpty() && gName.isEmpty()&& lcroom.isEmpty() && lcName.isEmpty()) {
-			query = em.createNamedQuery("FindLectureByTeacherName",Lecture.class);
-			query.setParameter("llName", llName);
-			query.setParameter("lfName", lfName);
+		CriteriaBuilder criteriabuilder = em.getCriteriaBuilder();
+		CriteriaQuery<Lecture> querybuild = criteriabuilder.createQuery(Lecture.class);
+		Root<Lecture> root = querybuild.from(Lecture.class);
+
+		if (!lfName.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("teacher").get("firstName"), "%" + lfName + "%"));
 		}
-		
-		if(llName.isEmpty() && lfName.isEmpty() && !gName.isEmpty()&& lcroom.isEmpty() && lcName.isEmpty()) {
-			query = em.createNamedQuery("FindLectureByGroupName",Lecture.class);
-			query.setParameter("gName", gName);
+		if (!llName.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("teacher").get("lastName"), "%" + llName + "%"));
 		}
-		
-		if(llName.isEmpty() && lfName.isEmpty() && gName.isEmpty()&& !lcroom.isEmpty() && lcName.isEmpty()) {
-			query = em.createNamedQuery("FindLectureByCourseRoom",Lecture.class);
-			query.setParameter("lcroom", lcroom);
+		if (!lcroom.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("room"), "%" + lcroom + "%"));
 		}
-		
-		if(llName.isEmpty() && lfName.isEmpty() && gName.isEmpty()&& lcroom.isEmpty() && !lcName.isEmpty()) {
-			query = em.createNamedQuery("FindLectureByCourseName",Lecture.class);
-			query.setParameter("lcName", lcName);
+
+		if (!!gName.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("groupName"), "%" + gName + "%"));
+
 		}
-		List<Lecture> lectures = query.getResultList();                         
-        return lectures;
+		if (!lcName.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("course").get("name"), "%" + lcName + "%"));
+		}
+		TypedQuery<Lecture> queryTyped = em.createQuery(querybuild);
+		return queryTyped.getResultList();
+
 	}
+	 
 }
