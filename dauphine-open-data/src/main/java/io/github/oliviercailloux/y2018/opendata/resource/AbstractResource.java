@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -19,6 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import io.github.oliviercailloux.y2018.opendata.annotation.Secured;
+import io.github.oliviercailloux.y2018.opendata.cas.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,6 +112,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@GET
 	@Secured
+	@PermitAll
 	public Response get() {
 		LOGGER.info("[{}] - finding all entities ..", resourceName);
 		return Response.ok(dao.findAll()).build();
@@ -125,6 +129,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	@GET
 	@Path("{id}")
 	@Secured
+	@PermitAll
 	public Response get(@PathParam("id") Long id) {
 		LOGGER.info("[{}] - finding entity with id [{}] ..", resourceName, id);
 		if (id == null) {
@@ -149,6 +154,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@POST
 	@Secured
+	@RolesAllowed({Roles.ADMIN})
 	public Response post(E entity) {
 		LOGGER.info("[{}] - creating entity [{}] ..", resourceName, entity);
 		try {
@@ -191,6 +197,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	 */
 	@PUT
 	@Secured
+	@RolesAllowed({Roles.ADMIN, Roles.TEACHER})
 	public Response put(E entity) {
 		LOGGER.info("[{}] - putting entity with id [{}] ..", resourceName, entity);
 		
@@ -215,6 +222,7 @@ public abstract class AbstractResource<E extends Entity, D extends Dao<E>> {
 	@DELETE
 	@Path("{id}")
 	@Secured
+	@RolesAllowed({Roles.ADMIN})
 	public Response delete(@PathParam("id") Long id) {
 		LOGGER.info("[{}] - removing entity with id [{}] ..", resourceName, id);
 		try {

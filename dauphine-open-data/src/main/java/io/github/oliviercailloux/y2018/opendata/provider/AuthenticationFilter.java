@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.opendata.provider;
 
+import com.google.common.collect.ImmutableList;
 import io.github.oliviercailloux.y2018.opendata.annotation.Secured;
 import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
 import io.github.oliviercailloux.y2018.opendata.cas.DauphineCasException;
@@ -13,8 +14,10 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
-import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This filter is called before the request is processed and is responsible of authentication based on the bearer token
@@ -57,10 +60,12 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
     }
     
-    private void attachUsernameToContext(String username, ContainerRequestContext requestContext) {
+    private void attachUsernameToContext(String username, ContainerRequestContext requestContext) throws DauphineCasException {
         final SecurityContext currentSecurityContext = requestContext.getSecurityContext();
         requestContext.setSecurityContext(new SecurityContext() {
         
+            private ImmutableList<String> roles = dauphineCas.getRoles(username);
+            
             @Override
             public Principal getUserPrincipal() {
                 return () -> username;
@@ -68,8 +73,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         
             @Override
             public boolean isUserInRole(String role) {
-                // TODO: Role based access
-                return true;
+                return roles.contains(role);
             }
         
             @Override

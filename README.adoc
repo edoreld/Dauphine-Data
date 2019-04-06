@@ -128,7 +128,6 @@ Pour afficher toutes les commandes disponibles:
 
   ./cli/client.sh --help
 
-  
   ## Une nouvelle fonctionnalité a été ajoutée pour faciliter les recherches sur la classe person ainsi que des Tests Junit
      3 champs ont été retenus pour la recherche:
           * le nom    qui fait référence au champ : firstName
@@ -142,13 +141,12 @@ curl -X POST "http://localhost:8080/person" -H "accept: application/json" -H "Co
 
            ** Faites  un get pour si tout marche 
          
-  curl http://localhost:8080/person/personfilter?lastName=Sana&firstName=Dani
-         
+  curl http://localhost:8080/person/personfilter?lastName=Sana&firstName=Dani      
        
-    
-=======
-
-## Authentification
+## Authentification
 
 Une documentation qui explique le mécanisme d'authentification est disponible link:doc/authentification.adoc[ici].
 
+## Authorization
+
+Une documentation qui explique le mécanisme de contrôle d'accès est disponible link:doc/autorisation.adoc[ici].
