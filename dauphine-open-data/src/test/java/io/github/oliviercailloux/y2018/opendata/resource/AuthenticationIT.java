@@ -34,23 +34,23 @@ public class AuthenticationIT extends AbstractArquillianIT {
 	@Test
 	@RunAsClient
 	public void authenticate(@ArquillianResteasyResource("authentication") final WebTarget authenticationEndpoint) {
-		Response response = authenticationEndpoint.request().post(Entity.json(new Credentials(TestDauphineCas.TEST_USERNAME, TestDauphineCas.TEST_PASSWORD)));
+		Response response = authenticationEndpoint.request().post(Entity.json(new Credentials(TestDauphineCas.ADMIN_USERNAME, TestDauphineCas.ADMIN_PASSWORD)));
 		assertEquals(200, response.getStatus());
 		assertTrue(response.getMediaType().isCompatible(MediaType.TEXT_PLAIN_TYPE));
-		assertEquals(TestDauphineCas.TEST_TOKEN, response.readEntity(String.class));
+		assertEquals(TestDauphineCas.ADMIN_TOKEN, response.readEntity(String.class));
 	}
 	
 	@Test
 	@RunAsClient
 	public void wrongPassword(@ArquillianResteasyResource("authentication") final WebTarget authenticationEndpoint) {
-		Response response = authenticationEndpoint.request().post(Entity.json(new Credentials(TestDauphineCas.TEST_USERNAME, "wrong-password")));
+		Response response = authenticationEndpoint.request().post(Entity.json(new Credentials(TestDauphineCas.ADMIN_USERNAME, "wrong-password")));
 		assertEquals(Response.Status.FORBIDDEN.getStatusCode(), response.getStatus());
 	}
 	
 	@Test
 	@RunAsClient
 	public void wrongCredentialsFormat(@ArquillianResteasyResource("authentication") final WebTarget authenticationEndpoint) {
-		Response response = authenticationEndpoint.request().post(Entity.json(new Credentials(TestDauphineCas.TEST_USERNAME, null)));
+		Response response = authenticationEndpoint.request().post(Entity.json(new Credentials(TestDauphineCas.ADMIN_USERNAME, null)));
 		assertTrue(response.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE));
 		assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 	}
@@ -59,7 +59,7 @@ public class AuthenticationIT extends AbstractArquillianIT {
 	@RunAsClient
 	public void secureAccess(@ArquillianResteasyResource("person") final WebTarget endpoint) {
 		Response response = endpoint.request()
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.TEST_TOKEN)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.ADMIN_TOKEN)
 				.get();
 		assertTrue(response.getMediaType().isCompatible(MediaType.APPLICATION_JSON_TYPE));
 		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -88,10 +88,10 @@ public class AuthenticationIT extends AbstractArquillianIT {
     @RunAsClient
     public void whoAmI(@ArquillianResteasyResource("authentication/whoami") final WebTarget endpoint) {
         Response response = endpoint.request()
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.TEST_TOKEN).get();
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.ADMIN_TOKEN).get();
         assertEquals(200, response.getStatus());
         assertTrue(response.getMediaType().isCompatible(MediaType.TEXT_PLAIN_TYPE));
-        assertEquals(TestDauphineCas.TEST_USERNAME, response.readEntity(String.class));
+        assertEquals(TestDauphineCas.ADMIN_USERNAME, response.readEntity(String.class));
     }
     
     @Test

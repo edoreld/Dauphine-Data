@@ -33,8 +33,8 @@ public class Utils {
 				.get();
 	}
 	
-	public static Builder sendWithAuthentification(final Builder builder) {
-		return builder.header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.TEST_TOKEN);
+	public static Builder sendWithAuthentification(final Builder builder, String token) {
+		return builder.header(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 	}
 
 	public static Builder sendContentType(final String contentType, final Builder builder) {

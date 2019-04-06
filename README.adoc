@@ -79,12 +79,12 @@ Travis déploie l'application et Swagger-ui automatiquement depuis le branche ma
 
 Les URLs sont :
 
-* api: https://dauphine-open-datas.eu-gb.mybluemix.net
+* api: https://dauphine-open-datas2.eu-gb.mybluemix.net
 * swagger-ui: https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
 
 Voici un exemple de commande curl pour faire un post :
 
-  curl -X POST "https://dauphine-open-datas.eu-gb.mybluemix.net/person" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"firstName\":\"Didier\",\"lastName\":\"Sana\",\"ine\":\"187383\",\"office\":\"B134\",\"phoneNumer\":\"0183738\",\"training\":\"Mangement\",\"fax\":\"183938\",\"isActive\":true}"
+  curl -X POST "https://dauphine-open-datas2.eu-gb.mybluemix.net/person" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"firstName\":\"Didier\",\"lastName\":\"Sana\",\"ine\":\"187383\",\"office\":\"B134\",\"phoneNumer\":\"0183738\",\"training\":\"Mangement\",\"fax\":\"183938\",\"isActive\":true}"
 
 Pour plus d'information sur comment fonctionne le déploiement, voir :
 
@@ -128,7 +128,10 @@ Pour afficher toutes les commandes disponibles:
 
   ./cli/client.sh --help
 
-## Authentification
+## Authentification
 
 Une documentation qui explique le mécanisme d'authentification est disponible link:doc/authentification.adoc[ici].
 
+## Authorization
+
+Une documentation qui explique le mécanisme de contrôle d'accès est disponible link:doc/autorisation.adoc[ici].
