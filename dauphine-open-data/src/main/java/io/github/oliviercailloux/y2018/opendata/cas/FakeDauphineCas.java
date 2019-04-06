@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.opendata.cas;
 
+import com.google.common.collect.ImmutableList;
 import io.github.oliviercailloux.y2018.opendata.cas.FakeUserTable.FakeUserRecord;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class FakeDauphineCas implements DauphineCas {
     }
     
     @Override
-    public String[] getRoles(String username) throws DauphineCasException {
+    public ImmutableList<String> getRoles(String username) throws DauphineCasException {
         return userTable.getUser(username)
                 .map(FakeUserRecord::getRoles)
                 .orElseThrow(() -> new DauphineCasException("Unknown user " + username));
@@ -55,7 +56,7 @@ class FakeUserTable {
     static class FakeUserRecord {
         private String username;
         private String password;
-        private String[] roles;
+        private ImmutableList<String> roles;
     }
     
     private Map<String, FakeUserRecord> table;
@@ -71,7 +72,7 @@ class FakeUserTable {
     }
     
     private void addUser(String username, String password, String[] roles) {
-        table.put(username, new FakeUserRecord(username, password, roles));
+        table.put(username, new FakeUserRecord(username, password, ImmutableList.copyOf(roles)));
     }
 }
 

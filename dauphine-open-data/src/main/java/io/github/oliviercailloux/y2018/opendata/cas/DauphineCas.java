@@ -1,5 +1,7 @@
 package io.github.oliviercailloux.y2018.opendata.cas;
 
+import com.google.common.collect.ImmutableList;
+
 /**
  * A proxy to the Dauphine CAS
  */
@@ -27,5 +29,5 @@ public interface DauphineCas {
      * @return the list of roles
      * @throws DauphineCasException if the list of roles can't be retrieved
      */
-    String[] getRoles(String username) throws DauphineCasException;
+    ImmutableList<String> getRoles(String username) throws DauphineCasException;
 }

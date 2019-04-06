@@ -46,7 +46,7 @@ public class FakeDauphineCasTest {
     
     @Test
     public void testRoles() throws DauphineCasException {
-        assertArrayEquals(new String[]{Roles.STUDENT}, cas.getRoles("loic"));
+        assertArrayEquals(new String[]{Roles.STUDENT}, cas.getRoles("loic").toArray());
     }
     
     @Test(expected = DauphineCasException.class)

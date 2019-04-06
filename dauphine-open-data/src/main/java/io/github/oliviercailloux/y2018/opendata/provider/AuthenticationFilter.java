@@ -1,5 +1,6 @@
 package io.github.oliviercailloux.y2018.opendata.provider;
 
+import com.google.common.collect.ImmutableList;
 import io.github.oliviercailloux.y2018.opendata.annotation.Secured;
 import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
 import io.github.oliviercailloux.y2018.opendata.cas.DauphineCasException;
@@ -63,7 +64,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         final SecurityContext currentSecurityContext = requestContext.getSecurityContext();
         requestContext.setSecurityContext(new SecurityContext() {
         
-            private Set<String> roles = new HashSet<>(Arrays.asList(dauphineCas.getRoles(username)));
+            private ImmutableList<String> roles = dauphineCas.getRoles(username);
             
             @Override
             public Principal getUserPrincipal() {

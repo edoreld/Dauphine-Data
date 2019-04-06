@@ -1,5 +1,7 @@
 package io.github.oliviercailloux.y2018.opendata.cas;
 
+import com.google.common.collect.ImmutableList;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
 
@@ -52,15 +54,15 @@ public class TestDauphineCas implements DauphineCas {
     }
     
     @Override
-    public String[] getRoles(String username) throws DauphineCasException {
+    public ImmutableList<String> getRoles(String username) throws DauphineCasException {
         if (username.equals(ADMIN_USERNAME)) {
-            return new String[] {Roles.ADMIN};
+            return ImmutableList.of(Roles.ADMIN);
         }
         if (username.equals(STUDENT_USERNAME)) {
-            return new String[] {Roles.STUDENT};
+            return ImmutableList.of(Roles.STUDENT);
         }
         if (username.equals(TEACHER_USERNAME)) {
-            return new String[] {Roles.TEACHER};
+            return ImmutableList.of(Roles.TEACHER);
         }
         throw new DauphineCasException();
     }
