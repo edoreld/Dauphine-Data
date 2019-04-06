@@ -296,17 +296,213 @@ case $state in
   ops)
     # Operations
     _values "Operations" \
-            "sayHello[]" 
+            "authenticate[]" \
+            "createCourse[]" \
+            "createLecture[]" \
+            "createPerson[]" \
+            "createPlanning[]" \
+            "deleteCourse[]" \
+            "deleteLecture[]" \
+            "deletePerson[]" \
+            "deletePlanning[]" \
+            "filterCourses[]" \
+            "getCourse[]" \
+            "getLecture[]" \
+            "getPerson[]" \
+            "getPlanning[]" \
+            "listCourses[]" \
+            "listLectures[]" \
+            "listPersons[]" \
+            "listPlannings[]" \
+            "replaceCourse[]" \
+            "replaceLecture[]" \
+            "replacePerson[]" \
+            "replacePlanning[]" \
+            "sayHello[]" \
+            "whoAmI[]" 
     _arguments "(--help)--help[Print information about operation]"
 
     ret=0
     ;;
   args)
     case $line[1] in
+      authenticate)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      createCourse)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      createLecture)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      createPerson)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      createPlanning)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      deleteCourse)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      deleteLecture)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      deletePerson)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      deletePlanning)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      filterCourses)
+        local -a _op_arguments
+        _op_arguments=(
+                    "name=:[QUERY] "
+"desc=:[QUERY] "
+"lang=:[QUERY] "
+          "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      getCourse)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      getLecture)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      getPerson)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      getPlanning)
+        local -a _op_arguments
+        _op_arguments=(
+          "id=:[PATH] "
+                    "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      listCourses)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      listLectures)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      listPersons)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      listPlannings)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      replaceCourse)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      replaceLecture)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      replacePerson)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      replacePlanning)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
       sayHello)
         local -a _op_arguments
         _op_arguments=(
-                              )
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
+        _describe -t actions 'operations' _op_arguments -S '' && ret=0
+        ;;
+      whoAmI)
+        local -a _op_arguments
+        _op_arguments=(
+                              "Bearer-Token\::[HEADER] The bearer authentication token"
+)
         _describe -t actions 'operations' _op_arguments -S '' && ret=0
         ;;
     esac
