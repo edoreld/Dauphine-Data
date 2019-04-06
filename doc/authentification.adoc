@@ -96,7 +96,7 @@ comme valeur `<token>` directement (ce header supplémentaire est utilisé pour 
 
 === Annotation JAX-RS @Secured
 
-Pour indiquer quelles routes doivent être protégés, nous avons créé une annotation link:../dauphine-open-data/src/main/java/io/github/oliviercailloux/y2018/opendata/annotation/Secured.java[@Secured]
+Pour indiquer quelles routes doivent être protégés, nous avons créé une annotation link:/dauphine-open-data/src/main/java/io/github/oliviercailloux/y2018/opendata/annotation/Secured.java[@Secured]
 qui est lié notre provider `AuthenticationFilter` grâce à l'https://javaee.github.io/javaee-spec/javadocs/javax/ws/rs/NameBinding.html[annotation JAX-RS @NameBinding].
 
 De ce fait toutes les routes qui portent l'annotation `@Secured` se verront protégé par `AuthenticationFilter`.
