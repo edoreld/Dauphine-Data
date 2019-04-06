@@ -30,6 +30,12 @@ public class ParseIcsFile {
 		parcoursICS("example.ics");
 		return "Grrr"+new File(".").getAbsoluteFile();
 	}
+	
+	/ **
+	* browse an {@link ICalendar} into an object {@link VEvent}
+	*
+	* @param read the read path of  an ICalendarto encode, can not be null
+	* /
 	public void parcoursICS(String path) {
 		
 		
