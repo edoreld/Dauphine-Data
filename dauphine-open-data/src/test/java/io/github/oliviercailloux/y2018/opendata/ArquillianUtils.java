@@ -1,13 +1,13 @@
 package io.github.oliviercailloux.y2018.opendata;
 
-import java.io.File;
-
+import io.github.oliviercailloux.y2018.opendata.cas.FakeDauphineCas;
+import lombok.experimental.UtilityClass;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
-import lombok.experimental.UtilityClass;
+import java.io.File;
 
 @UtilityClass
 public class ArquillianUtils {
@@ -23,6 +23,9 @@ public class ArquillianUtils {
 		final JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
 				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.resource")
 				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.provider")
+				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.annotation")
+				.addPackages(true, "io.github.oliviercailloux.y2018.opendata.cas")
+				.deleteClass(FakeDauphineCas.class)
 				.addClass(DauphineOpenDataApp.class).addAsResource("arquillian.xml");
 
 		final WebArchive war = ShrinkWrap.create(WebArchive.class, makeWarName(warName)).addAsLibraries(libs)
