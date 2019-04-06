@@ -2,6 +2,9 @@ package io.github.oliviercailloux.y2018.opendata.cas;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * This DauphineCas implementation is used during integration tests
@@ -28,5 +31,13 @@ public class TestDauphineCas implements DauphineCas {
             return TEST_USERNAME;
         }
         throw new DauphineCasException();
+    }
+    
+    @Override
+    public HashSet<String> getRoles(String username) throws DauphineCasException {
+        if (!username.equals(TEST_USERNAME)) {
+            throw new DauphineCasException();
+        }
+        return new HashSet<>(Collections.singletonList(Roles.ADMIN));
     }
 }
