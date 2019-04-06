@@ -15,18 +15,18 @@ public class TestDauphineCas implements DauphineCas {
     public final static String TEST_TOKEN = "test-token";
     
     @Override
-    public String authenticate(Credentials credentials) throws Exception {
+    public String authenticate(Credentials credentials) throws DauphineCasException {
         if (credentials.getUsername().equals(TEST_USERNAME) && credentials.getPassword().equals(TEST_PASSWORD)) {
             return TEST_TOKEN;
         }
-        throw new Exception();
+        throw new DauphineCasException();
     }
     
     @Override
-    public String validateToken(String token) throws Exception {
+    public String validateToken(String token) throws DauphineCasException {
         if (token.equals(TEST_TOKEN)) {
             return TEST_USERNAME;
         }
-        throw new Exception();
+        throw new DauphineCasException();
     }
 }

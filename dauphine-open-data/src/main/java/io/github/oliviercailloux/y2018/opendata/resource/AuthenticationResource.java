@@ -3,6 +3,7 @@ package io.github.oliviercailloux.y2018.opendata.resource;
 import io.github.oliviercailloux.y2018.opendata.annotation.Secured;
 import io.github.oliviercailloux.y2018.opendata.cas.Credentials;
 import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
+import io.github.oliviercailloux.y2018.opendata.cas.DauphineCasException;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class AuthenticationResource {
             String token = dauphineCas.authenticate(credentials);
             return Response.ok(token).build();
         }
-        catch (Exception e) {
+        catch (DauphineCasException e) {
             return Response.status(Response.Status.FORBIDDEN).build();
         }
     }

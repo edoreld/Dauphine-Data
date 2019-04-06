@@ -2,6 +2,7 @@ package io.github.oliviercailloux.y2018.opendata.provider;
 
 import io.github.oliviercailloux.y2018.opendata.annotation.Secured;
 import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
+import io.github.oliviercailloux.y2018.opendata.cas.DauphineCasException;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -50,7 +51,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             String username = dauphineCas.validateToken(token);
             attachUsernameToContext(username, requestContext);
         }
-        catch (Exception e) {
+        catch (DauphineCasException e) {
             // abort request if the CAS has not validated the token
             abortRequest(requestContext);
         }

@@ -11,12 +11,12 @@ import javax.enterprise.inject.Default;
 public class FakeDauphineCas implements DauphineCas {
     
     @Override
-    public String authenticate(Credentials credentials) throws Exception {
+    public String authenticate(Credentials credentials) throws DauphineCasException {
         return "fake-token";
     }
     
     @Override
-    public String validateToken(String token) throws Exception {
+    public String validateToken(String token) throws DauphineCasException {
         return "toto";
     }
 }
