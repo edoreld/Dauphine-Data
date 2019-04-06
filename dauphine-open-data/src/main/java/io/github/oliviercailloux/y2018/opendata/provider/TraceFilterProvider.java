@@ -1,6 +1,5 @@
 package io.github.oliviercailloux.y2018.opendata.provider;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.Optional;
 
@@ -8,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 
 import org.slf4j.Logger;
@@ -40,25 +38,18 @@ public class TraceFilterProvider implements ContainerRequestFilter {
 	}
 	
 	private void setUserIfAuthenticated(HttpAudit httpAudit, ContainerRequestContext requestContext) {
-		final SecurityContext sc = requestContext.getSecurityContext();
-		if(sc != null) {
-			final Principal p = requestContext.getSecurityContext().getUserPrincipal();
-			if(p != null) {
-				httpAudit.setUser(p.getName());
-			}
-		}
+		ProviderCompanion.getUserFromRequest(requestContext).ifPresent(httpAudit::setUser);
 	}
 	
 	private Optional<HttpAudit> makeHttpAudit(ContainerRequestContext requestContext, DateService dateService) {
-		final HttpMethod httpMethod;
-		try {
-			httpMethod = HttpMethod.valueOf(requestContext.getMethod());
-		} catch(IllegalArgumentException e) {
-			LOGGER.error("cannot parse http method {}", requestContext.getMethod(), e);
+		final Optional<HttpMethod> httpMethodOpt = ProviderCompanion.getHttpMethodFromRequest(requestContext);
+		if(!httpMethodOpt.isPresent()) {
 			return Optional.empty();
 		}
+		
+		final HttpMethod httpMethod = httpMethodOpt.get();
 		final Date date = dateService.getCurrentDate();
-		final String path = requestContext.getUriInfo().getPath();
+		final String path = ProviderCompanion.getPathFromRequest(requestContext);
 		final HttpAudit httpAudit = new HttpAudit(date, path, httpMethod);
 		setUserIfAuthenticated(httpAudit, requestContext);
 		return Optional.of(httpAudit);
