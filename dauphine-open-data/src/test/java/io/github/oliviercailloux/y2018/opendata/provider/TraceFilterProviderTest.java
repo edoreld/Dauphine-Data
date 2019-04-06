@@ -22,7 +22,6 @@ import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoExcept
 import io.github.oliviercailloux.y2018.opendata.dao.HttpAuditDao;
 import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit;
 import io.github.oliviercailloux.y2018.opendata.entity.HttpAudit.HttpMethod;
-import io.github.oliviercailloux.y2018.opendata.provider.TraceFilterProvider;
 import io.github.oliviercailloux.y2018.opendata.service.DateService;
 
 @RunWith(MockitoJUnitRunner.class)

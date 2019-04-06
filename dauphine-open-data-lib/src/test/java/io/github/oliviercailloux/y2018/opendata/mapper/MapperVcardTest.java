@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import ezvcard.VCard;
 import io.github.oliviercailloux.y2018.opendata.entity.Person;
-import io.github.oliviercailloux.y2018.opendata.mapper.MapperVcard;
 
 /**
  * @author Elhadj Diallo

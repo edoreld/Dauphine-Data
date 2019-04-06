@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +18,6 @@ import io.github.oliviercailloux.y2018.opendata.entity.Course;
 import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 import io.github.oliviercailloux.y2018.opendata.entity.Person;
 import io.github.oliviercailloux.y2018.opendata.entity.Planning;
-import io.github.oliviercailloux.y2018.opendata.mapper.VCalMapper;
 
 public class VCalMapperTest {
 

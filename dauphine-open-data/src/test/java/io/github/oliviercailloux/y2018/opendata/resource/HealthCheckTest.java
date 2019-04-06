@@ -9,8 +9,6 @@ import javax.ws.rs.core.Response;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import io.github.oliviercailloux.y2018.opendata.resource.HealthCheck;
-
 public class HealthCheckTest {
 
 	private HealthCheck healthcheck = new HealthCheck();

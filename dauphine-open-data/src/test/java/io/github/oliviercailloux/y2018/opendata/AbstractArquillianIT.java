@@ -22,8 +22,6 @@ import org.junit.runner.RunWith;
 
 import com.google.common.base.Preconditions;
 
-import io.github.oliviercailloux.y2018.opendata.DauphineOpenDataApp;
-
 @ArquillianSuiteDeployment
 @RunWith(Arquillian.class)
 public abstract class AbstractArquillianIT {

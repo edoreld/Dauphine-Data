@@ -16,8 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.github.oliviercailloux.y2018.opendata.provider.ResponseHeaderProvider;
-
 @RunWith(MockitoJUnitRunner.class)
 public class ResponseHeaderProviderTest {
 

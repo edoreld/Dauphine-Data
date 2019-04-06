@@ -29,9 +29,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.github.oliviercailloux.y2018.opendata.dao.AbstractDao;
-import io.github.oliviercailloux.y2018.opendata.dao.EntityAlreadyExistsDaoException;
-import io.github.oliviercailloux.y2018.opendata.dao.EntityDoesNotExistDaoException;
 import io.github.oliviercailloux.y2018.opendata.entity.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
