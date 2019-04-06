@@ -2,7 +2,7 @@
 
 set -ex
 
-openapi_route=${1:-http://localhost:8080/openapi.json}
+openapi_route=${1:-https://dauphine-open-datas2.eu-gb.mybluemix.net/openapi.json}
 host=$(dirname ${openapi_route})
 
 rm -rf cli

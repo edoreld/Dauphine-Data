@@ -110,7 +110,7 @@ Un client en ligne de commande est généré par le script `./scripts/generate-c
 
 Pour s'authentifier, le client a besoin d'un token dans la variable `$DOD_TOKEN`:
 
-   export DOD_TOKEN=$(./cli/client.sh authenticate username==toto password==1234)
+   export DOD_TOKEN=$(./cli/client.sh authenticate username==sylvie password==789)
 
 Pour créer un cours:
 
