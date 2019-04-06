@@ -1,0 +1,93 @@
+= Autorisation
+
+Ce document explique le fonctionnement du mécanisme de contrôle d'accès qui a été mis en place dans ce projet.
+
+== Interaction avec le CAS de Dauphine
+
+Il est supposé que le projet évolue pour s'interconnecter avec le CAS de Dauphine. Le système de contrôle d'accès
+a donc été pensé pour faciliter cette intégration future.
+
+== Description du système de droits
+
+La gestion des droits se fait via la notion de "rôle". Un utilisateur possède une liste de rôles qui peut évoluer avec le temps.
+Ces rôles sont de simples chaînes de caractères. On peut demander au CAS de nous donner la liste des rôles associés à un
+utilisateur authentifié.
+
+Dans notre application nous allons ensuite déterminer des règles du type : "quel rôle peut accéder à quelle ressource".
+
+Pour l'instant, ces règles sont très simple. On peut restreindre l'accès d'une certaine route à un ensemble
+de rôles, et c'est tout.
+
+== Axe d'amélioration
+
+Les évolutions naturelles de ce système de droits serait :
+
+* autoriser l'accès à certaines route en fonction d'attribut présent dans les paramètres et le contexte de la requête
+** exemple : l'utilisateur toto a accès à la route `GET /person/toto`, et pas `GET /person/tata`.
+* autoriser l'accès à certaines lignes dans une table en fonction de l'utilisateur
+** exemple: lorsque l'utilisateur toto accède à la route `GET /course`, il reçoit uniquement la liste des cours auxquels il est inscrit.
+
+== Implementation JAVA
+
+=== Proxy DauphineCAS
+
+Le proxy DauphineCAS définit une méthode `getRoles(username) -> [roles]`. Cette méthode interroge le CAS et retourne
+la liste des rôles associés à un utilisateur.
+
+=== Annotations
+
+Le standard JAVA définit 3 annotations à positionner au dessus des méthodes ou des classes resources JAX-RS:
+
+* `@DenyAll`
+* `@PermitAll`
+* `@RolesAllowed({role1, role2,...})`
+
+
+=== Provider AuthenticationFilter
+
+Le provider `AuthenticationFilter`, déjà documenté dans `link:/doc/authentication.adoc[authentication.adoc], récupère
+les rôles associés à l'utlisateur (via le CAS) et les enregistre dans le `SecurityContext` de la requête.
+
+=== Provider AuthorizationFilter
+
+Le provider `AuthorizationFilter` intercepte les requêtes juste après `AuthenticationFilter`. Il est en charge de rejeter
+ou de laisser passer les requêtes en fonction des annotations et des rôles de l'utilisateur.
+
+Il procède de la façon suivante :
+
+1. Collecte des annotations sur la méthode resource jax-rs en utilisant la reflection
+2. Si elle possède l'annotation @DenyAll, la requête est rejetée
+3. Si elle possède l'annotation @RolesAllowed :
+  .. Récupération du `SecurityContext` de la requête
+  .. Si le client n'est pas authentifié, rejet de la requête
+  .. Si le l'utilisateur possède un des rôles listé dans l'annotation, la requête est acceptée
+  .. Sinon la requête est rejetée
+4. Si elle possède l'annotation @PermitAll, la requête est acceptée.
+5. Collecte des annotations sur la classe resource jax-rs en utilisant la reflection
+6. Répétition des étape 2,3 et 4 pour ces annotations.
+
+NOTE: la reflection se fait en injectant le `ResourceInfo`.
+
+NOTE: l'annotation @Priority sur `AuthorizationFilter` permet de s'assurer que le filtre est exécuté après l'authentification.
+
+=== Test d'integration
+
+Une séquence de tests d'intégration Arquillian est fournie (voir `AuthorizationIT`).
+
+Pour les besoins des tests, nous avons créé `AuthorizationResource` : une resource jax-rs utilisée pour tester les
+différentes combinaisons d'annotations.
+
+== Politique d'accès
+
+Pour les besoin de la demonstration, nous avons crée 3 rôles :
+
+* STUDENT
+* ADMIN
+* TEACHER
+
+
+Les étudiants peuvent lire et lister les resources. (GET et GET {id})
+
+Les professeurs peuvent en plus modifier des resources existantes (POST)
+
+Les admins peuvent en plus créer et supprimer des resources. (POST et DELETE)
