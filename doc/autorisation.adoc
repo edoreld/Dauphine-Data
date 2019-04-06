@@ -22,7 +22,7 @@ de rôles, et c'est tout.
 
 Les évolutions naturelles de ce système de droits serait :
 
-* autoriser l'accès à certaines route en fonction d'attribut présent dans les paramètres et le contexte de la requête
+* autoriser l'accès à certaines route en fonction d'attributs présents dans les paramètres et le contexte de la requête
 ** exemple : l'utilisateur toto a accès à la route `GET /person/toto`, et pas `GET /person/tata`.
 * autoriser l'accès à certaines lignes dans une table en fonction de l'utilisateur
 ** exemple: lorsque l'utilisateur toto accède à la route `GET /course`, il reçoit uniquement la liste des cours auxquels il est inscrit.
@@ -45,7 +45,7 @@ Le standard JAVA définit 3 annotations à positionner au dessus des méthodes o
 
 === Provider AuthenticationFilter
 
-Le provider `AuthenticationFilter`, déjà documenté dans `link:/doc/authentication.adoc[authentication.adoc], récupère
+Le provider `AuthenticationFilter`, déjà documenté dans link:/doc/authentication.adoc[authentication.adoc], récupère
 les rôles associés à l'utlisateur (via le CAS) et les enregistre dans le `SecurityContext` de la requête.
 
 === Provider AuthorizationFilter
@@ -60,26 +60,26 @@ Il procède de la façon suivante :
 3. Si elle possède l'annotation @RolesAllowed :
   .. Récupération du `SecurityContext` de la requête
   .. Si le client n'est pas authentifié, rejet de la requête
-  .. Si le l'utilisateur possède un des rôles listé dans l'annotation, la requête est acceptée
+  .. Si le l'utilisateur possède un des rôles listés dans l'annotation, la requête est acceptée
   .. Sinon la requête est rejetée
 4. Si elle possède l'annotation @PermitAll, la requête est acceptée.
 5. Collecte des annotations sur la classe resource jax-rs en utilisant la reflection
-6. Répétition des étape 2,3 et 4 pour ces annotations.
+6. Répétition des étapes 2,3 et 4 pour ces annotations.
 
 NOTE: la reflection se fait en injectant le `ResourceInfo`.
 
-NOTE: l'annotation @Priority sur `AuthorizationFilter` permet de s'assurer que le filtre est exécuté après l'authentification.
+NOTE: l'annotation @Priority sur `AuthorizationFilter` permet de s'assurer que le filtre est exécuté après le filtre d'authentification.
 
 === Test d'integration
 
 Une séquence de tests d'intégration Arquillian est fournie (voir `AuthorizationIT`).
 
-Pour les besoins des tests, nous avons créé `AuthorizationResource` : une resource jax-rs utilisée pour tester les
+Pour les besoins des tests, nous avons crée `AuthorizationResource` : une resource jax-rs utilisée pour tester les
 différentes combinaisons d'annotations.
 
 == Politique d'accès
 
-Pour les besoin de la demonstration, nous avons crée 3 rôles :
+Pour les besoins de la demonstration, nous avons crée 3 rôles :
 
 * STUDENT
 * ADMIN
