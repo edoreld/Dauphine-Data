@@ -6,7 +6,7 @@ package io.github.oliviercailloux.y2018.opendata.dao;
  * @author Dauphine - CLAUDEL Arnaud
  *
  */
-public class DaoException extends Exception {
+public class DaoException extends RuntimeException {
 
 	private static final long serialVersionUID = 2180204496566733357L;
 

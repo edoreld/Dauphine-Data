@@ -1,15 +1,10 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
-import io.github.oliviercailloux.y2018.opendata.ArquillianUtils;
-import io.github.oliviercailloux.y2018.opendata.cas.Credentials;
-import io.github.oliviercailloux.y2018.opendata.cas.TestDauphineCas;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -17,15 +12,24 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static org.junit.Assert.*;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-@RunWith(Arquillian.class)
-public class AuthenticationIT {
+import io.github.oliviercailloux.y2018.opendata.AbstractArquillianIT;
+import io.github.oliviercailloux.y2018.opendata.DauphineOpenDataApp;
+import io.github.oliviercailloux.y2018.opendata.cas.Credentials;
+import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
+import io.github.oliviercailloux.y2018.opendata.cas.TestDauphineCas;
 
-	@Deployment
-	public static WebArchive makeWar() {
-        return ArquillianUtils.makeWar("resource-it-war");
-	}
+public class AuthenticationIT extends AbstractArquillianIT {
 	
 	@Test
 	@RunAsClient

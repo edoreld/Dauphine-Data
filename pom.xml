@@ -57,12 +57,12 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-		<!--  vCal -->
+		<!-- vCal -->
 		<dependency>
-    		<groupId>net.sf.biweekly</groupId>
-    		<artifactId>biweekly</artifactId>
-    		<version>0.6.3</version>
-		</dependency>		
+			<groupId>net.sf.biweekly</groupId>
+			<artifactId>biweekly</artifactId>
+			<version>0.6.3</version>
+		</dependency>
 		<!-- arquillian -->
 		<dependency>
 			<groupId>org.jboss.shrinkwrap.resolver</groupId>
@@ -80,6 +80,13 @@
 			<groupId>org.wildfly.arquillian</groupId>
 			<artifactId>wildfly-arquillian-container-remote</artifactId>
 			<version>${version.arquillian.wildfly}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eu.ingwar.tools</groupId>
+			<artifactId>arquillian-suite-extension</artifactId>
+			<version>1.2.0</version>
 			<scope>test</scope>
 		</dependency>
 
