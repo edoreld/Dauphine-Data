@@ -65,11 +65,13 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             return ;
         }
         
-        // @PermitAll on the class
+        // @PermitAll on the class... this is a non-op since PermitAll is the default
         if (resourceInfo.getResourceClass().isAnnotationPresent(PermitAll.class)) {
-            // Do nothing
+            // Accept the query
             return;
         }
+        
+        // Default is PermitAll.. Accept
     }
     
     /**
