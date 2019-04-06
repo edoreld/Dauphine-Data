@@ -128,7 +128,10 @@ Pour afficher toutes les commandes disponibles:
 
   ./cli/client.sh --help
 
-## Authentification
+## Authentification
 
 Une documentation qui explique le mécanisme d'authentification est disponible link:doc/authentification.adoc[ici].
 
+## Authorization
+
+Une documentation qui explique le mécanisme de contrôle d'accès est disponible link:doc/autorisation.adoc[ici].
