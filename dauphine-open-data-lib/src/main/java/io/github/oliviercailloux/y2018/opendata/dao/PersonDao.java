@@ -6,13 +6,15 @@ import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 import io.github.oliviercailloux.y2018.opendata.entity.Person;
 
 @Dependent
 public class PersonDao extends AbstractDao<Person> {
-	
-	@PersistenceContext
-	protected EntityManager em;
 
 	public PersonDao() {
 
@@ -30,42 +32,25 @@ public class PersonDao extends AbstractDao<Person> {
 	 */
 	public List<Person> findByCriteria(String lastName, String firstName, String training) {
 
-		TypedQuery<Person> query = null ;
-		
 		if (lastName.isEmpty() && firstName.isEmpty() && training.isEmpty()) {
 
 			return Collections.<Person>emptyList();
 		}
-		
-		if(!lastName.isEmpty() && firstName.isEmpty() && training.isEmpty()) {
-			query = em.createNamedQuery("FindPersonByLastName",Person.class);
-			query.setParameter("lName", lastName);
+		CriteriaBuilder criteriabuilder = em.getCriteriaBuilder();
+		CriteriaQuery<Person> querybuild = criteriabuilder.createQuery(Person.class);
+		Root<Person> root = querybuild.from(Person.class);
+
+		if (!lastName.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("firstName"), "%" + lastName + "%"));
 		}
-		
-		if(!firstName.isEmpty() && lastName.isEmpty() && training.isEmpty()) {
-			query = em.createNamedQuery("FindPersonByFirstName",Person.class);
-			query.setParameter("fName", firstName);
+		if (!firstName.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("firstName"), "%" + firstName + "%"));
 		}
-		
-		if(!training.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
-			query = em.createNamedQuery("FindPersonByTraining",Person.class);
-			query.setParameter("train", training);
+		if (!training.isEmpty()) {
+			querybuild.where(criteriabuilder.like(root.get("training"), "%" + training + "%"));
 		}
-		
-		if(training.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
-			query = em.createNamedQuery("FindPersonByFirstAndLastName",Person.class);
-			query.setParameter("lName", lastName);
-			query.setParameter("fName", firstName);
-		}
-		
-		if(!training.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()) {
-			query = em.createNamedQuery("FindPersonByFirstAndLastNameAndTraining",Person.class);
-			query.setParameter("train", training);
-			query.setParameter("lName", lastName);
-			query.setParameter("fName", firstName);
-		}
-		  
-		List<Person> persons = query.getResultList();                         
-        return persons;
+		TypedQuery<Person> queryTyped = em.createQuery(querybuild);
+		return queryTyped.getResultList();
+
 	}
 }

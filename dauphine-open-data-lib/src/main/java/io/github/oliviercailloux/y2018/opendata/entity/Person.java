@@ -50,14 +50,6 @@ import lombok.RequiredArgsConstructor;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 
-@NamedQueries({
-	@NamedQuery(name = "FindPersonByFirstName"       , query = "SELECT p FROM Person p WHERE p.firstName = :fName"),
-	@NamedQuery(name = "FindPersonByLastName"        , query = "SELECT p FROM Person p WHERE p.lastName  = :lName"),
-	@NamedQuery(name = "FindPersonByTraining"        , query = "SELECT p FROM Person p WHERE p.training  = :train"),
-	@NamedQuery(name = "FindPersonByFirstAndLastName", query = "SELECT p FROM Person p WHERE p.firstName = :fName and p.lastName=:lName"),
-	@NamedQuery(name = "FindPersonByFirstAndLastNameAndTraining", query = "SELECT p FROM Person p WHERE p.firstName  = :fName "
-			+ "and p.lastName=:lName and p.training  = :train") })
-
 public class Person implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
 	private static final long serialVersionUID = -4768931293875213592L;
