@@ -100,7 +100,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	protected Builder sendJsonAcceptJsonUTF8English(final String path) {
 		final Builder builder = getResourceWebTarget(path).request();
-		sendToken(TestDauphineCas.TEST_TOKEN, builder);
+		sendToken(TestDauphineCas.ADMIN_TOKEN, builder);
 		sendJson(builder);
 		acceptEnglish(builder);
 		acceptJson(builder);
