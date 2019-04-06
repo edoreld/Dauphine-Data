@@ -30,10 +30,12 @@ public class UserQuota {
 	private final ConcurrentHashMap<String, AtomicInteger> monitor = new ConcurrentHashMap<>();
 	
 	public void clearPath(String path) {
+		LOGGER.info("clearing quota of route [{}] for user [{}]", path, user);
 		monitor.remove(path);
 	}
 	
 	public void clearAll() {
+		LOGGER.info("clearing quota of all routes for user [{}]", user);
 		monitor.clear();
 	}
 	

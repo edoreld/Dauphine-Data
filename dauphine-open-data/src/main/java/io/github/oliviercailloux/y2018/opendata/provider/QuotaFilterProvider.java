@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -27,8 +28,13 @@ public class QuotaFilterProvider implements ContainerRequestFilter {
 	private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	
 	private UserQuota registerQuota(UserQuota userquota) { 
-		executor.schedule(userquota::clearAll, userquota.getRate(), TimeUnit.SECONDS);
+		executor.scheduleAtFixedRate(userquota::clearAll, userquota.getRate(), userquota.getRate(), TimeUnit.SECONDS);
 		return userquota;
+	}
+	
+	@PreDestroy
+	public void preDestroy() {
+		executor.shutdownNow();
 	}
 	
 	private Function<String, UserQuota> makeDefaultQuota(String user) {
