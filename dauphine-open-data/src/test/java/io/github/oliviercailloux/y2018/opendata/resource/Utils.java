@@ -19,33 +19,42 @@ import javax.ws.rs.core.Response;
 
 import com.diffplug.common.base.Errors;
 
+import io.github.oliviercailloux.y2018.opendata.cas.TestDauphineCas;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Utils {
 	
 	public static Builder getRequest(Client client, URL url, String path) {
-		return Errors.rethrow().wrap(() -> client.target(url.toURI().toString()).path(path).request()).get();
+		return Errors.rethrow().wrap(() -> client
+				.target(url.toURI().toString())
+				.path(path)
+				.request())
+				.get();
+	}
+	
+	public static Builder sendWithAuthentification(final Builder builder) {
+		return builder.header(HttpHeaders.AUTHORIZATION, "Bearer " + TestDauphineCas.TEST_TOKEN);
 	}
 
 	public static Builder sendContentType(final String contentType, final Builder builder) {
-		builder.header(HttpHeaders.CONTENT_TYPE, contentType);
-		return builder;
+		return builder.header(HttpHeaders.CONTENT_TYPE, contentType);
 	}
 
+	public static Builder sendToken(final String token, final Builder builder) {
+		return builder.header(HttpHeaders.AUTHORIZATION, "bearer " + token);
+	}
+	
 	public static Builder sendXml(final Builder builder) {
-		sendContentType(MediaType.APPLICATION_XML, builder);
-		return builder;
+		return sendContentType(MediaType.APPLICATION_XML, builder);
 	}
 
 	public static Builder sendJson(final Builder builder) {
-		sendContentType(MediaType.APPLICATION_JSON, builder);
-		return builder;
+		return sendContentType(MediaType.APPLICATION_JSON, builder);
 	}
 
 	public static Builder acceptCharset(final String charset, final Builder builder) {
-		builder.header(HttpHeaders.ACCEPT_CHARSET, charset);
-		return builder;
+		return builder.header(HttpHeaders.ACCEPT_CHARSET, charset);
 	}
 
 	public static Builder acceptUTF8(final Builder builder) {
@@ -53,8 +62,7 @@ public class Utils {
 	}
 
 	public static Builder acceptLanguage(final String language, final Builder builder) {
-		builder.header(HttpHeaders.ACCEPT_LANGUAGE, language);
-		return builder;
+		return builder.header(HttpHeaders.ACCEPT_LANGUAGE, language);
 	}
 
 	public static Builder acceptEnglish(final Builder builder) {
@@ -62,8 +70,7 @@ public class Utils {
 	}
 
 	public static Builder accept(final String accept, final Builder builder) {
-		builder.header(HttpHeaders.ACCEPT, accept);
-		return builder;
+		return builder.header(HttpHeaders.ACCEPT, accept);
 	}
 
 	public static Builder acceptJson(final Builder builder) {

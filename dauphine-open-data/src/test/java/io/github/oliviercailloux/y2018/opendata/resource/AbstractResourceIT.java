@@ -1,16 +1,6 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptEnglish;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptJson;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.acceptUTF8;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertContentTypeIsJsonUTF8;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertEntityIs;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusCodeIs;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsCreated;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNoContent;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNotFound;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsOk;
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.sendJson;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -76,6 +66,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	protected Builder sendJsonAcceptJsonUTF8English(final String path) {
 		final Builder builder = getResourceWebTarget(path).request();
+		sendWithAuthentification(builder);
 		sendJson(builder);
 		acceptEnglish(builder);
 		acceptJson(builder);

@@ -1,0 +1,109 @@
+= Authentification
+
+Ce document explique le fonctionnement du mécanisme d'authentification qui a été mis en place dans ce projet.
+
+== CAS de Dauphine
+
+L'université de Dauphine dispose d'un CAS (_Central Authentication Service_). Il est prévu que l'application
+dauphine-open-data utilise ce CAS pour l'authentification des utilisateurs. Malheureusement, nous (le groupe 2018-19)
+n'avons pas pris contact avec la DSI de Dauphine suffisamment tôt pour réaliser cette tâche.
+
+Il a donc été décidé de préparer le terrain en développant un système d'authentifcation basé sur une semblant de CAS.
+On espère qu'il pourra être utilisé comme socle pour l'authentification finale.
+
+== Séquence d'authentification
+
+L'authentification se fait en deux temps :
+
+* initialisation de la connection avec les identifiant (login + mot de passe dauphine)
+* accès aux ressources protégées (token)
+
+L'initialisation se fait de la façon suivante :
+
+1. Le client se connecte à l'API via une requête POST sur la route `/authentification`, en envoyant ses identifiants
+(login et mot de passe dauphine) dans le corps (json ou xml).
+2. L'API interroge le CAS en demandant si ces identifiants sont valides
+3. Si les identifiants sont valides, le CAS retourne un token (une chaîne de caractères auto-générée)
+4. L'API retourne le token au client dans le corps de la réponse (au format texte)
+5. Le client mémorise le token
+
+Pour accéder aux resources protégées :
+
+1. le client ajoute à ses requêtes une en-tête `authorization` contenant le token.
+2. L'API interroge le CAS pour savoir si le token est valide, ou alors utilise un mécanisme cryptographique (JWT)
+3. Si le token est valide, le CAS (ou le mécanisme cryptographique) retourne le login du client associé au token
+4. La requête est exécutée et le client accède donc à la resource
+
+Au bout d'un certain temps, le token aura expiré et le client devra refaire une initialisation pour en obtenir un nouveau.
+
+== Implementation Java
+
+=== POJO Credentials
+
+La classe `Credentials` est un POJO (_plain old java object_) qui contient le login et le mot de passe, nécessaire pour
+d'authentifier.
+
+Elle est notamment utilisée pour la serialization JSON et XML lors des échanges HTTP.
+
+=== Proxy DauphineCas
+
+Tous les accès au CAS se font par l'intermédiaire du bean `DauphineCas`.
+
+`DauphineCas` est en fait une interface très simple contenant deux méthodes:
+
+  String authenticate(Credentials credentials) throws Exception;
+  String validateToken(String token) throws Exception;
+
+Voici leurs contrats :
+
+  * `authenticate` doit demander au CAS de valider un identifiant et de retourner un token.
+  * `validateToken` doit demander au CAS de valider le token et de retourner le login associé
+
+NOTE: la validation du token pourrait aussi être effectué grace à un mécanisme de signature cryptographique (JWT) et
+dans ce cas ne nécessitera pas d'échanges supplémentaires (et coûteux) avec le CAS.
+
+==== FakeDauphineCas
+
+Nous avons implementé un semblant de CAS qui ne se connecte pas réellement au CAS de Dauphine. C'est la classe `FakeDauphineCas`.
+
+=== Route /authentication
+
+La resource JAX-RS `AuthenticationResource` contient deux routes :
+
+* POST `/authentication` pour l'initialisation de la connexion.
+* GET `/authentication/whoAmI` qui peut être utilisée par le client pour verifier la validité de son token
+
+Le bean `DauphineCas` est injecté dans cette resource.
+
+=== Provider AuthenticationFilter
+
+Un provider `AuthenticationFilter` intercepte les requêtes qui veulent accéder à des resources protégées et vérifie que
+le client est bien authentifié.
+
+Pour cela :
+
+1. Il regarde si la requête contient un token dans son en-tête `authorization`.
+2. Si c'est le cas, il demande au CAS (via le bean `DauphineCas` qui y est injecté) si le token est valide et récupère le login associé.
+3. Il ajoute le login dans le `SecurityContexte` de la requête. De cette façon, les route auront accès à ce login si elles en ont besoin (voir la route `/authentication/whoami`).
+
+En cas d'erreur, la requête est rejetée avec le code `UNAUTHORIZED`.
+
+NOTE: l'annotation `@Priority(Priorities.AUTHENTICATION)` au dessus de cette classe indique que ce filtre est exécuté très tôt
+dans le traitement de la requête.
+
+NOTE: L'en-tête `Authorization` doit contenir la valeur `Bearer <token>`. Une alternative est d'utiliser l'en-tête `Bearer-Token`
+comme valeur `<token>` directement (ce header supplémentaire est utilisé pour simplifier l'utilisation de l'api via le client swagger-ui).
+
+=== Annotation JAX-RS @Secured
+
+Pour indiquer quelles routes doivent être protégés, nous avons créé une annotation link:../dauphine-open-data/src/main/java/io/github/oliviercailloux/y2018/opendata/annotation/Secured.java[@Secured]
+qui est lié notre provider `AuthenticationFilter` grâce à l'https://javaee.github.io/javaee-spec/javadocs/javax/ws/rs/NameBinding.html[annotation JAX-RS @NameBinding].
+
+De ce fait toutes les routes qui portent l'annotation `@Secured` se verront protégé par `AuthenticationFilter`.
+
+=== Test d'integration
+
+Une séquence de tests d'intégration Arquillian est fournie (voir `AuthenticationIT`).
+
+Pour les besoins des tests, nous avons créé `TestDauphineCas` : une implementation spéciale de `DauphineCas`
+qui fonctionne uniquement pour les identifiants : `user:password` et le token `test-token`.
