@@ -40,6 +40,7 @@ Celui ci renomme les ID autogénérés des routes pour leur donner des noms plus
 
 == 3 Swagger-ui
 
+
 Swagger-ui est une interface web qui se branche sur une API REST OpenAPI-compatible et génère une interface permettant de tester les routes facilement. C'est en quelque sorte un explorateur d'API ou une documentation interactive.
 
 Le code de swagger-ui a été embarqué dans de répertoire git sous forme de site web statique : link:../swagger-ui-dist[swagger-ui-dist].

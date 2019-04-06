@@ -73,20 +73,28 @@ Le projet va se décomposer en 2 parties.
 * Tracage des requetes
 * Gestion des quotas
 
-## Connexion au cloud d'IBM
-Sur la base du déploiement que j'avais fait, Barthélémy a crée un client avec swagger.
-    * Pour vous connecter au cloud, vous disposer de :
-    ** l'URL de base à l'adresse : https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
-    
-    ** Voici un exemple de commande curl pour faire un post via le client swagger :
-    curl -X POST "https://barth-dauphine-open-datas.eu-gb.mybluemix.net/person" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"firstName\":\"Didier\",\"lastName\":\"Sana\",\"ine\":\"187383\",\"office\":\"B134\",\"phoneNumer\":\"0183738\",\"training\":\"Mangement\",\"fax\":\"183938\",\"isActive\":true}"
-    
-    **pour avoir la liste des personnes avec un get :
-  curl -X GET "https://barth-dauphine-open-datas.eu-gb.mybluemix.net/person" -H "accept: application/json"
-    
+## Déploiement IBM cloud
+
+Travis déploie l'application et Swagger-ui automatiquement depuis le branche master.
+
+Les URLs sont :
+
+* api: https://dauphine-open-datas.eu-gb.mybluemix.net
+* swagger-ui: https://dauphine-open-datas-swagger-ui.eu-gb.mybluemix.net
+
+Voici un exemple de commande curl pour faire un post :
+
+  curl -X POST "https://dauphine-open-datas.eu-gb.mybluemix.net/person" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"firstName\":\"Didier\",\"lastName\":\"Sana\",\"ine\":\"187383\",\"office\":\"B134\",\"phoneNumer\":\"0183738\",\"training\":\"Mangement\",\"fax\":\"183938\",\"isActive\":true}"
+
+Pour plus d'information sur comment fonctionne le déploiement, voir :
+
+* section `deploy` du travis.yml
+* le script link:./scripts/deploy-ibm-cf.sh[deploy-ibm-cf.sh]
+* le manifest.yml
+
 ## Swagger
 
-La doc sur swagger se trouve link:doc/swagger.adoc[ici]
+La doc sur swagger se trouve sur link:doc/swagger.adoc[ici]
 
 ## Swagger-ui
 
