@@ -3,6 +3,7 @@ package io.github.oliviercailloux.y2018.opendata.dao;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -13,7 +14,7 @@ import javax.persistence.criteria.Root;
 import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 import io.github.oliviercailloux.y2018.opendata.entity.Person;
 
-@Dependent
+@RequestScoped
 public class PersonDao extends AbstractDao<Person> {
 
 	public PersonDao() {
