@@ -21,7 +21,7 @@ before_deploy:
 # rather than giving travis your master ibmcloud password in plain text.
 deploy:
   provider: script
-  script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest.yaml
+  script: bash scripts/deploy-ibm-cf.sh ${BARTH_IBM_API_KEY} barthelemy.delemotte@gmail.com dev manifest.yml
   on:
     branch: master
   skip_cleanup: true
