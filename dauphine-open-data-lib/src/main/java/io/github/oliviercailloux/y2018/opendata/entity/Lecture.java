@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+
 public class Lecture implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
 	private static final long serialVersionUID = -6829937183172871605L;

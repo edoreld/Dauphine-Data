@@ -23,7 +23,7 @@ public interface Dao<E extends Entity> {
 	 * @return All entities
 	 */
 	List<E> findAll();
-
+	
 	/**
 	 * Finds the entity with the given id.
 	 *

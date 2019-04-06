@@ -2,14 +2,18 @@ package io.github.oliviercailloux.y2018.opendata.mapper;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
 import biweekly.property.Organizer;
+import io.github.oliviercailloux.y2018.opendata.entity.Course;
 import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
+import io.github.oliviercailloux.y2018.opendata.entity.Person;
 import io.github.oliviercailloux.y2018.opendata.entity.Planning;
 
 /**
@@ -29,6 +33,7 @@ public class VCalMapper {
 
 		planning.getLectures().forEach((lecture) -> {
 			ical.addEvent(this.transformLectureToEvent(lecture));
+			
 		});
 
 		return ical;
@@ -54,6 +59,28 @@ public class VCalMapper {
 		event.setDescription(lecture.getCourse().getCourseDescription());
 		event.setSummary(lecture.getCourse().getCourseName());
 		return event;
+	}
+	
+	public Planning  IcalToPlanning(ICalendar ical) {
+
+       
+		Planning planning= new Planning();
+		List<VEvent> events =ical.getEvents();
+		Long i = (long) 1;
+		if(!events.isEmpty()) {	
+			for(VEvent event: events) {
+				Person person  = new Person();
+				List<String> emails = new ArrayList<String>();
+				emails.add(event.getOrganizer().getEmail());
+			    person.setMails(emails);
+			    person.setFirstName(event.getOrganizer().getCommonName());
+			    
+				planning.getLectures().add(new Lecture(i,new Course(),Date.from( event.getDateStart().getValue().toInstant()), 
+						                   Integer.parseInt(event.getDuration().toString()), event.getLocation().getValue(),"SITN",person));
+			    i = i++;
+			}
+		} 
+		return planning;
 	}
 
 	/**

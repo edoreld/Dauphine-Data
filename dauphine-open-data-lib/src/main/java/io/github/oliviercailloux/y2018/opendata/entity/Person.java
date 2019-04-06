@@ -49,7 +49,6 @@ import lombok.RequiredArgsConstructor;
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-
 @NamedQueries({
 	@NamedQuery(name = "FindPersonByFirstName"       , query = "SELECT p FROM Person p WHERE p.firstName = :fName"),
 	@NamedQuery(name = "FindPersonByLastName"        , query = "SELECT p FROM Person p WHERE p.lastName  = :lName"),

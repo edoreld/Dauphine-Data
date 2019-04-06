@@ -61,5 +61,11 @@ public class Planning implements io.github.oliviercailloux.y2018.opendata.entity
 	@XmlElementWrapper(name = "lectures")
 	@XmlElement(name = "lecture")
 	private List<Lecture> lectures = new ArrayList<>();
+
+	@Override
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

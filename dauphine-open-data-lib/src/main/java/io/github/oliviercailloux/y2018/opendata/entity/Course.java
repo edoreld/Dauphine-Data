@@ -83,5 +83,7 @@ public class Course implements io.github.oliviercailloux.y2018.opendata.entity.E
 	@XmlElementWrapper
 	@XmlElement
 	private Map<CoursePart, Integer> volumes = new EnumMap<>(CoursePart.class);
+
+
 	
 }
