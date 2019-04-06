@@ -1,13 +1,14 @@
 package io.github.oliviercailloux.y2018.opendata;
 
-import io.github.oliviercailloux.y2018.opendata.cas.FakeDauphineCas;
-import lombok.experimental.UtilityClass;
+import java.io.File;
+
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
-import java.io.File;
+import io.github.oliviercailloux.y2018.opendata.cas.FakeDauphineCas;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ArquillianUtils {

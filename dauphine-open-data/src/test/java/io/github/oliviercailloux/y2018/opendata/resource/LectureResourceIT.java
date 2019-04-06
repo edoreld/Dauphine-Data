@@ -8,7 +8,6 @@ import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStat
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsNoContent;
 import static io.github.oliviercailloux.y2018.opendata.resource.Utils.assertStatusIsOk;
 import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -16,10 +15,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import com.diffplug.common.base.Errors;
 import io.github.oliviercailloux.y2018.opendata.dao.CourseDao;
 import io.github.oliviercailloux.y2018.opendata.dao.LectureDao;

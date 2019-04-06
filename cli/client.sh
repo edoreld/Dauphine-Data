@@ -254,7 +254,7 @@ curl_arguments="--fail ${DOD_TOKEN:+"-H 'Authorization: Bearer $DOD_TOKEN'"}"
 
 ##
 # The host for making the request
-host=http://localhost:8080
+host=https://dauphine-open-datas2.eu-gb.mybluemix.net
 
 ##
 # The user credentials for basic authentication
@@ -632,7 +632,7 @@ echo "  $ops" | column -t -s ';'
     echo -e "  -V,--version\\t\\t\\t\\tPrint API version"
     echo -e "  --about\\t\\t\\t\\tPrint the information about service"
     echo -e "  --host ${CYAN}<url>${OFF}\\t\\t\\t\\tSpecify the host URL "
-echo -e "              \\t\\t\\t\\t(e.g. 'https://localhost')"
+echo -e "              \\t\\t\\t\\t(e.g. 'https://dauphine-open-datas2.eu-gb.mybluemix.net')"
 
     echo -e "  --force\\t\\t\\t\\tForce command invocation in spite of missing"
     echo -e "         \\t\\t\\t\\trequired parameters or wrong content type"

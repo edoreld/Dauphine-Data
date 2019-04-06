@@ -4,7 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -21,7 +20,6 @@ import com.google.common.base.Preconditions;
  * @author Dauphine - CLAUDEL Arnaud
  */
 @Provider
-@RequestScoped
 public class ResponseHeaderProvider implements ContainerResponseFilter {
 
     private static final String DEFAULT_CHARSET = StandardCharsets.UTF_8.name();

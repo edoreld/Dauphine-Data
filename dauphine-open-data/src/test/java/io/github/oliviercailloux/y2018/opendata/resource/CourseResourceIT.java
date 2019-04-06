@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 
+
 import org.junit.Test;
 
 import io.github.oliviercailloux.y2018.opendata.dao.CourseDao;
