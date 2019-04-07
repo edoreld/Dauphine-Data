@@ -1,6 +1,5 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
-
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

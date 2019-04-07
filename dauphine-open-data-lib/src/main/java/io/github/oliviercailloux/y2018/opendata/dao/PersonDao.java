@@ -3,6 +3,9 @@ package io.github.oliviercailloux.y2018.opendata.dao;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,12 +13,13 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import io.github.oliviercailloux.y2018.opendata.entity.Lecture;
 import io.github.oliviercailloux.y2018.opendata.entity.Person;
 
 @RequestScoped
 public class PersonDao extends AbstractDao<Person> {
+	
+	@PersistenceContext
+	protected EntityManager em;
 
 	public PersonDao() {
 
@@ -37,6 +41,7 @@ public class PersonDao extends AbstractDao<Person> {
 
 			return Collections.<Person>emptyList();
 		}
+
 		CriteriaBuilder criteriabuilder = em.getCriteriaBuilder();
 		CriteriaQuery<Person> querybuild = criteriabuilder.createQuery(Person.class);
 		Root<Person> root = querybuild.from(Person.class);
@@ -52,6 +57,5 @@ public class PersonDao extends AbstractDao<Person> {
 		}
 		TypedQuery<Person> queryTyped = em.createQuery(querybuild);
 		return queryTyped.getResultList();
-
 	}
 }
