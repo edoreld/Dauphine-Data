@@ -127,7 +127,6 @@ Pour récupérer le cours avec l'identifiant 1:
 Pour afficher toutes les commandes disponibles:
 
   ./cli/client.sh --help
-<<<<<<< HEAD
 
 ## Authentification
 
@@ -136,8 +135,7 @@ Une documentation qui explique le mécanisme d'authentification est disponible l
 ## Authorization
 
 Une documentation qui explique le mécanisme de contrôle d'accès est disponible link:doc/autorisation.adoc[ici].
-=======
-  
+
   
 ## Ci-dessous la commande curl pour tester l'import VCard en ligne de commande
 
@@ -155,5 +153,3 @@ NOTE:B407
 EXPERTISE:Accounting
 EMAIL:forrestgump@example.com
 END:VCARD'
-
->>>>>>> Add curl command to execute in the README file
