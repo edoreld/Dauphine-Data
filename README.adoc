@@ -206,3 +206,19 @@ Une documentation qui explique le mécanisme d'authentification est disponible l
 
 Une documentation qui explique le mécanisme de contrôle d'accès est disponible link:doc/autorisation.adoc[ici].
 
+## Ci-dessous la commande curl pour tester l'import VCard en ligne de commande
+
+curl -X POST \
+  http://localhost:8080/person/importvcard \
+  -H 'Content-Type: text/plain' \
+  -d 'BEGIN:VCARD
+VERSION:4.0
+N:Gump;Forrest;;Mr.;
+FN:Forrest Gump
+UID:F467089i45oT7
+TEL;TYPE=CELL,voice;VALUE=uri:tel:+1-111-555-1212
+TEL;TYPE=FAX,voice;VALUE=uri:tel:+1-404-555-1212
+NOTE:B407
+EXPERTISE:Accounting
+EMAIL:forrestgump@example.com
+END:VCARD'
