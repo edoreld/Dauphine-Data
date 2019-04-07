@@ -41,7 +41,7 @@ public class PersonResource extends AbstractResource<Person, PersonDao> {
 	public PersonResource() {
 		super("Person", "person");
 	}
-  
+
 	/**
 	 * @param lastName  The lastName of given person
 	 * @param firstName The firstName of given person
@@ -90,4 +90,5 @@ public class PersonResource extends AbstractResource<Person, PersonDao> {
 		this.dao.persist(vcardImport.VcardToPerson(vcard));
 		return Response.ok("ok\n").build();
 	}
+ 
 }
