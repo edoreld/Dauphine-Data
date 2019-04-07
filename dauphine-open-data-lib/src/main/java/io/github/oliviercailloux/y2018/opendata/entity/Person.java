@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -31,7 +33,12 @@ import lombok.RequiredArgsConstructor;
  * null string All our method get for a List are protected from unsafe
  * modification we handle the adding of null value in a list by making mandatory
  * parameter of method modifying a list <br />
- *
+ * This class contain NamedQuaries That help to make easy request to get information about a person
+ * Three fields are chosen to make request by filtering :
+ * {@link Person#firstName  }
+ * {@link Person#lastName   }
+ * {@link Person#training   }
+ * 
  * @author Gandi Taric
  */
 
@@ -42,6 +49,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+
 public class Person implements io.github.oliviercailloux.y2018.opendata.entity.Entity {
 
 	private static final long serialVersionUID = -4768931293875213592L;
@@ -116,6 +124,5 @@ public class Person implements io.github.oliviercailloux.y2018.opendata.entity.E
 	@Column(nullable = false)
 	@XmlElement
 	private Boolean isActive;
-	
-}
 
+}

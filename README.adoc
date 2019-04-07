@@ -128,6 +128,21 @@ Pour afficher toutes les commandes disponibles:
 
   ./cli/client.sh --help
 
+  ## Une nouvelle fonctionnalité a été ajoutée pour faciliter les recherches sur la classe person ainsi que des Tests Junit
+     3 champs ont été retenus pour la recherche:
+          * le nom    qui fait référence au champ : firstName
+          * le prénom qui fait référence au champ : lastName
+          * le cours  qui fait référence au champ : course
+          * Voici quelques commandes pour faire des tests avec curl:
+         
+           ** Faites un post avec en local avec curl :
+           
+curl -X POST "http://localhost:8080/person" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"firstName\":\"Dani\",\"lastName\":\"Sana\",\"ine\":\"187383\",\"office\":\"B134\",\"phoneNumer\":\"0183738\",\"training\":\"Mangement\",\"fax\":\"183938\",\"isActive\":true}"
+
+           ** Faites  un get pour si tout marche 
+         
+  curl http://localhost:8080/person/personfilter?lastName=Sana&firstName=Dani      
+       
 ## Authentification
 
 Une documentation qui explique le mécanisme d'authentification est disponible link:doc/authentification.adoc[ici].
