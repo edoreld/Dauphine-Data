@@ -1,6 +1,6 @@
 ---
 applications:
- - name: dauphine-open-datas
+ - name: dauphine-open-datas2
    path: dauphine-open-data/target/dauphine-open-data.war
    instances: 1
    memory: 512M

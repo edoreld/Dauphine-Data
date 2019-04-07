@@ -1,16 +1,14 @@
 package io.github.oliviercailloux.y2018.opendata.resource;
 
-import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import com.google.common.base.Preconditions;
+import io.github.oliviercailloux.y2018.opendata.AbstractArquillianIT;
+import io.github.oliviercailloux.y2018.opendata.cas.TestDauphineCas;
+import io.github.oliviercailloux.y2018.opendata.dao.Dao;
+import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
+import io.github.oliviercailloux.y2018.opendata.entity.Planning;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.junit.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -19,43 +17,24 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
-import io.github.oliviercailloux.y2018.opendata.cas.DauphineCas;
-import io.github.oliviercailloux.y2018.opendata.cas.TestDauphineCas;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.util.ReflectionTestUtils;
+import static io.github.oliviercailloux.y2018.opendata.resource.Utils.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-import com.google.common.base.Preconditions;
-
-import io.github.oliviercailloux.y2018.opendata.ArquillianUtils;
-import io.github.oliviercailloux.y2018.opendata.dao.Dao;
-import io.github.oliviercailloux.y2018.opendata.dao.DaoException;
-import io.github.oliviercailloux.y2018.opendata.entity.Planning;
-
-@RunWith(Arquillian.class)
-public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y2018.opendata.entity.Entity, D extends Dao<E>> {
+public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y2018.opendata.entity.Entity, D extends Dao<E>> extends AbstractArquillianIT {
 
 	protected static final AtomicLong INC = new AtomicLong(100_000L);
 	protected static final String WAR_NAME = "resource-it-war";
 
-	@ArquillianResource
-	private URL url;
-
-	private URI uri;
-
-	protected final Client client;
 	protected final String resourcePath;
 
 	public AbstractResourceIT(final Client client, final String resourcePath) {
-		this.client = Preconditions.checkNotNull(client);
+		super(client);
 		this.resourcePath = Preconditions.checkNotNull(resourcePath);
 	}
 
@@ -63,23 +42,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 		this(ResteasyClientBuilder.newClient(), resourcePath);
 	}
 
-	@Deployment
-	public static WebArchive makeWar() {
-		return ArquillianUtils.makeWar(WAR_NAME);
-	}
-
 	protected abstract D getDao();
-
-	@Before
-	public void before() throws URISyntaxException {
-		Preconditions.checkNotNull("url", url);
-		this.uri = url.toURI();
-	}
-
-	@After
-	public void after() {
-		client.close();
-	}
 
 	protected abstract GenericType<List<E>> getEntitiesType();
 
@@ -101,7 +64,7 @@ public abstract class AbstractResourceIT<E extends io.github.oliviercailloux.y20
 
 	protected Builder sendJsonAcceptJsonUTF8English(final String path, final String token) {
 		final Builder builder = getResourceWebTarget(path).request();
-		sendToken(token, builder);
+		sendWithAuthentification(builder, token);
 		sendJson(builder);
 		acceptEnglish(builder);
 		acceptJson(builder);
