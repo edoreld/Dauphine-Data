@@ -38,7 +38,7 @@ public class PersonResource extends AbstractResource<Person, PersonDao> {
 	
 	@POST
 	@Path("importvcard")
-	@Consumes("text/x-vcard")
+	@Consumes("text/vcard")
 	public Response importVCard(String vCardString) throws EntityAlreadyExistsDaoException {
 				
 		VCard vcard = Ezvcard.parse(vCardString).first();
